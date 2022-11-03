@@ -1,0 +1,36 @@
+.shop_category_section {
+    margin: 40px 75px;
+    /* background-color: beige; */
+}
+
+.shop_category_section h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 61px;
+    text-align: center;
+    font-family: var(--lora);
+    font-weight: 600;
+    line-height: 61px;
+}
+
+.shop_category_link > h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 61px;
+    font-family: var(--lora);
+    font-weight: 600;
+    line-height: 61px;
+    text-align: center;
+    margin: 25px 0;
+}
+
+.shop_category_section div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 50px;
+    /* background-color: blue; */
+    margin: 50px 0;
+}
+

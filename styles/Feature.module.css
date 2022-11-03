@@ -1,0 +1,104 @@
+.feature_section {
+    /* padding: 50px; */
+    margin: 40px 75px;
+}
+
+.feature_section h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 61px;
+    text-align: center;
+    font-family: var(--lora);
+    font-weight: 600;
+    line-height: 61px;
+    margin-bottom: 0;
+}
+
+.feature_section p {
+    font-family: var(--lora);
+    font-weight: 600;
+    font-size: 1.3rem;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+    margin-top: 0;
+}
+
+.feature_section div {
+    margin: 30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.imgOuterContainer {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    width: 364px;
+    height: 526px;
+    border: 1px solid #E5E5E5;
+    border-radius: 50px;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.imgOuterContainer:hover {
+    transition: 2s;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    padding: 35px;
+    width: 400px;
+    height: 550px;
+}
+
+.imgOuterContainer h3 {
+    font-family: var(--lora);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 31px;
+    font-style: normal;
+}
+
+.imgOuterContainer h3:nth-child(2) {
+    margin-top: -20px;
+}
+
+.imgOuterContainer h3:nth-child(3) {
+    margin-top: -20px;
+}
+
+.imgInnerContainer {
+    grid-area: imgWrapper;
+    width: 268px;
+    height: 324px;
+    background-color: var(--main-background-color);
+    border-radius: 20%;
+}
+
+.imgItem {
+    display: block;
+    width: 202px;
+    height: 260px;
+    cursor: pointer;
+}
+
+.imgItem:hover {
+    padding: 10px;
+    transition: 1.5s;
+}
+
+.cart_feature {
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 31px;
+    font-style: normal;
+    align-self: flex-end;
+    margin-right: 15px;
+    margin-top: -60px;
+    cursor: pointer;
+}
+
+.cart_feature:hover {
+    font-size: 2.5rem;
+    color: var(--submit-button);
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    transition: 2s;
+}

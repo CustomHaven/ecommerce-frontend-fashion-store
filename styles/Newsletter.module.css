@@ -1,0 +1,83 @@
+.newsletter {
+    background-color: rgb(4, 29, 68);
+    font-family: var(--lora);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 40px;
+}
+
+.newsletter p, .newsletter h4 {
+    color: rgba(255, 255, 255, 1);
+}
+
+.newsletter h4 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.newsletter p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+.newsletter span {
+    color: rgb(247, 239, 138);
+}
+
+.newsletter form {
+    display: flex;
+}
+
+.newsletter input {
+    width: 426px;
+    font-size: 2rem;
+    font-family: var(--lora);
+}
+
+.newsletter button {
+    /* height: 45px; */
+    width: 181px;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid var(--submit-button);
+    font-family: var(--lora);
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    line-height: 31px;
+    cursor: pointer;
+    border-radius: 1px;
+    box-shadow: inset 0 0 0 0 var(--submit-button);
+    transition: all ease 1.3s;
+}
+
+.newsletter button:hover, .newsletter button:active {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: inset 181px 0 0 0 var(--submit-button);
+}
+
+@media only screen and (max-width: 775px) {
+    .newsletter input {
+        width: 250px;
+        font-size: 1rem;
+    }
+
+    .newsletter button {
+        width: 150px;
+        font-size: 1rem;
+    }
+
+    .newsletter button:hover, .newsletter button:active {
+        box-shadow: inset 150px 0 0 0 var(--submit-button);
+    }
+
+    .newsletter h4 {
+        font-size: 1.5rem;
+    }
+
+    .newsletter p {
+        font-size: 1rem;
+    }
+}

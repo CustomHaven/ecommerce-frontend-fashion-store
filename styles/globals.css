@@ -1,9 +1,11 @@
 html,
 body {
+  overflow-x: hidden;
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: 'Lora', serif; */
 }
 
 a {
@@ -13,6 +15,27 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
+:root {
+  --main-background-color: rgb(217, 217, 217);
+  --divider-background-color: rgb(251, 250, 251);
+  --lora: "Lora", Didot, Garamond, Georgia, "Times New Roman" serif;
+  --submit-button: rgb(101, 171, 168);
+  --submit-button-0: rgba(101, 171, 168, 0);
+  --submit-button-50: rgba(101, 171, 168, 0.5);
+  --submit-button-100: rgba(101, 171, 168, 1);
+  --header-footer-colors: rgba(228, 230, 244, 1);
+}
+
+.mainContainer {
+  /* padding: 0 2rem; */
+  position: relative;
+  /* z-index: 100000; */
+  margin-top: 115px;
+  /* background-color: green; */
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,0 +1,48 @@
+.headerNavbar {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--header-footer-colors);
+    z-index: 100000;
+    position: fixed;
+    margin-top: -115px;
+    height: 115px;
+}
+
+.logo_link {
+    margin-left: 20px;
+}
+
+.navigations {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 20px;
+    /* background-color: pink; */
+}
+
+.ulNavs {
+    /* width: 100%; */
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.ulNavs > li {
+    font-size: 2.5rem;
+}
+
+.navIcons {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navIcons > * {
+    font-size: 2.5rem;
+}
