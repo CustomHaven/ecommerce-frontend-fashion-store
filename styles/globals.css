@@ -1,6 +1,7 @@
 html,
 body {
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  /* overflow-y: hidden; */
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -17,7 +18,8 @@ a {
   box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Oswald:wght@300;400;700&family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap'); */
 
 :root {
   --main-background-color: rgb(217, 217, 217);
@@ -28,13 +30,18 @@ a {
   --submit-button-50: rgba(101, 171, 168, 0.5);
   --submit-button-100: rgba(101, 171, 168, 1);
   --header-footer-colors: rgba(228, 230, 244, 1);
+  --nice-background-color: rgb(246, 247, 248);
+  --roboto: "Roboto", "Lato", "Oswald", Helvetica, Arial, sans-serif;
+  --logo-color: rgba(100, 181, 160, 1);
 }
 
 .mainContainer {
   /* padding: 0 2rem; */
   position: relative;
   /* z-index: 100000; */
-  margin-top: 115px;
+  /* margin-top: 115px; */
+  /* old vals up */
+  /* margin-top: 85px; */
   /* background-color: green; */
 }
 

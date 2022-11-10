@@ -3,6 +3,8 @@ import Layout from '../components/Layout';
 import Head from "next/head"
 import Script from 'next/script'
 import '../styles/reset.css';
+import { Provider } from 'react-redux';
+import store from '../store/store';
 
 /*
 Do not add <script> tags using next/head (see <script> tag with src="https://unpkg.com/ml5@latest/dist/ml5.min.js"). Use next/script instead. 
@@ -16,7 +18,9 @@ function MyApp({ Component, pageProps }) {
         {/* <Script src="https://unpkg.com/ml5@latest/dist/ml5.min.js" /> */}
         {/* <link rel="stylesheet" href={reset} /> */}
       {/* </Head> */}
-      <Layout><Component {...pageProps} /></Layout>
+      <Provider store={store}>
+        <Layout><Component {...pageProps} /></Layout>
+      </Provider>
     </>
   );
 };

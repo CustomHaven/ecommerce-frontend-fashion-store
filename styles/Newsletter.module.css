@@ -1,6 +1,6 @@
 .newsletter {
     background-color: rgb(4, 29, 68);
-    font-family: var(--lora);
+    font-family: var(--roboto);
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
@@ -34,7 +34,7 @@
 .newsletter input {
     width: 426px;
     font-size: 2rem;
-    font-family: var(--lora);
+    font-family: var(--roboto);
 }
 
 .newsletter button {
@@ -42,7 +42,7 @@
     width: 181px;
     background-color: rgba(255, 255, 255, 1);
     border: 1px solid var(--submit-button);
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-size: 1.5rem;
     color: rgba(0, 0, 0, 1);
     font-weight: 400;
@@ -79,5 +79,46 @@
 
     .newsletter p {
         font-size: 1rem;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .newsletter input {
+        width: 200px;
+        /* font-size: 1rem; */
+    }
+
+    .newsletter button {
+        width: 100px;
+        font-size: 1rem;
+    }
+
+    .newsletter button:hover, .newsletter button:active {
+        box-shadow: inset 100px 0 0 0 var(--submit-button);
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .newsletter h4 {
+        font-size: 1rem;
+    }
+
+    .newsletter p {
+        font-size: 0.7rem;
+    }
+
+    .newsletter input {
+        /* width: 200px; */
+        font-size: 0.7rem;
+        width: 150px;
+    }
+
+    .newsletter button {
+        width: 75px;
+        font-size: 0.7rem;
+    }
+
+    .newsletter button:hover, .newsletter button:active {
+        box-shadow: inset 75px 0 0 0 var(--submit-button);
     }
 }

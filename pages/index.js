@@ -11,13 +11,13 @@ export default function Home() {
       <Head>
         <title>Fashion Home Page</title>
       </Head>
-      <main className={"mainContainer"}>
+      <>
         <Hero />
         <FeatureProducts />
         <Guarantee />
         <ShopCategory />
         <Newsletter />
-      </main>
+      </>
     </>
   )
 }

@@ -8,14 +8,14 @@
     font-weight: 600;
     line-height: 61px;
     text-align: center;
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-weight: 600;
     line-height: 61px;
     margin-bottom: 0;
 }
 
 .feature_section p {
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-weight: 600;
     font-size: 1.3rem;
     text-align: center;
@@ -50,7 +50,7 @@
 }
 
 .imgOuterContainer h3 {
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-weight: 600;
     font-size: 1.5rem;
     line-height: 31px;

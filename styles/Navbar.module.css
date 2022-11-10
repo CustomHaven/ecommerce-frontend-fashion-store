@@ -1,13 +1,85 @@
 .headerNavbar {
     width: 100vw;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    background-color: var(--header-footer-colors);
-    z-index: 100000;
+    /* position: absolute; */
     position: fixed;
-    margin-top: -115px;
-    height: 115px;
+    /* position: sticky; */
+    /* position: relative; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    background-color: transparent;
+    /* background-color: var(--header-footer-colors); */
+    /* background-color: white; */
+    /* background-color: var(--main-background-color); */
+    z-index: 10;
+    /* background-color: var(--main-background-color); */
+
+    /* position: fixed; */
+    /* margin-top: -115px; */
+    top: 0;
+    height: auto;
+    right: 0;
+    left: 0;
+    /* bottom: 0; */
+    font-family: var(--roboto);
+    letter-spacing: 2px;
+    /* old vals */
+    /* margin-top: -85px; */
+    /* height: 85px; */
+    /* margin-bottom: 0; */
+    transition: background-color 0.6s ease-in-out;
+}
+
+.headerNavbar:hover, .headerNavbar:active {
+    background-color: white !important;
+    /* position: fixed; */
+}
+
+.logo_section {
+    margin-top: -50px;
+    margin-bottom: -20px;
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    /* align-items: center; */
+    display: grid;
+    /* grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; */
+    grid-template-columns: 1fr 0.3fr 0.1fr 0.3fr 0.01fr;
+    /* grid-template-areas: ". logo . logins"; */
+    /* gap: 50px; */
+}
+
+.logo_link_section {
+    justify-self: center;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    /* grid-area: logo; */
+    /* background-color: green; */
+}
+
+.navIcons {
+    justify-self: flex-end;
+    /* grid-area: logins; */
+    /* background-color: blue; */
+    grid-column-start: 4;
+    grid-column-end: 5;
+    gap: 50px;
+}
+
+.navIcons select {
+    font-size: 0.8rem;
+}
+
+.navIcons * {
+    fill: transparent;
+    stroke: black;
+    stroke-width: 0.1;
+    /* color: white; */
+}
+
+.logo {
+    display: block;
 }
 
 .logo_link {
@@ -23,6 +95,19 @@
     /* background-color: pink; */
 }
 
+.navigations {
+    min-height: 0;
+    max-height: 0;
+    opacity: 0;
+    transition: min-height 0.6s ease-in-out,
+                opacity 0.6s ease-in-out;
+}
+
+.headerNavbar:hover > .navigations {
+    min-height: 20px;
+    opacity: 1;
+}
+
 .ulNavs {
     /* width: 100%; */
     list-style-type: none;
@@ -32,8 +117,168 @@
     width: 100%;
 }
 
-.ulNavs > li {
-    font-size: 2.5rem;
+.ulNavs > li > p {
+    font-size: 1.3rem;
+    position: relative;
+}
+
+.ulNavs > li > p > *::after {
+    content: "";
+    position: absolute;
+    z-index: 5;
+    top: 100%;
+    right: -15px;
+    height: 3px;
+    padding: 0;
+    width: 0;
+    background-color: var(--logo-color);
+    transition: width 0.6s ease-in,
+                padding 0.6s ease-in;
+}
+
+.ulNavs > li > p > *:hover::after {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.ulNavs > li:nth-child(2), .ulNavs > li:nth-child(4) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+    cursor: pointer;
+
+}
+
+.ulNavs > li:nth-child(2) > *:nth-child(2), .ulNavs > li:nth-child(4) > *:nth-child(2) {
+    margin-top: 4px;
+    padding-left: 5px;
+    /* background-color: aqua; */
+    transition: font-size 0.6s ease-in-out,
+                font-weight 0.6s ease-in-out;
+}
+
+.ulNavs > li:nth-child(2) > *:nth-child(2):hover, .ulNavs > li:nth-child(4) > *:nth-child(2):hover {
+    font-size: 1.7rem;
+    font-weight: 700;
+}
+
+.dropdown_options {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    left: -100%;
+    /* left: 100%; */
+    /* transform: translateX(-500%); */
+    font-size: 0.1rem;
+    opacity: 0;
+     /* 0px 2px 10px rgba(0, 0, 0, 0.5); */
+    transition: all 0.6s ease-in-out;
+}
+
+.ulNavs > li:nth-child(2):hover > .dropdown_options, 
+.ulNavs > li:nth-child(2):active > .dropdown_options,
+.ulNavs > li:nth-child(4):hover > .dropdown_options,
+.ulNavs > li:nth-child(4):active > .dropdown_options {
+    opacity: 1;
+    left: 0;
+    font-size: 1rem;
+}
+
+
+.dropdown_options > * {
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+    padding: 80px 0px 40px 250px;
+    background-color: white;
+    gap: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* align-content: flex-end; */
+    position: relative;
+    /* padding: 10px; */
+}
+
+/* ////////////////////  SOME CLASSES FOR RIGHT ARRROW AND WALL SEPARATOR WHERE THE WORDS OFF TOP AND BOTTOM FOR HREF MEN AND WOMEN IS! BELOW CODE */
+
+.right_arrows_men {
+    position: absolute;
+    left: 330px;
+    top: 40%;
+    transition: left 2s ease-in-out;
+}
+
+.right_arrows_women {
+    position: absolute;
+    left: 330px;
+    top: 72%;
+    transition: left 2s ease-in-out;
+}
+
+.right_arrows_men:hover, .right_arrows_women:hover {
+    animation: animate_right_arrow 0.6s linear 0.2s 1 normal forwards;
+}
+
+@keyframes animate_right_arrow {
+    0% { left: 340px; }
+    25% { left: 350px; }
+    50% { left: 360px; }
+    75% { left: 370px; }
+    100% { left: 375px; }
+}
+
+.wall_separator {
+    position: absolute;
+    top: 30%;
+    left: 400px;
+    width: 2px;
+    background-color: rgba(0, 0, 0, 1);
+    height: 20vh;
+}
+
+.right_arrow_topics {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    bottom: -15px;
+    left: 85px;
+}
+
+.right_arrows_men:hover .right_arrow_topics:hover, .right_arrows_women:hover > .right_arrow_topics:hover {
+    left: 85px;
+}
+
+/* ////////////////////  SOME CLASSES FOR RIGHT ARRROW AND WALL SEPARATOR WHERE THE WORDS OFF TOP AND BOTTOM FOR HREF MEN AND WOMEN IS! ABOVE CODE */
+
+.dropdown_options > div > * {
+    /* box-shadow: 2px 5px rgba(0, 0, 0, 0.2); */
+    display: block;
+    transition: font-size 0.6s ease-in-out;
+}
+
+.dropdown_options > div > *:active, .dropdown_options > div > *:hover {
+    font-size: 1.5rem;
+}
+
+.dropdown_options > div > *:nth-child(1) {
+    background-color: white;
+}
+
+.dropdown_options > *:nth-child(2) {
+    background-color: white;
+}
+
+.dropdown_options > *:nth-child(3) {
+    background-color: white;
+}
+
+.dropdown_options > *:nth-child(4) {
+    background-color: white;
 }
 
 .navIcons {
@@ -45,4 +290,51 @@
 
 .navIcons > * {
     font-size: 2.5rem;
+}
+
+
+@media only screen and (max-width: 1250px) {
+    /* .ulNavs > li {
+        font-size: 2rem;
+    }
+
+    .navIcons > * {
+        font-size: 2rem;
+    } */
+}
+
+@media only screen and (max-width: 1250px) and (min-width: 1051px) {
+    /* .dropdown_options {
+        top: 60px;
+    } */
+}
+
+@media only screen and (max-width: 1050px) and (min-width: 701px) {
+    /* .dropdown_options {
+        top: 40px;
+    } */
+}
+
+@media only screen and (max-width: 1050px) {
+    .ulNavs > li {
+        font-size: 1.5rem;
+    }
+
+    .navIcons > * {
+        font-size: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 850px) {
+    .ulNavs > li {
+        font-size: 1rem;
+    }
+
+    .navIcons > * {
+        font-size: 1rem;
+    }
+}
+
+#about {
+    display: none !important;
 }

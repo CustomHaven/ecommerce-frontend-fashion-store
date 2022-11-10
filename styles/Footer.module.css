@@ -4,21 +4,21 @@
 }
 
 .footer h3 {
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-size: 2rem;
     line-height: 40px;
     font-weight: 600;
 }
 
 .footer p {
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-size: 1.5rem;
     line-height: 30px;
     font-weight: 400;   
 }
 
 .footer h4 {
-    font-family: var(--lora);
+    font-family: var(--roboto);
     font-size: 1.7rem;
     font-weight: 600;
     text-align: center;
@@ -45,4 +45,54 @@
     margin: 50px 0;
 }
 
-/* find the media size and do flex coloumn for the ul */
+
+@media only screen and (max-width: 900px) {
+    .footer_ul {
+        gap: 50px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer_ul > li {
+        text-align: center;
+    }
+}
+
+
+@media only screen and (max-width: 550px) {
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .logo_link {
+        margin-left: 0px;
+    }
+
+    .footer h3 {
+        font-size: 1.7rem;
+    }
+
+    .footer p {
+        font-size: 1.3rem;
+    }
+
+    .footer h4 {
+        font-size: 1.5rem;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .footer h3 {
+        font-size: 1.3rem;
+    }
+
+    .footer p {
+        font-size: 1rem;
+    }
+
+    .footer h4 {
+        font-size: 1rem;
+    }
+}

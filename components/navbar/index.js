@@ -1,41 +1,118 @@
+import React, { useState, useEffect, useRef, useMemo } from "react";
+import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import styles from "../../styles/Navbar.module.css";
-import { BsMinecartLoaded, BsMinecart } from "react-icons/bs";
-import { CgProfile } from "react-icons/cg";
-import { AiOutlineDown } from "react-icons/ai";
+import { BsMinecartLoaded, BsMinecart, BsFillBagFill } from "react-icons/bs";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
+import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 import Canvas from "../canva";
+import { selectNavHeader, selectHeroRef, placeHeaderRef } from "../../feature/generalComponents/generalComponentSlice";
+import Hamburger from "./hamburger";
+import { mediaQueryFunc } from "../../utils/mediaQuery";
+import YourSvg from '/public/assets/Black-_-White-Minimalist-Business-Logo.svg';
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const headerRef = useRef(null);
+
+    const { windowWidth, windowHeight } = useWindowDimensions();
+
+    console.log("useWindowDimensions windowWidth", windowWidth);
+    console.log("useWindowDimensions windowHeight", windowHeight);
+
+    // const [windowWidth, setWindowWidth] = useState(process?.title === "browser" ? window.innerWidth : null);
+    const [heightCanva, setHeightCanva] = useState(180);
+
+    // useEffect(() => {
+    //     if (headerRef.current) {
+    //         dispatch(placeHeaderRef(headerRef));
+    //     }
+    //     // document.addEventListener("DOMContentLoaded", () => setWindowWidth(window.innerWidth));
+    //     // window.addEventListener("resize", () => setWindowWidth(window.innerWidth));
+    // }, [headerRef, windowWidth]);
+
+
+    console.log("windowWidth", windowWidth);
+
     return (
-        <header className={styles.headerNavbar}>
-            <Link href="/" className={styles.logo_link}>
-                <Canvas src="/assets/Custom.png" width={250} height={110} className={styles.logo} />
-            </Link>
-            <nav className={styles.navigations}>
-                <ul className={styles.ulNavs}>
-                    <li>
-                        <Link href="/">Home</Link>
-                    </li>
-                    <li style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <Link href="/shop">Shop</Link>
-                        <AiOutlineDown style={{marginTop: "4px", paddingLeft: "5px"}}/>
-                    </li>
-                    <li>
-                        <Link href="/services">Services</Link>
-                    </li>
-                    <li style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
-                        <Link href="/about">About</Link>
-                        <AiOutlineDown style={{marginTop: "4px", paddingLeft: "5px"}}/>
-                    </li>
-                    <li>
-                        <Link href="/contact">Contact</Link>
-                    </li>
-                </ul>
-                <div className={styles.navIcons}>
-                    <BsMinecart />
-                    <CgProfile />
+        <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>
+        
+        {
+            windowWidth <= 700 ?
+
+            <>
+            <Hamburger
+                navStyles={styles}
+                logoLink={styles.logo_link}
+                logo={styles.logo}
+                headerNavbar={styles.headerNavbar}
+                windowWidth={windowWidth}
+                heightCanva={heightCanva}
+                // setWindowWidth={() => setWindowWidth}
+            />
+            </> :
+                <>
+            {/* // <header id="header-elem" ref={headerRef} className={styles.headerNavbar}> */}
+                <div className={styles.logo_section}>
+                    <div className={styles.logo_link_section}>
+                        <Link href="/" className={styles.logo_link}>
+                            <Canvas src="/assets/custom-haven-monkey-small.png" width={250} height={heightCanva} className={styles.logo} />
+                        </Link>
+                    </div>
+                    <div className={styles.navIcons}>
+                        <Link href="/cart">
+                            <BsFillBagFill />
+                        </Link>
+                        <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link>
+                        <Link href="/search"><BsSearch /></Link>
+                        <select>
+                            <option value="USD">USD</option>
+                            <option value="GBP">GBP</option>
+                            <option value="EUR">EUR</option>
+                        </select>
+                    </div>
                 </div>
-            </nav>
+                <nav className={styles.navigations}>
+                    <ul className={styles.ulNavs}>
+                        <li>
+                            <p><Link href="/"><span>Home</span></Link></p>
+                        </li>
+                        <li>
+                            <p><span>Shop</span></p>
+                            <AiOutlineDown />
+                            <div className={styles.dropdown_options}>
+                                <div>
+                                    <Link href="/shop/mens"><p>Men's</p></Link>
+                                    <Link href="/shop/womens"><p>Women's</p></Link>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p><Link href="/services">Services</Link></p>
+                        </li>
+                        <li>
+                            <p><span>About</span></p>
+                            <AiOutlineDown />
+                            <div id="about" className={styles.dropdown_options}>
+                                <div>
+                                    <Link href="/about"><p>About Us</p></Link>
+                                    <Link href="/delivery-information"><p>Delivery Information</p></Link>
+                                    <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
+                                    <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p><Link href="/contact"><span>Contact</span></Link></p>
+                        </li>
+                    </ul>
+                </nav>
+                </>
+            
+        }
         </header>
     );
 };
