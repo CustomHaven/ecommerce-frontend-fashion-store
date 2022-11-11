@@ -16,7 +16,7 @@ const useCanvas = (canvaRef, src) => {
             }
             // willReadFrequently removes a warning not so serious but this warning
             // Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true.
-            const ctx = canvas.getContext("2d");
+            const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
             setWidth(canvaRef.current.width);
             setHeight(canvaRef.current.height);

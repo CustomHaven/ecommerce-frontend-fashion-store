@@ -9,7 +9,7 @@ const useQuerySelector = (selector) => {
         // console.log("elem", elem);
         element.current = elem;
         // console.log("current element ", element.current);
-    }, [selector]);
+    }, [element]);
 
     return element;
 };

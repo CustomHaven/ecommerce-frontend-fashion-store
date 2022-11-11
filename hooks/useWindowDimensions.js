@@ -11,13 +11,11 @@ const useWindowDimensions = () => {
     };
 
     useEffect(() => {
+        if (document.readyState !== "loading") {
+            handler();
+        }
+        window.addEventListener('resize', handler);
 
-        // handler();
-
-        document.addEventListener("DOMContentLoaded", () => handler());
-        window.addEventListener('resize', () => handler());
-
-        // return () => window.removeEventListener('resize', () => handler());
     }, [windowWidth, windowHeight]);
 
     return { windowWidth, windowHeight };

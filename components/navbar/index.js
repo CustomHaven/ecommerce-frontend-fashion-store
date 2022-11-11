@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
@@ -13,31 +13,20 @@ import Hamburger from "./hamburger";
 import { mediaQueryFunc } from "../../utils/mediaQuery";
 import YourSvg from '/public/assets/Black-_-White-Minimalist-Business-Logo.svg';
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 const Navbar = () => {
-    const dispatch = useDispatch();
+
     const headerRef = useRef(null);
-
-    const { windowWidth, windowHeight } = useWindowDimensions();
-
-    // const [windowWidth, setWindowWidth] = useState(process?.title === "browser" ? window.innerWidth : null);
-    const [heightCanva, setHeightCanva] = useState(180);
-
-    // useEffect(() => {
-    //     if (headerRef.current) {
-    //         dispatch(placeHeaderRef(headerRef));
-    //     }
-    //     // document.addEventListener("DOMContentLoaded", () => setWindowWidth(window.innerWidth));
-    //     // window.addEventListener("resize", () => setWindowWidth(window.innerWidth));
-    // }, [headerRef, windowWidth]);
-
-
+    const { windowWidth } = useWindowDimensions();
+    const { media } = useMediaQuery(700);
+    const [heightCanva] = useState(180);
 
     return (
         <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>
         
         {
-            windowWidth <= 700 ?
+            media ?
 
             <>
             <Hamburger

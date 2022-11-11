@@ -1,31 +1,30 @@
 import { useState, useEffect } from "react";
-// still testing this commiting without using this hook for now
+import useIsomorphicEffect from "./useIsomorphicEffect";
+
 const useMediaQuery = (value) => {
     const [media, setMedia] = useState(false);
-    const [mql, setMql] = useState(process?.title === "browser" ? window.matchMedia(`(max-width: ${value}px)`) : null);
+    const [mql] = useState(process?.title === "browser" ? window.matchMedia(`(max-width: ${value}px)`) : null);
 
     const handler = () => {
         // from value down matches = true
         // value + 1 up matches = false
-        setMql(window.matchMedia(`(max-width: ${value}px)`));
-
         if (mql.matches) {
             setMedia(true);
         } else {
             setMedia(false);
         }
     }
-
+//
     useEffect(() => {
-        if (mql !== null) {
-            document.addEventListener("DOMContentLoaded", () => handler());
-            mql.addEventListener("change", () => handler());
-            mql.addEventListener("resize", () => handler());
+        if (document.readyState !== "loading") {
+            handler();
         }
-    }, [media, mql]);
+        window.addEventListener("resize", handler);
+    }, [media]);
 
     return {
-        media
+        media,
+        mql
     }
 }
 

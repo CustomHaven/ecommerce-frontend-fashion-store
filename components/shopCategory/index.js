@@ -11,7 +11,7 @@ const ShopCategory = () => {
                 <div>
                     <Link href="/shop/men" className={styles.shop_category_link}>
                         <div className={styles.shop_img_container}>
-                            <Image src="/assets/man_standing_LED.jpg" fill objectFit="contain" alt="men's shopping" />
+                            <Image src="/assets/man_standing_LED.jpg" fill contain="true" alt="men's shopping" />
                         </div>
                     </Link>
                     <Link href="/shop/men" className={styles.shop_category_link}>
@@ -21,7 +21,7 @@ const ShopCategory = () => {
                 <div>
                     <Link href="/shop/women" className={styles.shop_category_link} >
                         <div className={styles.shop_img_container}>
-                            <Image src="/assets/woman-touching-hair.jpg" fill objectFit="contain" alt="women's shopping" />  
+                            <Image src="/assets/woman-touching-hair.jpg" fill contain="true" alt="women's shopping" />  
                         </div>
                         {/* <Image src="woman-touching-hair.jpg" width={410} height={249} alt="women's shopping"/> */}
                     </Link>  

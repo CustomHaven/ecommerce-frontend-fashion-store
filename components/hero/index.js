@@ -36,9 +36,9 @@ const Hero = () => {
     };
 
     // if (windowWidth > 700) {
-        useIntersectionObserver({
-            rootMargin: "-30%",
-        }, heroRef, handleIntersect);
+    useIntersectionObserver({
+        rootMargin: "-30%",
+    }, heroRef, handleIntersect);
     // }
 
     // }
@@ -58,7 +58,7 @@ const Hero = () => {
                 </div>
 
                 <div className={styles.imgContainer}>
-                    <Image priority src={src} fill objectFit="contain" alt="Lady Banner" className={styles.hero_banner_img} />
+                    <Image priority src={src} fill contain="true" alt="Lady Banner" className={styles.hero_banner_img} />
                     {/* <Canvas src={src} className={styles.hero_banner_img} /> */}
                     {/* <Canvas src={src} width={820} height={950} className={styles.ladyImg} /> */}
                 </div>
