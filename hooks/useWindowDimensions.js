@@ -6,13 +6,13 @@ const useWindowDimensions = () => {
     const [windowHeight, setWindowHeight] = useState();
 
     const handler = () => {
-        setWindowHeight(window.innerWidth);
-        setWindowWidth(window.innerHeight);
+        setWindowWidth(window.innerWidth);
+        setWindowHeight(window.innerHeight);
     };
 
-    useIsomorphicEffect(() => {
+    useEffect(() => {
 
-        handler();
+        // handler();
 
         document.addEventListener("DOMContentLoaded", () => handler());
         window.addEventListener('resize', () => handler());

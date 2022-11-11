@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import styles from "../../styles/Home.module.css";
@@ -10,7 +11,8 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 
 const Hero = () => {
-    const [src] = useState("assets/ladybanner-removebg.png");
+    const src = "/assets/ladybanner-removebg.png";
+    // const src = "https://ae01.alicdn.com/kf/H1431897478504b3d87aae37cffd6dc02A/New-2021-Men-s-Casual-Jacket-Fashion-Winter-Parkas-Male-Fur-Trench-Thick-Overcoat-Heated-Jackets.jpg";
     const [width] = useState(820);
     const [height] = useState(951);
     const heroRef = useRef(null);
@@ -19,7 +21,7 @@ const Hero = () => {
 
     const headerRef = useQuerySelector("#header-elem");
 
-    console.log("querySelector HeaderRef", headerRef);
+
 
 
     const handleIntersect = entries => {
@@ -47,16 +49,18 @@ const Hero = () => {
             {/* <section className={styles.heroSection} style={{width: "100vw", margin: "-300px 0px 0px 0px"}}> */}
                 <div className={styles.heroText}>
                     <h3>Trade-in-offer</h3>
-                    <h1>Super value deals</h1>
+                    <h2>Super value deals</h2>
                     <h1>On all products</h1>
                     <h3>Save more with coupons</h3>
                     <div className={styles.shop_now_wrap}>
-                        <Link href="/all-products"><button className={styles.shop_now_button}>Shop now</button></Link>
+                        <Link href="/#"><button className={styles.shop_now_button}>Shop now</button></Link>
                     </div>
                 </div>
 
                 <div className={styles.imgContainer}>
-                    <Canvas src={src} width={width} height={height} className={styles.ladyImg} />
+                    <Image priority src={src} fill objectFit="contain" alt="Lady Banner" className={styles.hero_banner_img} />
+                    {/* <Canvas src={src} className={styles.hero_banner_img} /> */}
+                    {/* <Canvas src={src} width={820} height={950} className={styles.ladyImg} /> */}
                 </div>
 
 

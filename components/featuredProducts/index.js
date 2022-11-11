@@ -8,7 +8,7 @@ const Featured = () => {
     const price = 89.99;
     const name = "Leather Jacket";
 
-    const array = new Array(3).fill({
+    const array = new Array(8).fill({
         url,
         name,
         price

@@ -15,7 +15,7 @@ const Hamburger = (props) => {
     const [canvaWidth, setCanvaWidth] = useState(250);
     const [canvaHeight] = useState(60); // 180?
     // const [heightCanva, setHeightCanva] = useState(180);
-    console.log(props.logo);
+
     const headerNav = useSelector(selectNavHeader);
 
     const [menuClick, setMenuClick] = useState(false);
@@ -39,8 +39,8 @@ const Hamburger = (props) => {
     }, [props.windowWidth]);
 
     return (
-        <header className={props.headerNavbar}>
-        
+        // <header className={props.headerNavbar}>
+        <>
             {
                 process?.title === "browser" && menuClick === true ?
                 <>
@@ -71,8 +71,7 @@ const Hamburger = (props) => {
                     </div>
                 </nav>
             }
-
-        </header>
+        </>
     );
 };
 

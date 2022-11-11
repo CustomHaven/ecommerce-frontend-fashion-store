@@ -6,9 +6,9 @@ const useQuerySelector = (selector) => {
 
     useEffect(() => {
         const elem = document.querySelector(selector);
-        console.log("elem", elem);
+        // console.log("elem", elem);
         element.current = elem;
-        console.log("current element ", element.current);
+        // console.log("current element ", element.current);
     }, [selector]);
 
     return element;

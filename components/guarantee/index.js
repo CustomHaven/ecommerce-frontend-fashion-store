@@ -8,25 +8,26 @@ const Guarantee = () => {
             <article className={styles.article_guarantee}>
                 <div>
                     <figure className={styles.fig_guarantee}>
-                        <Image src="/assets/Beep-Beep-Fast-Delivery.png" width={172} height={131} className={styles.guarantee_img} />
+                        <Image src="/assets/Beep-Beep-Fast-Delivery.png" fill objectFit="contain" alt="fast-delivery" />
+                        {/* <Image src="Beep-Beep-Fast-Delivery.png" width={172} height={131} className={styles.guarantee_img} /> */}
                     </figure>
                     <p>Free Shipping</p>
                 </div>
                 <div>
                     <figure className={styles.fig_guarantee}>
-                        <Image src="/assets/The-Little-Things-Business-Planning.png" width={172} height={131} className={styles.guarantee_img} />
+                        <Image src="/assets/The-Little-Things-Business-Planning.png" fill objectFit="contain" alt="buy-simple" />
                     </figure>
                     <p>Online Order</p>
                 </div>
                 <div>
                     <figure className={styles.fig_guarantee}>
-                        <Image src="/assets/Wavy-Buddies-Dollar.png" width={172} height={131} className={styles.guarantee_img} />
+                        <Image src="/assets/Wavy-Buddies-Dollar.png" fill objectFit="contain" alt="save-your-money" />
                     </figure>
                     <p>Save Money</p>
                 </div>
                 <div>
                     <figure className={styles.fig_guarantee}>
-                        <Image src="/assets/Lifesavers-Videocall.png" width={172} height={131} className={styles.guarantee_img} />
+                        <Image src="/assets/Lifesavers-Videocall.png" fill objectFit="contain" alt="24/7 support" />
                     </figure>
                     <p>24/7 Support</p>
                 </div>

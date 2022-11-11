@@ -5,9 +5,9 @@ const Canvas = (props) => {
 
     const canvasRef = useRef(null);
 
-    const { canvaRef, width, height } = useCanvas(canvasRef, props.width, props.height, props.src, props.className);
+    const { canvaRef, width, height } = useCanvas(canvasRef, props.src);
 
-    return <canvas ref={canvaRef} width={width} height={height} />
+    return <canvas ref={canvaRef} className={props.className} />
 
 }
 

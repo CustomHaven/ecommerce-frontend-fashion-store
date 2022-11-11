@@ -10,7 +10,7 @@ const MinitureProductSize = ({item}) => {
         <>
             <div className={styles.imgOuterContainer} >
                 <div className={styles.imgInnerContainer}>
-                    <Canvas src={item.url} width={202} height={260} className={styles.imgItem} />
+                    <Canvas src={item.url} className={styles.imgItem} />
                 </div>
                 <h3>{item.name}</h3>
                 <BsCart3 className={styles.cart_feature} />

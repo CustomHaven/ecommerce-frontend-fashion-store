@@ -20,9 +20,6 @@ const Navbar = () => {
 
     const { windowWidth, windowHeight } = useWindowDimensions();
 
-    console.log("useWindowDimensions windowWidth", windowWidth);
-    console.log("useWindowDimensions windowHeight", windowHeight);
-
     // const [windowWidth, setWindowWidth] = useState(process?.title === "browser" ? window.innerWidth : null);
     const [heightCanva, setHeightCanva] = useState(180);
 
@@ -35,7 +32,6 @@ const Navbar = () => {
     // }, [headerRef, windowWidth]);
 
 
-    console.log("windowWidth", windowWidth);
 
     return (
         <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>
@@ -69,7 +65,7 @@ const Navbar = () => {
                         <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link>
                         <Link href="/search"><BsSearch /></Link>
                         <select>
-                            <option value="USD">USD</option>
+                            <option value="USD">{windowWidth < 1300 ? "USD" : "SHILING"}</option>
                             <option value="GBP">GBP</option>
                             <option value="EUR">EUR</option>
                         </select>
