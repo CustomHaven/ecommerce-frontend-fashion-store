@@ -4,11 +4,16 @@ import useIsomorphicEffect from './useIsomorphicEffect';
 const useQuerySelector = (selector) => {
     const element = useRef(null);
 
-    useEffect(() => {
+    const handler = () => {
         const elem = document.querySelector(selector);
-        // console.log("elem", elem);
         element.current = elem;
-        // console.log("current element ", element.current);
+    }
+
+    useEffect(() => {
+        if (document.readyState !== "loading") {
+            handler();
+        }
+        window.addEventListener("resize", handler);
     }, [element]);
 
     return element;

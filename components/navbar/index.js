@@ -3,13 +3,12 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import styles from "../../styles/Navbar.module.css";
-import { BsMinecartLoaded, BsMinecart, BsFillBagFill } from "react-icons/bs";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
+import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
 import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 import Canvas from "../canva";
 import { selectNavHeader, selectHeroRef, placeHeaderRef } from "../../feature/generalComponents/generalComponentSlice";
-import Hamburger from "./hamburger";
+import Burger from "./burger";
 import { mediaQueryFunc } from "../../utils/mediaQuery";
 import YourSvg from '/public/assets/Black-_-White-Minimalist-Business-Logo.svg';
 import useWindowDimensions from "../../hooks/useWindowDimensions";
@@ -29,7 +28,7 @@ const Navbar = () => {
             media ?
 
             <>
-            <Hamburger
+            <Burger
                 navStyles={styles}
                 logoLink={styles.logo_link}
                 logo={styles.logo}
@@ -44,7 +43,9 @@ const Navbar = () => {
                 <div className={styles.logo_section}>
                     <div className={styles.logo_link_section}>
                         <Link href="/" className={styles.logo_link}>
-                            <Canvas src="/assets/custom-haven-monkey-small.png" width={250} height={heightCanva} className={styles.logo} />
+                            <div className={styles.nav_main_logo_container}>
+                                <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.logo} />
+                            </div>
                         </Link>
                     </div>
                     <div className={styles.navIcons}>
@@ -54,12 +55,14 @@ const Navbar = () => {
                         <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link>
                         <Link href="/search"><BsSearch /></Link>
                         <select>
-                            <option value="USD">{windowWidth < 1300 ? "USD" : "SHILING"}</option>
+                            <option value="USD">USD</option>
                             <option value="GBP">GBP</option>
                             <option value="EUR">EUR</option>
                         </select>
                     </div>
                 </div>
+
+
                 <nav className={styles.navigations}>
                     <ul className={styles.ulNavs}>
                         <li>
@@ -79,8 +82,6 @@ const Navbar = () => {
                             <p><Link href="/services">Services</Link></p>
                         </li>
                         <li>
-                            <p><span>About</span></p>
-                            <AiOutlineDown />
                             <div id="about" className={styles.dropdown_options}>
                                 <div>
                                     <Link href="/about"><p>About Us</p></Link>
@@ -89,6 +90,8 @@ const Navbar = () => {
                                     <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
                                 </div>
                             </div>
+                            <p><span>About</span></p>
+                            <AiOutlineDown />
                         </li>
                         <li>
                             <p><Link href="/contact"><span>Contact</span></Link></p>

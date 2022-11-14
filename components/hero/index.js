@@ -29,6 +29,7 @@ const Hero = () => {
         if (entry.isIntersecting) {
             headerRef.current.style.boxShadow = "none";
             headerRef.current.style.backgroundColor = "transparent";
+            // headerRef.current.style.backgroundColor = "blue";
         } else {
             headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
             headerRef.current.style.backgroundColor = "white";

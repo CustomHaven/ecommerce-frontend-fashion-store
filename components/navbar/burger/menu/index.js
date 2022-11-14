@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { BsMinecartLoaded, BsMinecart } from "react-icons/bs";
+import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDown } from "react-icons/ai";
 import styles from "../../../../styles/Menu.module.css";
@@ -25,8 +25,8 @@ const Menu = (props) => {
             <ul className={styles.ulNavs_menu}>
                 <li>
                     <div className={styles.navIcons_menu}>
-                        <Link href="/cart"><BsMinecart /></Link>
-                        <Link href="/login"><CgProfile /></Link>
+                        <Link href="/cart"><BsFillBagFill /></Link>
+                        <Link href="/login"><BsPerson /></Link>
                     </div>
                 </li>
                 <li>
@@ -39,8 +39,14 @@ const Menu = (props) => {
                         {
                             shop === true &&
                             <div className={styles.menu_options_shop}>
-                                <Link href="/shop/mens"><p>Men's</p></Link>
-                                <Link href="/shop/womens"><p>Women's</p></Link>
+                                <ul>
+                                    <li>
+                                        <Link href="/shop/mens"><p>Men's</p></Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/shop/womens"><p>Women's</p></Link>
+                                    </li>
+                                </ul>
                             </div>
                         }
 
@@ -56,10 +62,20 @@ const Menu = (props) => {
                         {
                             about === true ?
                             <div className={styles.menu_options_about}>
-                                <Link href="/about"><p>About Us</p></Link>
-                                <Link href="/delivery-information"><p>Delivery Information</p></Link>
-                                <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
-                                <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                                <ul>
+                                    <li>
+                                        <Link href="/about"><p>About Us</p></Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/delivery-information"><p>Delivery Information</p></Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                                    </li>
+                                </ul>
                             </div> : null
                         }
                     </div>

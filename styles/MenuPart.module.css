@@ -1,0 +1,214 @@
+/* /////////////////////////////////// Dealing with the menu sliding in from the right /////////////////////////////////////// */
+
+.sidebar_menu_drawer {
+    /* background-color: #1C1B1B; */
+    background-color: whitesmoke;
+
+    position: absolute;
+    top: 0;
+    /* right: 0; */
+    height: 100vh;
+    width: 80%;
+    animation: slide_in_right 0.3s ease-in 0s 1 normal forwards;
+    /* animation: slide_out_right 0.3s ease-in 0s 1 reverse forwards; */
+    /* transition: right 2s ease-in-out; */
+}
+
+.sidebar_slide_in_right {
+    /* right: 0; */
+    animation: slide_in_right 0.3s ease-in 0s 1 normal forwards;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+
+.sidebar_slide_out_right {
+    /* right: -100%; */
+    animation: slide_out_right 0.3s ease-in 0s 1 normal forwards;
+}
+
+@keyframes slide_out_right {
+    0% {right: 0}
+    25% {right: -25%}
+    50% {right: -50%}
+    75% {right: -75%}
+    100% {right: -100%}
+}
+
+@keyframes slide_in_right {
+    0% {right: -100%}
+    25% {right: -75%}
+    50% {right: -50%}
+    75% {right: -25%}
+    100% {right: 0}
+}
+
+
+/* /////////////////////////////////// Aside the menu bars display values /////////////////////////////////////// */
+
+.aside_menu_drawer {
+    /* background-color: #1C1B1B; */
+    padding: 0px 2.5vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: minmax(25%, 1fr) minmax(50%, 2.3fr) 0.7fr minmax(2.5%, 0.1fr) 0.2fr minmax(3%, 0.1fr); /* 1+2.3+0.3+0.1+0.6+0.2 = 4.5 */
+    grid-template-areas: ". aside-header-logo ."
+                        "aside-header-ul aside-header-ul aside-header-ul"
+                        ". . ."
+                        "aside-header-account aside-header-account aside-header-account"
+                        ". . ."
+                        "aside-header-socials aside-header-socials aside-header-socials";
+}
+
+.aside_menu_drawer > button {
+    position: absolute;
+    top: 2.5vh;
+    left: 2.5vw;
+    border: 0;
+    background-color: inherit;
+}
+
+.aside_menu_drawer > button > * {
+    font-size: 1.5rem;
+}
+
+
+.aside_menu_drawer > .aside_menu_canva_logo_container {
+    grid-area: aside-header-logo;
+}
+
+.aside_menu_canva_logo_container > .aside_menu_canva_logo {
+    width: 100%;
+    height: 100%;
+}
+
+.aside_menu_drawer > .aside_menu_ul {
+    grid-area: aside-header-ul;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.aside_menu_drawer > .aside_menu_ul > li {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    padding: 2.5vh 0px;
+    font-weight: 700;
+    font-size: min(6vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.aside_menu_drawer > .aside_menu_ul > li::after {
+    content: "";
+    width: 100%;
+    height: 1.5px;
+    background-color: #1C1B1B;
+    position: absolute;
+    top: 100%;
+}
+
+.aside_menu_ul > li:nth-child(2), .aside_menu_ul > li:nth-child(4) {
+    /* background-color: green; */
+    display: grid;
+    grid-template-columns: 0.2fr 0.8fr 5fr 0.1fr;
+    /* grid-auto-rows: minmax(30px, auto); */
+    gap: 0.5rem;
+    grid-auto-rows: auto;
+    grid-template-areas: "span-menu-container span-menu-container . plus-container"
+                        ". dropdown-options dropdown-options dropdown-options";
+}
+
+.aside_menu_ul > li:nth-child(2) > span, .aside_menu_ul > li:nth-child(4) > span {
+    /* grid-column: 1; */
+    /* grid-row: 1; */
+    grid-area: span-menu-container;
+}
+
+.aside_menu_ul > li:nth-child(2) > :nth-child(2), .aside_menu_ul > li:nth-child(4) > :nth-child(2) {
+    /* grid-column: -1; */
+    /* grid-row: 1; */
+    grid-area: plus-container;
+}
+
+.aside_menu_options_dropdown {
+    /* grid-column: 1 span -1; */
+    /* grid-row: -1; */
+    font-size: min(5vw, 0.8rem);
+    font-weight: 400;
+    grid-area: dropdown-options;
+    
+}
+
+.aside_menu_options_dropdown > ul {
+    /* padding: 0.5vh 0px; */
+    letter-spacing: 1.5px;
+    text-transform: capitalize;
+    list-style-type: circle;
+}
+
+.aside_menu_options_dropdown > ul > li {
+    margin: 0.5vh 0px;
+}
+
+.aside_menu_drawer > .aside_menu_account {
+    grid-area: aside-header-account;
+    letter-spacing: 0px;
+    font-weight: 400;
+    font-size: min(4vw, 13px);
+}
+
+.aside_menu_drawer > .aside_menu_last_nav::before {
+    content: "";
+    width: 100%;
+    height: 1.5px;
+    left: -2.5vw;
+    right: -2.5vw;
+    background-color: #1C1B1B;
+    position: absolute;
+    bottom: 100%;
+}
+
+.aside_menu_drawer > .aside_menu_last_nav {
+    grid-area: aside-header-socials;
+    position: relative;
+    padding: 1.25vh 0px 0px 0px;
+}
+
+.aside_menu_drawer > .aside_menu_last_nav > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.aside_menu_drawer > .aside_menu_last_nav > div > select {
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    background-color: inherit;
+    font-size: min(6vw, 1.5rem);
+}
+
+.socials {
+    display: flex;
+    justify-content: space-around;
+    font-size: min(6vw, 1.5rem);
+    width: 80%;
+    position: relative;
+}
+
+.socials::after {
+    content: "";
+    position: absolute;
+    width: 1.5px;
+    top: -1.25vh;
+    bottom: 0;
+    right: 100%;
+    padding-top: 1.25vh;
+    background-color: #1C1B1B;
+}
+
+.socials > *:nth-child(1) { color: var(--facebook); }
+.socials > *:nth-child(2) { color: var(--twitter); }
+.socials > *:nth-child(3) { color: var(--instagram); }
+.socials > *:nth-child(4) { color: var(--youtube); }
+.socials > *:nth-child(5) { color: var(--github); }
