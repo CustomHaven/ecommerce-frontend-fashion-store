@@ -1,8 +1,6 @@
 .burger_nav {
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: space-between; */
     display: grid;
+    place-items: center;
     grid-template-columns: 10% 10% 10% 5% 15% 15% 5% 10% 9% 10% 1%;
     grid-template-rows: 2% 18% 70% 5% 5%;
     grid-template-areas:
@@ -12,28 +10,13 @@
         ". . . . small-logo small-logo . . . burger-nav ."
         ". . . . small-logo small-logo . . . . .";
     width: 100%;
-    /* margin-top: 0.5vh; */
-    /* gap: 30px; */
-    /* background-color: aqua; */
 }
 
 .burger_nav div {
-    font-size: min(10vw, 2.5rem);
-    /* margin-right: 50px; */
+    font-size: min(8vw, 2.5rem);
     cursor: pointer;
     grid-area: burger-nav;
-    /* margin-right: 50px; */
-    /* background-color: aqua; */
 
-}
-
-.burger_closer {
-    grid-area: burger-nav;
-    font-size: min(10vw, 2.5rem);
-    /* position: absolute; */
-    /* top: 10px; */
-    /* right: 30px; */
-    cursor: pointer;
 }
 
 .logo_link {
@@ -86,4 +69,14 @@
     50% {right: -50%}
     75% {right: -25%}
     100% {right: 0}
+}
+
+@media only screen and (max-width: 300px) {
+    .burger_nav {
+        letter-spacing: 0px !important;
+    }
+
+    .burger_nav div {
+        margin-right: 50px !important;
+    }
 }

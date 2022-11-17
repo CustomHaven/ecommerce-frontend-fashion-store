@@ -11,6 +11,7 @@
 
 .article_guarantee div {
     padding: 40px;
+    opacity: 0; /* 627 and down opacity 0 */
 }
 
 .fig_guarantee {
@@ -22,13 +23,13 @@
     position: relative;
 }
 
-.article_guarantee div p {
+.article_guarantee div h3 {
     font-family: var(--roboto);
-    font-size: 1.5rem;
+    font-size: min(5vw, 1.2rem);
     line-height: 31px;
     text-align: center;
     margin-top: 20px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 @media only screen and (max-width: 1078px) {

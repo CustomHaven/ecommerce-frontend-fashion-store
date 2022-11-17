@@ -4,8 +4,8 @@
 }
 
 .shop_category_section h2 {
-    font-size: 2.5rem;
-    font-weight: 600;
+    font-size: min(6vw, 1.6rem);
+    font-weight: 700;
     line-height: 61px;
     text-align: center;
     font-family: var(--roboto);
@@ -14,8 +14,8 @@
 }
 
 .shop_category_link > h3 {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: min(5vw, 1.2rem);
+    font-weight: 700;
     line-height: 61px;
     font-family: var(--roboto);
     font-weight: 600;
@@ -34,6 +34,7 @@
 
 .shop_category_section div > div {
     width: 30%;
+    opacity: 0;
 } 
 
 .shop_category_section div > div > * {

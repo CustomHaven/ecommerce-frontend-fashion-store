@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Hero from "../components/hero";
+import Hero from "../components/homepage_components/hero";
 import FeatureProducts from "../components/featuredProducts";
-import Guarantee from '../components/guarantee';
-import ShopCategory from "../components/shopCategory";
-import Newsletter from "../components/newsletter";
+import Guarantee from '../components/homepage_components/guarantee';
+import ShopCategory from "../components/homepage_components/shopCategory";
+import Newsletter from "../components/homepage_components/newsletter";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       </Head>
       <>
         <Hero />
-        <FeatureProducts />
+        <FeatureProducts max={8} />
         <Guarantee />
         <ShopCategory />
         <Newsletter />
@@ -57,7 +57,7 @@ export const getStaticProps = async () => {
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
   });
-  // const ecom = await Axios.get("https://api-custom-ecommerce-pern.onrender.com/api/v2/products");
+  // const ecom = await Axios.get("https://google.com");
   return {
       props: {
           removeData: data,

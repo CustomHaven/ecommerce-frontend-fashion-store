@@ -1,27 +1,30 @@
-import { useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import useIsomorphicEffect from './useIsomorphicEffect';
 
-const useIntersectionObserver = (options, targetRef, callback) => {
-
-    // if (truthyFalsy === false) {
-    //     return;
-    // }
+const useIntersectionObserver = (options, targetRefs = [], callback) => {
 
     const option = useMemo(() => options, [options]);
+    const [observer] = useState(process?.title === "browser" && new IntersectionObserver(callback, option))
 
     useEffect(() => {
-        const observer = new IntersectionObserver(callback, option);
-        const currentTarget = targetRef.current;
-        if (currentTarget) {
-            observer.observe(currentTarget);
+        // const observer = new IntersectionObserver(callback, option);
+        // const currentTarget = targetRefs.current;
+        if (!targetRefs.includes(null)) {
+            targetRefs.forEach((currentTarget) => {
+                observer.observe(currentTarget.current);
+            });
         }
 
         return () => {
-            if (currentTarget) {
-                observer.unobserve(currentTarget);
+            if (!targetRefs.includes(null)) {
+                targetRefs.forEach((currentTarget) => {
+                    observer.unobserve(currentTarget.current);
+                });
             }
         }
-    }, [option, targetRef]);
+    }, [option, targetRefs]);
+
+    return { observer };
 }
 
 export default useIntersectionObserver;

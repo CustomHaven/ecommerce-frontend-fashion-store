@@ -10,7 +10,8 @@
   ". hero-text img"
   ". . img";
   height: 100vh;
-  width: 100vw;
+  /* width: 100vw; */
+  width: 100%;
   gap: 10px;
   /* min-width: 100vw; */
   /* max-width: 100%; */
@@ -20,6 +21,8 @@
   position: relative;
   z-index: 10;
   letter-spacing: 2px;
+  /* overflow-y: hidden; */
+
 }
 
 .heroText {

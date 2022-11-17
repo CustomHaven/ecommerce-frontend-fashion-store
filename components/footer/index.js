@@ -1,22 +1,25 @@
 import Link from "next/link";
 import Canvas from "../canva";
-// import "../../styles/Navbar.module.css";
 import styles from "../../styles/Footer.module.css";
+
 
 const Footer = () => {
     return (
         <footer className={styles.footer}>
+
             <div className={styles.logo_link}>
                 <Link href="/">
-                    <Canvas src="/assets/Custom.png" width={250} height={110} className={styles.footer_logo} />
+                    <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.footer_logo} />
                 </Link>
             </div>
+
+            {/* <div > */}
             <ul className={styles.footer_ul}>
                 <li>
                     <h3>Contact</h3>
-                    <p>Address: 10 Downing Street, London, UK</p>
-                    <p>Phone: 999</p>
-                    <p>Hours: Mon-Fri 9-5</p>
+                    <p>10 Downing Street, UK</p>
+                    <p>999</p>
+                    <p>Mon-Fri 9-5</p>
                 </li>
                 <li>
                     <h3>About</h3>
@@ -37,7 +40,10 @@ const Footer = () => {
                     <Link href="/help"><p>Help</p></Link>
                 </li>
             </ul>
-            <h4>&copy; {new Date().getFullYear()} Made with love by Custom Haven <span>&hearts;</span></h4>
+            {/* </div> */}
+            <div className={styles.footer_copyright}>
+                <h4>&copy; {new Date().getFullYear()} Made with love by Custom Haven <span>&hearts;</span></h4>
+            </div>
         </footer>
     )
 }

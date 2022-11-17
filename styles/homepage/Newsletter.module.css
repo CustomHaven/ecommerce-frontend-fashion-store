@@ -1,0 +1,108 @@
+.newsletter {
+    background-color: rgb(4, 29, 68);
+    font-family: var(--roboto);
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* gap: 30px; */
+    /* align-items: center; */
+    /* justify-content: space-evenly; */
+    width: 100%;
+    /* width: 100vw; */
+    /* margin: 0 auto; */
+    padding: 40px;
+}
+
+.newsletter > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+/* ///////////////////////////////////////// left side ////////////////////////////////////////////////////// */
+
+.newsletter > div > div > p, .newsletter > div > div > h4 {
+    color: rgba(255, 255, 255, 1);
+}
+
+.newsletter h4 {
+    font-size: min(5vw, 1.3rem);
+    padding-bottom: 10px;
+}
+
+.newsletter p {
+    font-size: min(4vw, 1.1rem);
+    padding-top: 10px;
+}
+
+.newsletter span {
+    color: rgb(247, 239, 138);
+}
+
+/* ///////////////////////////////////////// right side ////////////////////////////////////////////////////// */
+
+.right {
+    width: 40%;
+    /* background-color: brown; */
+}
+
+.newsletter form {
+    width: 100%;
+    display: flex;
+}
+
+.newsletter input {
+    width: 70%;
+    font-size: min(3vw, 1.1rem);
+    font-family: var(--roboto);
+    height: 5vh;
+    /* padding: 2px; */
+}
+
+.newsletter button {
+    width: 30%;
+    height: 5vh;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid var(--submit-button);
+    font-family: var(--roboto);
+    font-size: min(3vw, 1.1rem);
+    color: rgba(0, 0, 0, 1);
+    font-weight: 400;
+    line-height: 31px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 1);
+    border: 1px solid var(--submit-button);
+    border-radius: 1px;
+    box-shadow: inset 0 0 0 0 var(--submit-button);
+    transition: all ease 1.3s;
+}
+
+.newsletter button:hover, .newsletter button:active {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: inset min(21vw, 200px) 0 0 0 var(--submit-button);
+}
+
+@media only screen and (max-width: 850px) {
+    .right {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .right {
+        width: 80%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .right {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .right {
+        width: 100%;
+    }
+}

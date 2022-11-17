@@ -14,6 +14,7 @@ const useQuerySelector = (selector) => {
             handler();
         }
         window.addEventListener("resize", handler);
+        handler();
     }, [element]);
 
     return element;
