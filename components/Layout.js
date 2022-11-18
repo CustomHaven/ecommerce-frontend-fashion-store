@@ -1,7 +1,6 @@
-import { useSelector } from "react-redux";
 import Navbar from "./navbar";
 import Footer from "./footer";
-import { selectMainMarginTop } from "../feature/generalComponents/generalComponentSlice";
+import useQuerySelector from "../hooks/useQuerySelector";
 // import dynamic from "next/dynamic";
 
 // const Navbar = dynamic(() => import('./navbar'), {
@@ -9,13 +8,13 @@ import { selectMainMarginTop } from "../feature/generalComponents/generalCompone
 // })
 
 const Layout = ({children}) => {
-    const mainMarginTop = useSelector(selectMainMarginTop);
+    const sectionRef = useQuerySelector("section");
     
     return (
         <>
         {/* <div style={{width: "100%", padding: "80px"}}> */}
-            <Navbar />
-                <main className={"mainContainer"} style={{marginTop: mainMarginTop}}>{children}</main>
+            <Navbar sectionRef={sectionRef} />
+            <main className={"mainContainer"}>{children}</main>
             <Footer />
         {/* </div> */}
         </>

@@ -6,13 +6,20 @@ import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, B
 import { AiOutlineDown } from "react-icons/ai";
 import Canvas from "../canva";
 import Burger from "./burger";
+import useQuerySelector from "../../hooks/useQuerySelector";
 import useMediaQuery from "../../hooks/useMediaQuery";
+import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
-const Navbar = () => {
+const Navbar = (props) => {
     const shopRef = useRef(null);
     const aboutRef = useRef(null);
     const headerRef = useRef(null);
     const { media } = useMediaQuery(700);
+    // const sectionRef = useQuerySelector("section");
+
+    // console.log("sectionRef", sectionRef);
+    // console.log("sectionRef.current", sectionRef.current);
+
 
     const handleMouseEnter = (e) => {
         const dataSet = e.target.dataset;
@@ -31,6 +38,27 @@ const Navbar = () => {
             shopRef.current.classList.remove(styles.options_stay_on);
         }
     }
+
+    const handleIntersect = entries => {
+        const [entry] = entries;
+        const dataSet = entry.target.dataset;
+        if (!dataSet.hasOwnProperty("white")) {
+            if (entry.isIntersecting) {
+                headerRef.current.style.backgroundColor = "transparent";
+                headerRef.current.style.boxShadow = "none";
+            } else {
+                headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+                headerRef.current.style.backgroundColor = "white";
+            }
+        } else {
+            headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+            headerRef.current.style.backgroundColor = "white";
+        }
+    };
+
+    useIntersectionObserver({
+        rootMargin: "-40%",
+    }, [props.sectionRef], handleIntersect);
 
     return (
         <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>

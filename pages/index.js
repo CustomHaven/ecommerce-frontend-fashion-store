@@ -6,13 +6,14 @@ import ShopCategory from "../components/homepage_components/shopCategory";
 import Newsletter from "../components/homepage_components/newsletter";
 
 export default function Home() {
+  const src = "/assets/ladybanner-removebg.png";
   return (
     <>
       <Head>
         <title>Fashion Home Page</title>
       </Head>
       <>
-        <Hero />
+        <Hero src={src} />
         <FeatureProducts max={8} />
         <Guarantee />
         <ShopCategory />

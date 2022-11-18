@@ -16,7 +16,7 @@ const Featured = (props) => {
 
     return (//
         <>
-            <section id="feature-product-section" className={styles.feature_section}>
+            <section data-white id="feature-product-section" className={styles.feature_section}>
                 <h2>Featured Products</h2>
                 <h3>New Modern Design Collection</h3>
                 <div>

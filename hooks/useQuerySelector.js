@@ -1,8 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import useIsomorphicEffect from './useIsomorphicEffect';
+import { watchHrefChange } from '../utils/hrefChangeHelper';
 
 const useQuerySelector = (selector) => {
     const element = useRef(null);
+    const [href, setHref] = useState(process?.title === "browser" && window.location.href);
 
     const handler = () => {
         const elem = document.querySelector(selector);
@@ -15,7 +17,9 @@ const useQuerySelector = (selector) => {
         }
         window.addEventListener("resize", handler);
         handler();
-    }, [element]);
+        window.onload = watchHrefChange(href, setHref, element, selector);
+
+    }, [element, href]);
 
     return element;
 };
