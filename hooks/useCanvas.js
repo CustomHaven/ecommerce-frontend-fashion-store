@@ -8,6 +8,7 @@ const useCanvas = (canvaRef, src) => {
 
     useEffect(() => {
         const image = new Image();
+        // console.log("src in useCanva", src)
         image.onload = ({target}) => {
             
             const canvas = canvaRef.current;
@@ -34,7 +35,7 @@ const useCanvas = (canvaRef, src) => {
                 const g = imageData.data[index + 1];
                 const b = imageData.data[index + 2];
             
-                if ([r, g, b].every((item) => item > 230)) {
+                if ([r, g, b].every((item) => item > 240)) { // old was 230 but 240 looks best for white shirts as well
                     imageData.data[index + 3] = 0;
                 }
             }
@@ -46,6 +47,7 @@ const useCanvas = (canvaRef, src) => {
         }
         image.crossOrigin = "";
         image.src = src;
+        // image.src = "https://ae01.alicdn.com/kf/S631a8556fdbc47ea88354a6697f28651a/korean-Bling-Lurex-diamond-Summer-knit-Tank-for-Women-Cami-Sleeveless-Knit-vest-White-Black-Women.jpg"
     }, [width, height, canvaRef]);
 
     return {

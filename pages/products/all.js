@@ -1,11 +1,11 @@
 import Head from "next/head";
-import HiddenHeader from "../components/HiddenHeader";
-import AsideMenu from "../components/asideMenu";
-import FeatureProducts from "../components/featuredProducts";
-import Directions from "../components/directions";
+import HiddenHeader from "../../components/HiddenHeader";
+import AsideMenu from "../../components/asideMenu";
+import FeatureProducts from "../../components/featuredProducts";
+import Directions from "../../components/directions";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../feature/productSlice/productSlice"
-import { wrapper } from "../store/store";
+import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice"
+import { wrapper } from "../../store/store";
 
 
 const AllProducts = () => {

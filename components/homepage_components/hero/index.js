@@ -16,7 +16,7 @@ const Hero = (props) => {
                     <h1>On all products</h1>
                     <h3>Save more with coupons</h3>
                     <div className={styles.shop_now_wrap}>
-                        <Link href="/allproducts"><button className={styles.shop_now_button}>Shop now</button></Link>
+                        <Link href="/products/all"><button className={styles.shop_now_button}>Shop now</button></Link>
                     </div>
                 </div>
 

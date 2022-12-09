@@ -1,17 +1,22 @@
+import React, { useEffect, useLayoutEffect } from "react";
 import Head from "next/head";
-import HiddenHeader from "../components/HiddenHeader";
-import AsideMenu from "../components/asideMenu";
-import FeatureProducts from "../components/featuredProducts";
-import Directions from "../components/directions";
+import HiddenHeader from "../../../components/HiddenHeader";
+import AsideMenu from "../../../components/asideMenu";
+import FeatureProducts from "../../../components/featuredProducts";
+import Directions from "../../../components/directions";
 import { useSelector, useDispatch } from "react-redux";
-import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../feature/productSlice/productSlice"
-import { wrapper } from "../store/store";
+import { 
+    selectAllWomensProducts, allProductsThunk, 
+    selectDisplayMax, productDisplayMax, 
+    listOfAllWomenProducts } from "../../../feature/productSlice/productSlice";
+import { wrapper } from "../../../store/store";
 
 
-const AllProducts = () => {
-    const allProducts = useSelector(selectAllProducts);
+const AllProducts = (props) => {
     const dispatch = useDispatch();
     dispatch(productDisplayMax(6));
+    dispatch(listOfAllWomenProducts(props.allProducts));
+    const allProducts = useSelector(selectAllWomensProducts);
     const displayMax = useSelector(selectDisplayMax);
     return (
         <>
@@ -22,7 +27,7 @@ const AllProducts = () => {
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
                 <AsideMenu />
-                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} />
+                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"Womens"} />
                 <Directions />
             </>
         </>   
