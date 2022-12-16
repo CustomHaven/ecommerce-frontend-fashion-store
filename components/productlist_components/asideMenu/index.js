@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { BsPerson } from "react-icons/bs";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; 
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import Canvas from "../../canva";
 import styles from "../../../styles/Aside.module.css";
-import { BsPerson } from "react-icons/bs";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; 
 
 const AsideMenu = () => {
 

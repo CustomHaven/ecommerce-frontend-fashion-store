@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styles from "../../../../styles/Feature.module.css";
-import Canvas from "../../../canva";
 import { BsCart3 } from "react-icons/bs";
 import { FaCartPlus } from "react-icons/fa";
+import styles from "../../../../styles/Feature.module.css";
+import Canvas from "../../../canva";
 import useQuerySelector from "../../../../hooks/useQuerySelector";
 import useIntersectionObserver from "../../../../hooks/useIntersectionObserver";
 import { slides } from "../../../../utils/slideInHelpers";

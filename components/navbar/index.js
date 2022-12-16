@@ -1,12 +1,11 @@
-import React, { useRef } from "react";
 import Link from "next/link";
+import { useRef } from "react";
 import styles from "../../styles/Navbar.module.css";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import Canvas from "../canva";
 import Burger from "./burger";
-import useQuerySelector from "../../hooks/useQuerySelector";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 

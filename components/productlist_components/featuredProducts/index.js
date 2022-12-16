@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styles from "../../../styles/Feature.module.css";
-
 import MinitureProductSize from "./minitureProduct";
+import { chunkArray } from "../../../utils/generalUtils";
 import { selectAllMensProducts,
     selectMensBottom,
     selectMensTop,
@@ -12,7 +12,6 @@ import { selectAllMensProducts,
     displayProductCategory,
     selectDisplayCategoryList,
     selectProductListCount, productArrayChunkSize } from "../../../feature/productSlice/productSlice";
-import { chunkArray } from "../../../utils/generalUtils";
 
 
 

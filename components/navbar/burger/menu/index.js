@@ -1,10 +1,9 @@
-import React, { useState, useRef } from "react";
 import Link from "next/link";
-import { AiOutlinePlus, AiOutlineClose, AiOutlineMinus } from "react-icons/ai";
+import { useState, useRef } from "react";
+import { AiOutlinePlus, AiOutlineClose, AiOutlineMinus, AiOutlineInstagram, AiFillYoutube, AiFillGithub } from "react-icons/ai";
+import { TfiFacebook, TfiTwitterAlt } from "react-icons/tfi";
 import styles from "../../../../styles/Menu.module.css";
 import Canvas from "../../../canva";
-import { TfiFacebook, TfiTwitterAlt } from "react-icons/tfi";
-import { AiOutlineInstagram, AiFillYoutube, AiFillGithub } from "react-icons/ai";
 
 const Menu = (props) => {
 

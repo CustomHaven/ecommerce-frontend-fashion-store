@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import useCanvas from '../../hooks/useCanvas';
 
 const Canvas = (props) => {

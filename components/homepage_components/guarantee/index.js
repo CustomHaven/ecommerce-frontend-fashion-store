@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
 import styles from "../../../styles/homepage/Guarantee.module.css";
 import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";

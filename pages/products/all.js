@@ -1,16 +1,15 @@
-import React, { useState } from "react";
 import Head from "next/head";
+import { useSelector, useDispatch } from "react-redux";
 import HiddenHeader from "../../components/HiddenHeader";
 import AsideMenu from "../../components/productlist_components/asideMenu";
 import FeatureProducts from "../../components/productlist_components/featuredProducts";
 import Directions from "../../components/productlist_components/directions";
-import { useSelector, useDispatch } from "react-redux";
-import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice"
 import { wrapper } from "../../store/store";
+import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice"
+
 
 
 const AllProducts = () => {
-    const [symbolHolder] = useState("");
     const allProducts = useSelector(selectAllProducts);
     const dispatch = useDispatch();
     dispatch(productDisplayMax(6));
@@ -24,7 +23,7 @@ const AllProducts = () => {
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
                 <AsideMenu />
-                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} categoryPage={symbolHolder} />
+                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} categoryPage={""} />
                 <Directions />
             </>
         </>   
