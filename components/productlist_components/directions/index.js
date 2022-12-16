@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from "react-icons/bs";
-import useQuerySelector from "../../hooks/useQuerySelector";
-import useResizeObserver from "../../hooks/useResizeObserver";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { selectArrayChunkSize, selectProductListCount, productListCounter, listSlideDirection } from "../../feature/productSlice/productSlice";
+import useQuerySelector from "../../../hooks/useQuerySelector";
+import useResizeObserver from "../../../hooks/useResizeObserver";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import { selectArrayChunkSize, selectProductListCount, productListCounter, listSlideDirection } from "../../../feature/productSlice/productSlice";
 
 const Directions = (props) => {
 

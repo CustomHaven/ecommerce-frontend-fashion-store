@@ -1,10 +1,8 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import useQuerySelector from "../../hooks/useQuerySelector";
-import useResizeObserver from "../../hooks/useResizeObserver";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
-import Canvas from "../canva";
-import styles from "../../styles/Aside.module.css";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import Canvas from "../../canva";
+import styles from "../../../styles/Aside.module.css";
 import { BsPerson } from "react-icons/bs";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; 
 

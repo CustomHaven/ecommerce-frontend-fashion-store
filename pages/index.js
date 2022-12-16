@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import Hero from "../components/homepage_components/hero";
-import FeatureProducts from "../components/featuredProducts";
+import FeatureProducts from "../components/productlist_components/featuredProducts";
 import Guarantee from '../components/homepage_components/guarantee';
 import ShopCategory from "../components/homepage_components/shopCategory";
 import Newsletter from "../components/homepage_components/newsletter";
@@ -10,10 +10,9 @@ import { selectAllProductsRandomized, allProductsThunk } from "../feature/produc
 import { wrapper } from '../store/store';
 
 export default function Home(props) {
-  // const dispatch = useDispatch();
   const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
-
+  const [symbolHolder] = useState("");
   // console.log("from useSelector", allProducts, "in server??");
 
 
@@ -25,7 +24,7 @@ export default function Home(props) {
       </Head>
       <>
         <Hero src={src} />
-        <FeatureProducts products={allProducts} displayMax={8} headerText={"Featured Products"} />
+        <FeatureProducts products={allProducts} displayMax={8} headerText={"Featured Products"} categoryPage={symbolHolder} />
         <Guarantee />
         <ShopCategory />
         <Newsletter />

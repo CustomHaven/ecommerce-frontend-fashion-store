@@ -36,6 +36,7 @@ const productSlice = createSlice({
         allProductsLoading: false,
         allProductsErrors: false,
 
+        displayCategoryList: [],
 
         // single product
         singleProduct: {},
@@ -66,11 +67,14 @@ const productSlice = createSlice({
 
     },
     reducers: {
+        displayProductCategory(state, action) {
+            state.displayCategoryList = action.payload;
+        },
         hrefChanger(state, action) {
-            state.hrefMonitor = action.payload
+            state.hrefMonitor = action.payload;
         },
         listOfAllMenProducts(state, action) {
-            console.log("redux action.payload check", action.payload);
+            // console.log("redux action.payload check", action.payload);
             state.allMenProducts = action.payload.filter(products => {
                 if (products.type.match(/Men/)) {
                     return products;
@@ -78,11 +82,14 @@ const productSlice = createSlice({
             });
         },
         listMensTop(state, action) {
+            // console.log("we are inside redux mens Top", action.payload);
+            // console.log("we are inside redux look at state mensTop", state);
             state.mensTop = action.payload.filter(products => {
                 if (products.type.match(/Mens Top/)) {
                     return products;
                 }
             });
+            // console.log("end", state.mensTop);
         },
         listMensBottoms(state, action) {
             state.mensBottom = action.payload.filter(products => {
@@ -203,9 +210,12 @@ export const {
     productDisplayMax,
     productArrayChunkSize,
     listSlideDirection,
-    hrefChanger
+    hrefChanger,
+    displayProductCategory
 } = productSlice.actions;
 
+
+export const selectDisplayCategoryList = state => state.products.displayCategoryList;
 export const selectArrayChunkSize = state => state.products.arrayChunkSize;
 export const selectDisplayMax = state => state.products.displayMax;
 export const selectProductListCount = state => state.products.productListCount;

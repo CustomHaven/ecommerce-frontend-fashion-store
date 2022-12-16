@@ -1,15 +1,16 @@
 import Link from "next/link";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import styles from "../../../styles/Feature.module.css";
-import Canvas from "../../canva";
+import styles from "../../../../styles/Feature.module.css";
+import Canvas from "../../../canva";
 import { BsCart3 } from "react-icons/bs";
 import { FaCartPlus } from "react-icons/fa";
-import useQuerySelector from "../../../hooks/useQuerySelector";
-import useIntersectionObserver from "../../../hooks/useIntersectionObserver";
-import { slides } from "../../../utils/slideInHelpers";
-import { selectSlideDirection, selectHrefMonitor, hrefChanger } from "../../../feature/productSlice/productSlice";
+import useQuerySelector from "../../../../hooks/useQuerySelector";
+import useIntersectionObserver from "../../../../hooks/useIntersectionObserver";
+import { slides } from "../../../../utils/slideInHelpers";
+import { selectSlideDirection, selectHrefMonitor, hrefChanger } from "../../../../feature/productSlice/productSlice";
 
+// TODO! WHEN WE ARE IMPLEMENTING CART PAGE
 // when cart is pressed and item is in cart change BsCart3 to FaCartPlus
 
 const MinitureProductSize = ({item}) => {
@@ -66,11 +67,11 @@ const MinitureProductSize = ({item}) => {
     const firstParam = item.type.replace(/\w\s\w+$/, "").toLowerCase();
     const secondParam = item.type.replace(/^\w+\s/, "").toLowerCase();
 
-    console.log("firstParam", firstParam);
+    // console.log("firstParam", firstParam);
 
-    console.log("secondParam", secondParam);
+    // console.log("secondParam", secondParam);
 
-    console.log("the ID", item.id);
+    // console.log("the ID", item.id);
 
 
     useEffect(() => {
