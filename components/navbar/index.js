@@ -51,7 +51,7 @@ const Navbar = (props) => {
             }
         } else {
             headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-            headerRef.current.style.backgroundColor = "white";
+            headerRef.current.style.backgroundColor = "var(--header-footer-colors)";
         }
     };
 
@@ -101,8 +101,8 @@ const Navbar = (props) => {
                             <li>
                                 <div data-shop="shop" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={styles.dropdown_options}>
                                     <div>
-                                        <Link href="/shop/mens"><p>Men's</p></Link>
-                                        <Link href="/shop/womens"><p>Women's</p></Link>
+                                        <Link href="/products/men/all" title="Shop for Men's"><p>Men's</p></Link>
+                                        <Link href="/products/women/all" title="Shop for Women's"><p>Women's</p></Link>
                                     </div>
                                 </div>
                                 <p ref={shopRef} className={styles.nav_option_drawers}>

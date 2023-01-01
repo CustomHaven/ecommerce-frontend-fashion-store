@@ -22,6 +22,10 @@ const SubCat = (props) => {
     const { category } = router.query;
     const { subcat } = router.query;
 
+    if (category === "" && subcat === "") {
+        return;
+    }
+
     const [displayText, setDisplayText] = useState("");
     const [symbolHolder, setSymbolHolder] = useState("");
 

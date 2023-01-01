@@ -5,7 +5,7 @@ import styles from "../../styles/Footer.module.css";
 
 const Footer = () => {
     return (
-        <footer className={styles.footer}>
+        <footer id="footer-elm" className={styles.footer}>
 
             <div className={styles.logo_link}>
                 <Link href="/">

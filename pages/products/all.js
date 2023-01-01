@@ -5,11 +5,18 @@ import AsideMenu from "../../components/productlist_components/asideMenu";
 import FeatureProducts from "../../components/productlist_components/featuredProducts";
 import Directions from "../../components/productlist_components/directions";
 import { wrapper } from "../../store/store";
-import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice"
+import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice";
+import { useRouter } from "next/dist/client/router";
 
 
 
 const AllProducts = () => {
+    console.log(window.location.pathname);
+    if (process.title === "browser" && window.location.pathname === "/") {
+        console.log("empty pathname?");
+        return;
+    }
+
     const allProducts = useSelector(selectAllProducts);
     const dispatch = useDispatch();
     dispatch(productDisplayMax(6));

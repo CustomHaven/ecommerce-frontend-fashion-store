@@ -10,6 +10,11 @@ import { wrapper } from '../store/store';
 import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice"
 
 export default function Home(props) {
+  // console.log(window.location.pathname);
+  if (process.title === "browser" && window.location.pathname === "/") {
+    console.log("empty pathname?");
+    // return;
+}
   const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
   const [symbolHolder] = useState("");

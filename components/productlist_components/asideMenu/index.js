@@ -5,8 +5,18 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import Canvas from "../../canva";
 import styles from "../../../styles/Aside.module.css";
+import { useRouter } from "next/dist/client/router";
 
 const AsideMenu = () => {
+    // Stops some error
+    if (process.title === "browser" && window.location.pathname === "/") {
+        console.log("empty pathname?");
+        return;
+    }
+    const router = useRouter();
+
+    console.log("router inside asideMenu", router.query);
+    console.log(window.location.pathname);
 
     const [menClick, setMenClick] = useState(false);
     const [womenClick, setWomenClick] = useState(false);
@@ -80,6 +90,16 @@ const AsideMenu = () => {
     }
 
     const handleOnLoad = () => {
+        // stops some error that pageArrayRefs[pathNameIndex].current is null when pathname is nothing
+        if (process.title === "browser" && window.location.pathname === "/") {
+            console.log("empty pathname?");
+            return;
+        }
+        // Reason for this is when single product page comes up I dont want this part of the code to follow along so I return and break out
+        const slashArrays = window.location.pathname.match(/[\/]/g);
+        if (slashArrays.length === 4) {
+            return;
+        }
         if (windowWidth <= 500) {
             return pageArrayRefs.forEach(page => {
                 if (page.current !== null) {
@@ -101,6 +121,10 @@ const AsideMenu = () => {
     }
     
     useEffect(() => {
+        if (process.title === "browser" && window.location.pathname === "/") {
+            console.log("empty pathname?");
+            return;
+        }
         if (document.readyState !== "loading") {
             handleOnLoad();
         }

@@ -9,6 +9,7 @@ import useQuerySelector from "../../../../hooks/useQuerySelector";
 import useIntersectionObserver from "../../../../hooks/useIntersectionObserver";
 import { slides } from "../../../../utils/slideInHelpers";
 import { selectSlideDirection, selectHrefMonitor, hrefChanger } from "../../../../feature/productSlice/productSlice";
+import { bufferImg } from "../../../../utils/generalUtils";
 
 // TODO! WHEN WE ARE IMPLEMENTING CART PAGE
 // when cart is pressed and item is in cart change BsCart3 to FaCartPlus
@@ -60,9 +61,10 @@ const MinitureProductSize = ({item}) => {
     // const b64encoded = btoa(String.fromCharCode.apply("image/webp", item.ProductBannerImage.banner_image_data.data));
     // console.log("base64String", "data:mime;base64," + base64String);
 
-    const buff = Buffer.from(item.ProductBannerImage.banner_image_data, "base64"); //.toString("utf-8");
-
-    const bannerImg = buff.toString("utf-8");
+    const bannerImg = bufferImg(item.ProductBannerImage.banner_image_data); //.toString("utf-8");
+    console.log("bnnerImg", bannerImg);
+    console.log("type bannerImg", typeof bannerImg);
+    // const bannerImg = buff.toString("utf-8");
     
     const firstParam = item.type.replace(/\w\s\w+$/, "").toLowerCase();
     const secondParam = item.type.replace(/^\w+\s/, "").toLowerCase();
