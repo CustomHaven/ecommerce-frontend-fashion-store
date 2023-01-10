@@ -65,7 +65,7 @@ const SubCat = (props) => {
                 dispatch(listWomensTop(props.allProducts));
                 break;
             default:
-                // console.log("nothing inside the page was returned!");
+                // console.log("nothing inside the page was returned! DO ERROR PAGE!!!!");
                 break;
         }
 

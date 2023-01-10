@@ -13,6 +13,7 @@ const DisplayMainImage = (props) => {
     const headerSize = useResizeObserver(headerRef.current, "#header-elem");
 
     const imgDisplayStyles = [styles.img_on_display, styles.zoom_in].join(" ");
+
     const localModalStyles = {
         position: "absolute", 
         backgroundColor: "rgba(60, 60, 59, .9)",
@@ -35,7 +36,6 @@ const DisplayMainImage = (props) => {
     }
 
     const handleImgSelected = () => {
-        console.log("image selected!!")
         setLargeImageSelected(!largeImageSelected);
     }
 

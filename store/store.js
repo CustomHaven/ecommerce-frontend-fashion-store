@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import componentReducer from "../feature/generalComponents/generalComponentSlice";
 import productReducer from "../feature/productSlice/productSlice";
+import errorReducer from "../feature/errorSlice/errorSlice";
 
 const makeStore = () => configureStore({
     reducer: {
         components: componentReducer,
-        products: productReducer
+        products: productReducer,
+        error: errorReducer
     },
     devTools: true,
 });

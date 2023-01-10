@@ -24,12 +24,13 @@ const ProductDetails = (props) => {
                 <button className={styles.product_detail_ca_count}>
                     <AiOutlineMinus
                         onClick={handleSubtraction}
-                        onMouseDown={handleSubtraction}
+                        // onMouseDown={handleSubtraction}
                     />
                     <p>{productCount}</p>
+                    {/* <input value={productCount}/> */}
                     <AiOutlinePlus
                         onClick={handleAddition}
-                        onMouseDown={handleAddition}
+                        // onMouseDown={handleAddition}
                     />
                 </button>
 
