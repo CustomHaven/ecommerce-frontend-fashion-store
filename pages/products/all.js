@@ -6,12 +6,10 @@ import FeatureProducts from "../../components/productlist_components/featuredPro
 import Directions from "../../components/productlist_components/directions";
 import { wrapper } from "../../store/store";
 import { selectAllProducts, allProductsThunk, selectDisplayMax, productDisplayMax } from "../../feature/productSlice/productSlice";
-import { useRouter } from "next/dist/client/router";
-
 
 
 const AllProducts = () => {
-    console.log(window.location.pathname);
+    // console.log(window.location.pathname);
     if (process.title === "browser" && window.location.pathname === "/") {
         console.log("empty pathname?");
         return;
@@ -30,7 +28,7 @@ const AllProducts = () => {
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
                 <AsideMenu />
-                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} categoryPage={""} />
+                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} categoryPage={""} pageType={"Product Listing"} />
                 <Directions />
             </>
         </>   

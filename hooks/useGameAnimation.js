@@ -4,7 +4,9 @@ import Player from "../utils/SpaceInvader/player";
 import { classToObject, createStarParticles, createParticles, shootFunc, getXY, collusionDetection, invaderDestroyed, gridInvaders } from "../utils/SpaceInvader/spaceinvaderhelpers";
 import { selectGameActive, selectGameLives, playGame, hitpoints, modalOptions } from "../feature/errorSlice/errorSlice";
 
-const useGameAnimation = (canvaRef) => {
+const useGameAnimation = (canvaRef, status, resetValues) => {
+    const [resetAll, setResetAll] = useState(typeof resetValues === "boolean" ? resetValues : false);
+    const resetAllRef = useRef(resetAll);
     const gameActive = useSelector(selectGameActive);
     const gameLives = useSelector(selectGameLives);
     const dispatch = useDispatch();
@@ -55,7 +57,7 @@ const useGameAnimation = (canvaRef) => {
             const ctxInit = canvaInit.getContext("2d", { willReadFrequently: true });
             canva.current = canvaInit;
             setCtx(ctxInit);
-            invadersInGrid = gridInvaders(setGrids);
+            invadersInGrid = gridInvaders(setGrids, status);
             invadersGrid.current = invadersInGrid;
             playerInit = new Player(canvaInit);
             const playerConverted = classToObject(playerInit);
@@ -77,6 +79,8 @@ const useGameAnimation = (canvaRef) => {
             playerHit = false;
             playerBlink = 0;
             score = 0;
+            setResetAll(false);
+            resetAllRef.current = false;
         }
     }
 
@@ -92,8 +96,12 @@ const useGameAnimation = (canvaRef) => {
             init();
         }
 
+        if (resetAllRef.current === true) {
+            init();
+        }
+
         if (invadersGrid.current[0].invaders.length === 0) {
-            invadersInGrid = gridInvaders(setGrids);
+            invadersInGrid = gridInvaders(setGrids, status);
             invadersGrid.current = invadersInGrid;
             dispatch(hitpoints(gameLivesRef.current + 1));
         }
@@ -404,6 +412,7 @@ const useGameAnimation = (canvaRef) => {
         player.current = playerState;
         stars.current = starParticles;
         invadersGrid.current = grids;
+        resetAllRef.current = resetAll;
     }, [gameActive, gameLives]);
 
     // 3rd useEffect to reset the animation based on user clicking restart game from the component restart button

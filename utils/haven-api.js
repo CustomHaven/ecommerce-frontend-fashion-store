@@ -40,11 +40,12 @@ const haven = {
         try {
             // /products/single-product-and-all-images/
             response = await fetch(`${API_URL}/products/single-product-and-all-images/${id}`);
-
             const jsonResponse = await finalResponse(response);
+            console.log("final response json bits", jsonResponse);
             return jsonResponse;
+            // }
         } catch (error) {
-            console.log("oops something went wrong in api call", error);
+            throw error;
         }
     }
 }

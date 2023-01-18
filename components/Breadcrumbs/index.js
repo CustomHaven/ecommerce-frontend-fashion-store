@@ -33,7 +33,11 @@ const Breadcrumbs = (props) => {
 
     return (
         <>
-            <div style={{ height: `${blockSize / props.divideBy}px`, marginLeft: "50px" }}>
+            <div style={{ 
+                height: `${blockSize / props.divideBy}px`, 
+                // marginLeft: props.pageType !== "cartPage" ? "50px" : "0px",
+                margin: props.pageType === "cartPage" ? "40px 10%" : "0px 0px 0px 50px"
+            }}>
                 {
                     breadcrumbs.map((crumb, index, array) => {
                         //<> 

@@ -15,7 +15,6 @@ export const classToObject = theClass => {
 }
 
 export const createStarParticles = (canva) => {
-    console.log("stars called!")
     if (canva !== undefined) {
         let starParticles = []
         for (let i = 0; i < 100; i++) {
@@ -58,8 +57,30 @@ export const createParticles = (object, color) => {
     return particles;
 }
 
-export const gridInvaders = (setGrid) => {
-    const gridInit = [].concat(new Grid(coordinates404));
+// TODO: status is the statusCode based on the status send relevant coords back as invader Grid!
+export const gridInvaders = (setGrid, status) => {
+    let statusCode;
+    switch (status) {
+        case 500:
+            statusCode = 500; // TODO: fix the coords!
+            break;
+        case 409:
+            statusCode = 409; // TODO: fix the coords!
+            break;
+        case 403:
+            statusCode = 403; // TODO: fix the coords!
+            break;
+        case 401:
+            statusCode = 401; // TODO: fix the coords!
+            break;
+        case 400:
+            statusCode = 400; // TODO: fix the coords!
+            break;
+        default:
+            statusCode = coordinates404;
+            break;
+    }
+    const gridInit = [].concat(new Grid(statusCode));
     setGrid(gridInit);
     return gridInit;
 }

@@ -32,6 +32,10 @@
     flex-wrap: wrap;
 }
 
+.noWrap {
+    flex-wrap: nowrap !important;
+}
+
 .imgOuterContainer {
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     /* width: 364px; */

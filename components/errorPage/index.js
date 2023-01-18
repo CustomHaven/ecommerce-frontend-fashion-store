@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RiArrowGoBackLine } from "react-icons/ri";
@@ -7,15 +8,17 @@ import styles from "../../styles/Error.module.css";
 import { selectGameActive, selectModal, playGame, modalOptions, hitpoints, restartGame } from '../../feature/errorSlice/errorSlice';
 
 
-const ErrorPage = (props) => {
+const ErrorPage = ({status, resetValues}) => {
+    const router = useRouter();
     const canvasRef = useRef(null);
     const gameActive = useSelector(selectGameActive);
     const modal = useSelector(selectModal);
     const dispatch = useDispatch();
-    const [requestRef, resetAnimation, setResetAnimation] = useGameAnimation(canvasRef);
+    const [requestRef, resetAnimation, setResetAnimation] = useGameAnimation(canvasRef, status, resetValues);
 
     const handleHome = () => {
-
+        console.log(router);
+        router.push("/");
     }
 
     const handleRestart = () => {

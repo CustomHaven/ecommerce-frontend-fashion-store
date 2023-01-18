@@ -5,7 +5,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import Canvas from "../../canva";
 import styles from "../../../styles/Aside.module.css";
-import { useRouter } from "next/dist/client/router";
+// import { useRouter } from "next/dist/client/router";
 
 const AsideMenu = () => {
     // Stops some error
@@ -13,10 +13,10 @@ const AsideMenu = () => {
         console.log("empty pathname?");
         return;
     }
-    const router = useRouter();
+    // const router = useRouter();
 
-    console.log("router inside asideMenu", router.query);
-    console.log(window.location.pathname);
+    // console.log("router inside asideMenu", router.query);
+    // console.log(window.location.pathname);
 
     const [menClick, setMenClick] = useState(false);
     const [womenClick, setWomenClick] = useState(false);

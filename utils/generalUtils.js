@@ -13,13 +13,6 @@ export const bufferImg = (imgData) => {
     return bannerImg;
 }
 
-
-
-
-
-
-let array1 = ["a", "b", "c", "d", "e", "f", "g", "h", "j", "k", "l", "m", "n", "o"];
-
 export const fillDisplayArray = (array, size, idIndex) => {
     let arr = [];
 

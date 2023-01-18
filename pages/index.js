@@ -1,27 +1,17 @@
 import Head from 'next/head';
-import { useState } from 'react';
 import { useSelector } from "react-redux";
 import Hero from "../components/homepage_components/hero";
 import FeatureProducts from "../components/productlist_components/featuredProducts";
+import Directions from '../components/productlist_components/directions';
 import Guarantee from '../components/homepage_components/guarantee';
 import ShopCategory from "../components/homepage_components/shopCategory";
 import Newsletter from "../components/homepage_components/newsletter";
 import { wrapper } from '../store/store';
-import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice"
+import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice";
 
 export default function Home(props) {
-  // console.log(window.location.pathname);
-  if (process.title === "browser" && window.location.pathname === "/") {
-    console.log("empty pathname?");
-    // return;
-}
   const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
-  const [symbolHolder] = useState("");
-  // console.log("from useSelector", allProducts, "in server??");
-
-
-  // console.log("haven", props.allProducts);
   return (
     <>
       <Head>
@@ -29,7 +19,8 @@ export default function Home(props) {
       </Head>
       <>
         <Hero src={src} />
-        <FeatureProducts products={allProducts} displayMax={8} headerText={"Featured Products"} categoryPage={symbolHolder} />
+        <FeatureProducts products={allProducts} displayMax={8} headerText={"Featured Products"} categoryPage={""} pageType={"Home"} />
+        <Directions />
         <Guarantee />
         <ShopCategory />
         <Newsletter />
@@ -37,7 +28,6 @@ export default function Home(props) {
     </>
   )
 }
-
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {

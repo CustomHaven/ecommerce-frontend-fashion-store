@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Error from "../../../_error";
 import HiddenHeader from "../../../../components/HiddenHeader";
 import Breadcrumbs from "../../../../components/Breadcrumbs";
 import ProductPage from "../../../../components/productPage";
@@ -7,6 +8,10 @@ import { singleProductThunk } from "../../../../feature/productSlice/productSlic
 
 
 const ProdId = (props) => {
+
+    if (props.isError) {
+        return <Error statusCode={props.statusCode} statusText={props.statusText} resetValues={true} />
+    }
 
     const productImagesArray = [].concat(props.singleProduct.ProductImages.map(val => Object.assign({}, {
         idImage: val.id.replace(/^(.+)$/, "image-id-$1"),
@@ -56,13 +61,29 @@ export const getServerSideProps = wrapper.getServerSideProps(
         queryParams.pop();
 
         await store.dispatch(singleProductThunk(ctx.query.prod_id));
-        queryParams.push(store.getState().products.singleProduct.product_name);
+
+        const isError = store.getState().products.singleProductErrors;
+        const statusCode = store.getState().products.singleProductStatusCode;
+        const statusText = store.getState().products.singleProductStatusText;
+
+        const singleProductObject = store.getState().products.singleProduct;
+
+        if ("product_name" in singleProductObject) {
+            queryParams.push(store.getState().products.singleProduct.product_name);
+        }
+
+
+        console.log("queryParams!", queryParams);
+
 
         return {
             props: {
                 singleProduct: store.getState().products.singleProduct,
                 prodId: ctx.query.prod_id,
-                queryParams: queryParams
+                queryParams: queryParams,
+                isError: isError,
+                statusCode: statusCode,
+                statusText: statusText
             }
         }
     }

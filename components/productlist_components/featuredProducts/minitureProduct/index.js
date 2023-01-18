@@ -57,24 +57,17 @@ const MinitureProductSize = ({item}) => {
 
     // console.log(item.ProductBannerImage.banner_image_data)
 
-    const base64String = btoa(String.fromCharCode(... new Uint8Array(item.ProductBannerImage.banner_image_data.data))).toString("utf-8");
+    // const base64String = btoa(String.fromCharCode(... new Uint8Array(item.ProductBannerImage.banner_image_data.data))).toString("utf-8");
     // const b64encoded = btoa(String.fromCharCode.apply("image/webp", item.ProductBannerImage.banner_image_data.data));
     // console.log("base64String", "data:mime;base64," + base64String);
 
     const bannerImg = bufferImg(item.ProductBannerImage.banner_image_data); //.toString("utf-8");
-    console.log("bnnerImg", bannerImg);
-    console.log("type bannerImg", typeof bannerImg);
+    // console.log("bnnerImg", bannerImg);
+    // console.log("type bannerImg", typeof bannerImg);
     // const bannerImg = buff.toString("utf-8");
     
     const firstParam = item.type.replace(/\w\s\w+$/, "").toLowerCase();
     const secondParam = item.type.replace(/^\w+\s/, "").toLowerCase();
-
-    // console.log("firstParam", firstParam);
-
-    // console.log("secondParam", secondParam);
-
-    // console.log("the ID", item.id);
-
 
     useEffect(() => {
         directionsComponentClickEvent();
@@ -83,7 +76,7 @@ const MinitureProductSize = ({item}) => {
 
     return (
         <>
-                <div ref={productContainerRef} className={styles.imgOuterContainer} >
+                <div id={item.idHTML} name={item.idHTML} data-card-products-outer-all ref={productContainerRef} className={[styles.imgOuterContainer, "card_products"].join(" ")} >
                     <div className={styles.imgInnerContainer}>
                         {/* <Canvas src={`data:image.png;base64,${base64String}`} className={styles.imgItem} /> */}
                         {/* <Canvas src={`data:mime;base64,` + base64String} className={styles.imgItem} /> */}

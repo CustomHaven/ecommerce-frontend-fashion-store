@@ -1,89 +1,27 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/dist/client/router";
+import Error from "../../_error";
 import HiddenHeader from "../../../components/HiddenHeader";
 import AsideMenu from "../../../components/productlist_components/asideMenu";
 import FeatureProducts from "../../../components/productlist_components/featuredProducts";
 import Directions from "../../../components/productlist_components/directions";
 import { wrapper } from "../../../store/store";
 import {
-    selectDisplayCategoryList,
-    allProductsThunk, 
-    selectDisplayMax, productDisplayMax, 
+    allProductsThunk, productDisplayMax, 
     listOfAllMenProducts, listMensBottoms, listMensTop,
     listOfAllWomenProducts, listWomensBottoms, listWomensTop
 } from "../../../feature/productSlice/productSlice";
 
 
 const SubCat = (props) => {
-    const categoryListProducts = useSelector(selectDisplayCategoryList);
-    const router = useRouter();
-    const { category } = router.query;
-    const { subcat } = router.query;
 
-    if (category === "" && subcat === "") {
-        return;
+    if (props.symbolHolder === "") {
+        return <Error statusCode={404} resetValues={true} />
     }
-
-    const [displayText, setDisplayText] = useState("");
-    const [symbolHolder, setSymbolHolder] = useState("");
-
-    const displayMax = useSelector(selectDisplayMax);
-
-    const [pagePath, setPagePath] = useState("");
-
-    const dispatch = useDispatch();
-    dispatch(productDisplayMax(6));
-
-    const masterFunc = () => {
-        setPagePath(category.toLowerCase() + " " + subcat.toLowerCase());
-
-        switch (pagePath) {
-            case "men all":
-                setSymbolHolder("ma");
-                dispatch(listOfAllMenProducts(props.allProducts));
-                break;
-            case "men bottom":
-                setSymbolHolder("mb");
-                dispatch(listMensBottoms(props.allProducts));
-                break;
-            case "men top":
-                setSymbolHolder("mt");
-                dispatch(listMensTop(props.allProducts));
-                break;
-            case "women all":
-                setSymbolHolder("wa");
-                dispatch(listOfAllWomenProducts(props.allProducts));
-                break;
-            case "women bottom":
-                setSymbolHolder("wb");
-                dispatch(listWomensBottoms(props.allProducts));
-                break;
-            case "women top":
-                setSymbolHolder("wt");
-                dispatch(listWomensTop(props.allProducts));
-                break;
-            default:
-                // console.log("nothing inside the page was returned! DO ERROR PAGE!!!!");
-                break;
-        }
-
-        setDisplayText(pagePath.replace(/(^[m|w])(\w+)\s([t|b|a])(\w+$)/i, (all, b, c, d, e) => {
-            return b.toUpperCase() + c.toLowerCase() + "'s " + d.toUpperCase() + e.toLowerCase();
-        }));
-        // return;
-
-    }
-    useEffect(() => {
-        masterFunc();
-    }, [pagePath, symbolHolder, displayText, category, subcat]);
-
 
     return (
         <>
             <Head>
-                <title>Haven {displayText} Products</title>
+                <title>Haven {props.displayText} Products</title>
             </Head>
             <>
                 <HiddenHeader divideBy={1} />
@@ -92,7 +30,13 @@ const SubCat = (props) => {
                 {
                 props.allProducts.length > 0 ?
                 
-                <FeatureProducts products={categoryListProducts} displayMax={displayMax} headerText={displayText} categoryPage={symbolHolder} />
+                <FeatureProducts 
+                    products={props.displayProductCategory}
+                    displayMax={props.displayMax}
+                    headerText={props.displayText}
+                    categoryPage={props.symbolHolder}
+                    pageType={"Product Listing"}
+                />
                 : null
                 }
                 <Directions />
@@ -102,28 +46,72 @@ const SubCat = (props) => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-    (store) => async () => {
+    (store) => async (ctx) => {
+        const query = ctx.query;
+
         await store.dispatch(allProductsThunk());
+
+        const allProducts = store.getState().products.allProducts;
+        const pagePath = query.category.toLowerCase() + " " + query.subcat.toLowerCase();
+
+        const textDisplay = pagePath.replace(/(^[m|w])(\w+)\s([t|b|a])(\w+$)/i, (all, b, c, d, e) => {
+            return b.toUpperCase() + c.toLowerCase() + "'s " + d.toUpperCase() + e.toLowerCase();
+        });
+
+        let displayProductCategory = null, symbolHolder = "";
+        const productCategoriesSeparator = () => {
+            switch (pagePath) {
+                case "men all":
+                    symbolHolder = "ma";
+                    store.dispatch(listOfAllMenProducts(allProducts));
+                    displayProductCategory = store.getState().products.allMenProducts;
+                    break;
+                case "men bottom":
+                    symbolHolder = "mb";
+                    store.dispatch(listMensBottoms(allProducts));
+                    displayProductCategory = store.getState().products.mensBottom;
+                    break;
+                case "men top":
+                    symbolHolder = "mt";
+                    store.dispatch(listMensTop(allProducts));
+                    displayProductCategory = store.getState().products.mensTop;
+                    break;
+                case "women all":
+                    symbolHolder = "wa";
+                    store.dispatch(listOfAllWomenProducts(allProducts));
+                    displayProductCategory = store.getState().products.allWomenProducts;
+                    break;
+                case "women bottom":
+                    symbolHolder = "wb";
+                    store.dispatch(listWomensBottoms(allProducts));
+                    displayProductCategory = store.getState().products.womensBottom;
+                    break;
+                case "women top":
+                    symbolHolder = "wt";
+                    store.dispatch(listWomensTop(allProducts));
+                    displayProductCategory = store.getState().products.womensTop;
+                    break;
+                default:
+                    displayProductCategory = null;
+                    symbolHolder = "";
+                    break;
+            }
+        }
+
+        store.dispatch(productDisplayMax(6));
+        productCategoriesSeparator();
 
         return {
             props: {
                 allProducts: store.getState().products.allProducts,
-                displayMax: store.getState().products.displayMax
+                displayMax: store.getState().products.displayMax,
+                symbolHolder: symbolHolder,
+                pagePath: pagePath,
+                displayText: textDisplay,
+                displayProductCategory: displayProductCategory
             }
         }
     }
 );
-
-// export function getServerSideProps(ctx) {
-//   const { params } = ctx;
-//   const { id } = params;
-
-//   return {
-//     props: {
-//       // Pass id as key here, remember that the file name is [id].tsx
-//       key: id
-//     }, // will be passed to the page component as props
-//   };
-// }
 
 export default SubCat;
