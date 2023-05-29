@@ -1,0 +1,247 @@
+.sign_on_section {
+    height: 800px;
+    width: 100vw;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.blur_background {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+.sign_on_article {
+    /* width: max-content; */
+    background-color: #fff;
+    padding: 0 50px;
+    border-radius: 20px;
+    /* position: absolute; */
+    position: relative;
+    z-index: 10;
+    display: grid;
+    /* height: 60%; */
+    grid-template-columns: 0.5fr 0.1fr 1.2fr;
+    grid-template-areas: "front_img . sign_on_content";
+    box-shadow: inset 0 0 5px 5px rgba(60, 60, 60, 0.5), 0 0 5px 5px rgba(60, 60, 60, 0.5);
+}
+
+.sign_on_image_container {
+    position: relative;
+    height: auto;
+    /* width: 250px; */
+    margin-left: -50px;
+    grid-area: front_img;
+}
+
+.curved_image {
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    box-shadow: inset 0 0 5px 5px rgba(60, 60, 60, 0.5), 0 0 5px 5px rgba(60, 60, 60, 0.5);
+}
+
+.sign_on_content_container {
+    padding: 25px 0 25px 25px;
+    grid-area: sign_on_content;
+    height: 100%;
+    /* background-color: red; */
+}
+
+.sign_on_content_container > div {
+    height: 100%;
+    /* background-color: pink; */
+    width: 100%;
+}
+
+
+/* ////////////////////////////////////////////////// GAIN ACCESS  */
+
+.gain_access_form {
+    width: 100%;
+    /* height: 100%; */
+    /* height: 400px; */
+    /* background-color: green; */
+    display: grid;
+    /* grid-template-columns: 1fr; */
+    grid-template-rows: .2fr .4fr .1fr 1fr 1.5fr;
+    grid-template-areas: "."
+                "logo"
+                "header"
+                "content"
+                "content"; 
+    gap: 5px;
+}
+
+.form_logo {
+    grid-area: logo;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    margin-bottom: -20px;
+    margin-top: -5px;
+}
+
+.logo_ {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-width: 130px;
+    /* transform: scale(var(--logo-scale-size)); */
+}
+
+.form_header {
+    margin-top: -50px;
+    grid-area: header;
+    display: grid;
+    gap: 10px;
+}
+
+.form_header > h4 {
+    font-size: min(4.5vw, 1.3rem);
+    font-weight: 700;
+    width: max-content;
+}
+
+.form_content {
+    grid-area: content;
+}
+
+.sign_on_inputs {
+    width: 100%;
+    height: 35px;
+    /* min-width: 100px; */
+}
+
+/* ////////////////////////// user input container div  */
+.user_input_content {
+    position: relative;
+    /* width: 100%; */
+    height: 100%;
+    /* background-color: aqua; */
+    display: grid;
+    grid-template-columns: .4fr 1fr .4fr;
+    grid-template-rows: 1fr 1fr 1fr .6fr;
+    grid-template-areas: "email-form email-form email-form"
+                        "password-form password-form password-form"
+                        "optional-form optional-form optional-form";
+    /* grid-template-rows: ; */
+}
+
+.form_email {
+    grid-area: email-form;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* margin-top: -20px; */
+}
+
+.form_password {
+    grid-area: password-form;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.optional_div  {
+    grid-area: optional-form;
+    /* background-color: pink; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    /* width: max-content; */
+}
+
+.optional_div > :first-child > label {
+    padding-bottom: 2.5px;
+}
+
+.optional_div > :last-child {
+    padding-bottom: 20px;
+    padding-top: 2.5px;
+} 
+
+
+.submission_elem {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+/* ////////////////////////////// LOGIN */
+
+.login_title {
+    color: var(--submit-button);
+    cursor: pointer;
+}
+
+.login_info_fallbacks {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.login_info_fallbacks > span {
+    color: var(--warning-yellow);
+}
+
+.login_info_fallbacks > p {
+    color: var(--danger-red);
+}
+
+
+/* //////////////////////////    REGISTER    */
+
+.email_subscription {
+    display: flex;
+    gap: 5px;
+    color: var(--submit-button);
+    cursor: pointer;
+}
+
+.email_subscription > input {
+    cursor: pointer;
+}
+
+/* ////////////////////////// submission */
+
+.submit_form {
+    background-color: var(--submit-button);
+    color: #fff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: min(4vw, 1.2rem);
+    padding: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    /* width: max-content; */
+}
+
+.text_form_size {
+    font-size: min(3vw, 1rem);
+    /* white-space: nowrap; */
+}
+
+@media only screen and (max-width: 500px) {
+    .form_header {
+        margin-top: 0;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .gain_access_form {
+        /* height: 500px; */
+    }
+}

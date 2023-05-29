@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import HiddenHeader from "../components/HiddenHeader";
-import LoginPage from "../components/LoginPage";
+import SignOn from "../components/SignOn";
 
 const Login = (props) => {
     return (
@@ -10,7 +10,13 @@ const Login = (props) => {
             </Head>
             <HiddenHeader divideBy={1} />
             {/* <HiddenHeader divideBy={4} /> */}
-            <LoginPage />
+            <SignOn
+                header={"Login"}
+                pageType={"loginPage"}
+                theBackgroundImage={"/assets/login_background.jpg"}
+                theBannerImage={"/assets/login_front.jpg"}
+                bannerALT={"Login Lock"}
+            />
         </>
     )
 }

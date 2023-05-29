@@ -59,7 +59,8 @@ a {
   --browser-check: var(--all-browsers);
   --shipping-content-transform-y: 100%;
   --checkout-aside-accordion-y: -100%;
-
+  --warning-yellow: rgba(214, 196, 33, 1);
+  --danger-red: rgba(244, 15, 15, 1);
   /* TYPOGRAPHY */
 }
 
