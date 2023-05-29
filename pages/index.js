@@ -12,6 +12,7 @@ import { selectAllProductsRandomized, allProductsThunk } from "../feature/produc
 export default function Home(props) {
   const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
+  console.log(allProducts)
   return (
     <>
       <Head>
@@ -19,7 +20,13 @@ export default function Home(props) {
       </Head>
       <>
         <Hero src={src} />
-        <FeatureProducts products={allProducts} displayMax={8} headerText={"Featured Products"} categoryPage={""} pageType={"Home"} />
+        <FeatureProducts 
+          products={allProducts}
+          displayMax={8}
+          headerText={"Featured Products"}
+          subHeader={"New Modern Design Collection"}
+          categoryPage={""}
+          pageType={"Home"} />
         <Directions />
         <Guarantee />
         <ShopCategory />
@@ -41,7 +48,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     }
   }
 );
-
+Home.layout = "L1";
 
 /*
 export async function getServerSideProps() {

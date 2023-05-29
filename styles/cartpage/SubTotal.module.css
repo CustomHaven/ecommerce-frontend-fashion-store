@@ -1,0 +1,161 @@
+.aside_subtotal_container {
+    text-align: right;
+    position: relative;
+}
+
+.aside_subtotal_container::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: black;
+}
+
+.aside_subtotal_container > div {
+    position: absolute;
+    right: 0;
+}
+
+.free_shipping_container {
+    text-align: center;
+    font-size: clamp(min(2vw, 0.7rem), min(4vw, 1rem), min(6vw, 1.2rem));
+    color: green;
+}
+
+.italic_i {
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    height: min(3vh, 15px);
+    width: min(3vw, 15px);
+    min-width: 5px;
+    min-height: 5px;
+    font-style: italic;
+    font-weight: 700;
+    display: inline-block;
+    text-align: center;
+    /* vertical-align: middle; */
+}
+
+.input_range {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EDF1F0), to(#F6F8F7));
+    outline: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 1);
+}
+
+.input_range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1px;
+    height: 15px;
+    /* border-radius: 50%; */
+
+    background: var(--range-o-meter);
+    border: 4px solid var(--range-o-meter);
+    box-shadow: -807px 0 0 800px var(--range-o-meter);
+}
+
+.input_range::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1px;
+    height: 15px;
+    /* border-radius: 50%; */
+
+    background: var(--range-o-meter);
+    border: 4px solid var(--range-o-meter);
+    box-shadow: -807px 0 0 800px var(--range-o-meter);
+}
+
+.subtotal_prices {
+    height: 150px;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    margin: 20px 0;
+}
+
+.subtotal_prices::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: black;
+    top: 50%;
+    left: 0;
+}
+
+.subtotal_prices > h3 {
+    /* font-size: 1.5rem; */
+    font-size: clamp(min(3vw, 1rem), min(6vw, 1.3rem), min(9vw, 1.5rem));
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.subtotal_cta_container {
+    position: relative;
+    /* min-width: 250px; */
+}
+
+.subtotal_cta {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 190px;
+    align-items: flex-end;
+    width: 80%;
+}
+
+.subtotal_cta > * {
+    width: 100%;
+}
+
+.subtotal_cta_buttons {
+    width: 100%;
+    height: 60px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.subtotal_cta > :first-child > .subtotal_cta_buttons {
+    border: 2px solid #A85425;
+    background-color: #A85425;
+    font-size: clamp(min(2vw, 0.7rem), min(4vw, 1rem), min(6vw, 1.2rem));
+    color: white;
+}
+
+.subtotal_cta > :first-child:hover > .subtotal_cta_buttons {
+    background-color: white;
+    color: #A85425;
+}
+
+.subtotal_cta > :last-child > .subtotal_cta_buttons {
+    border: 2px solid black;
+    background-color: white;
+    font-size: clamp(min(2vw, 0.7rem), min(4vw, 1rem), min(6vw, 1.2rem));
+    color: #808080;
+}
+
+.subtotal_cta > :last-child:hover > .subtotal_cta_buttons {
+    border: 2px solid #808080;
+    color: white;
+    background-color: #808080; /* gray */
+}
+
+.subtotal_cta > p {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: clamp(min(2vw, 0.7rem), min(4vw, 1rem), min(6vw, 1.2rem));
+}

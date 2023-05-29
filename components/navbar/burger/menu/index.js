@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { AiOutlinePlus, AiOutlineClose, AiOutlineMinus, AiOutlineInstagram, AiFillYoutube, AiFillGithub } from "react-icons/ai";
 import { TfiFacebook, TfiTwitterAlt } from "react-icons/tfi";
 import styles from "../../../../styles/Menu.module.css";
@@ -29,6 +29,12 @@ const Menu = (props) => {
         }
     }
 
+    useEffect(() => {
+        if (props.media && props.root.current && props.menuClick) {
+            props.root.current.style.setProperty("--logo-scale-size", "1");
+        }
+    }, [props.media, props.menuClick]);
+
     return (
         <>
             {
@@ -38,7 +44,12 @@ const Menu = (props) => {
                     </button>
                     <figure className={styles.aside_menu_canva_logo_container}>
                         <Link href="/">
-                            <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.aside_menu_canva_logo} />
+                            {/* <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.aside_menu_canva_logo} /> */}
+                            <Canvas 
+                                src="/assets/my_logo/logo_world_customhaven_side_stack.svg"
+                                // className={"logo"}
+                                className={[styles.aside_menu_canva_logo, "logo"].join(" ")}
+                            />
                         </Link>
                     </figure>
                     <ul className={styles.aside_menu_ul}>
@@ -58,10 +69,10 @@ const Menu = (props) => {
                                 <div className={styles.aside_menu_options_dropdown}>
                                     <ul>
                                         <li>
-                                            <Link href="/shop/mens"><p>Men's</p></Link>
+                                            <Link href="/products/men/all"><p>Men's</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/shop/womens"><p>Women's</p></Link>
+                                            <Link href="/products/women/all"><p>Women's</p></Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -69,7 +80,7 @@ const Menu = (props) => {
                             }
                         </li>
                         <li>
-                            <Link href="services"><span>Services</span></Link>
+                            <Link href="/services"><span>Services</span></Link>
                         </li>
                         <li data-about="about-li" onClick={handleClick}>
                             <span data-about="about-li" data-span-content="the-content">About</span>
@@ -101,7 +112,7 @@ const Menu = (props) => {
                             }
                         </li>
                         <li>
-                            <Link href="contact"><span>Contact</span></Link>
+                            <Link href="/contact"><span>Contact</span></Link>
                         </li>
                     </ul>
                     <p className={styles.aside_menu_account}><Link href="/account/login">Account</Link></p>

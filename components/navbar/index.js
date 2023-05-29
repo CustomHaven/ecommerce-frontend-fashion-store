@@ -1,11 +1,13 @@
 import Link from "next/link";
-import { useRef } from "react";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
 import styles from "../../styles/Navbar.module.css";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import Canvas from "../canva";
 import Burger from "./burger";
+import useQuerySelector from "../../hooks/useQuerySelector";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
 
@@ -15,6 +17,7 @@ const Navbar = (props) => {
     const headerRef = useRef(null);
     const { media } = useMediaQuery(700);
     // const sectionRef = useQuerySelector("section");
+    const root = useQuerySelector(":root");
 
     // console.log("sectionRef", sectionRef);
     // console.log("sectionRef.current", sectionRef.current);
@@ -54,10 +57,16 @@ const Navbar = (props) => {
             headerRef.current.style.backgroundColor = "var(--header-footer-colors)";
         }
     };
-
+// /assets/my_logo/logo_world_customhaven_side_stack.svg #B5DECB // old #297ad6
     useIntersectionObserver({
         rootMargin: "-40%",
     }, [props.sectionRef], handleIntersect);
+
+    useEffect(() => {
+        if (!media && root.current) {
+            root.current.style.setProperty("--logo-scale-size", "0.8");
+        }
+    }, [media]);
 
     return (
         <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>
@@ -68,6 +77,8 @@ const Navbar = (props) => {
             <>
             <Burger
                 logo={styles.logo}
+                root={root}
+                media={media}
             />
             </> :
                 <>
@@ -75,7 +86,12 @@ const Navbar = (props) => {
                         <div className={styles.logo_link_section}>
                             <Link href="/" className={styles.logo_link}>
                                 <div className={styles.nav_main_logo_container}>
-                                    <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.logo} />
+                                    <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={"logo"} />
+                                    {/* <Image 
+                                        // key={img.idImage}
+                                        className={styles.logo}
+                                        fill src={"/assets/my_logo/logo_world_customhaven_side_stack.svg"} alt={"LOGO"}
+                                    /> */}
                                 </div>
                             </Link>
                         </div>

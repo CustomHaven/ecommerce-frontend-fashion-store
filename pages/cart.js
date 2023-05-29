@@ -14,10 +14,15 @@ const Cart = (props) => {
                 <title>Haven Cart Page</title>
             </Head>
             <HiddenHeader divideBy={1} />
-            <HiddenHeader divideBy={4} />
-            <Breadcrumbs divideBy={8} breadcrumbs={["Home", "Cart"]} pageType={"cartPage"} />
+            {/* <HiddenHeader divideBy={4} /> */}
+            <Breadcrumbs divideBy={8} breadcrumbs={["Home", "All Products", "Cart"]} prodId={""} pageType={"cartPage"} />
             <CartPage randomProducts={props.allProductsRandomized}/>
-            <Featured products={props.allProductsRandomized} displayMax={4} headerText={""} categoryPage={""} />
+            <Featured 
+                products={props.allProductsRandomized}
+                displayMax={4}
+                headerText={""}
+                subHeader={"YOU MIGHT ALSO LIKE"}
+                categoryPage={"cart"} />
         </>
     )
 }
@@ -34,5 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
     }
 );
+
+Cart.layout = "L1";
 
 export default Cart;

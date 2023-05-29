@@ -28,9 +28,9 @@ const Featured = (props) => {
 
     const copyArrayHelper = (smallOrBigArray, chunkSize) => {
         const copy = chunkArray(smallOrBigArray, chunkSize);
-        return copy.map((page, index) => page.map(p => ({
+        return copy.map((page) => page.map((p, i) => ({
             ...p,
-            idHTML: "product-cards-" + index 
+            idHTML: "product-cards-" + i
         })));
     }
 
@@ -73,7 +73,7 @@ const Featured = (props) => {
         <>
             <section data-white id="feature-product-section" className={styles.feature_section}>
                 <h2>{props.headerText}</h2>
-                <h3>New Modern Design Collection</h3>
+                <h3>{props.subHeader}</h3>
                 <div ref={featureProductsContainerRef}>
                     {
                         pageArray.length > 0 &&

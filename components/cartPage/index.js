@@ -1,103 +1,104 @@
 import Image from "next/image";
-import { useState } from "react";
-import styles from "../../styles/Cart.module.css";
+import { useRouter } from "next/router";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import useQuerySelector from "../../hooks/useQuerySelector";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { selectCart, updateQuantity, removeCartItemThunk, removeCartThunk } from "../../feature/cartSlice/cartSlice";
+import SubTotal from "./subTotal";
+import { bufferImg } from "../../utils/generalUtils";
+import { handleInput, handlePlus, handleMinus, handleRemove, handleProductName } from "../../utils/cartFormHelper";
+import styles from "../../styles/cartpage/Cart.module.css";
 
-const CartPage = (props) => {
-    console.log(props.randomProducts);
-    const img = "https://images.unsplash.com/photo-1601762603339-fd61e28b698a";
-    const ArrayData = new Array(3).fill({
-        id: 0,
-        img,
-        name: "prison jumper",
-        price: 39.99,
-        quantity: 1,
-    }).map((a, i) => ({...a, id: i+1}));
+const CartPage = () => {
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const cart = useSelector(selectCart);
+    const root = useQuerySelector(":root");
+    const { windowWidth } = useWindowDimensions();
+    const cartList = cart.cartList;
+    const [fireOnce, setFireOnce] = useState(false);
+    const tableRef = useRef(null);
 
-
-    const changleInputValues = (e, arrayOld, data) => {
-        const newArray = [...arrayOld];
-
-        const foundIndex = newArray.findIndex((item) => {
-            if (item.id === data.id) {
-                return item;
-            }
-        });
-
-        newArray[foundIndex].quantity = e.target.value;
-        const firstPart = newArray.slice(0, foundIndex);
-        const secondPart = newArray.slice(foundIndex + 1, newArray.length);
-        return [].concat(firstPart).concat(newArray[foundIndex]).concat(secondPart);
-    }
-
-
-    const [arrayDummy, setArrayDummy] = useState(ArrayData);
-
-
-    const handleInput = (e, data) => {
-        const reg = new RegExp(/^\d*$/)
-        if (!reg.test(e.target.value)) {
-            return;
+    useEffect(() => {
+        if (fireOnce === true) {
+            dispatch(removeCartThunk({ cartId: cart.id }));
+            setFireOnce(false);
         }
-
-        const array = changleInputValues(e, arrayDummy, data);
-        setArrayDummy(array);
-    }
-
+    }, [cartList]);
 
     return (
         <>
         <section data-white className={styles.cart_section}>
             <h1>Cart</h1>
-            <div data-cartContent>
+            {cartList.length > 0 ?
+            <div id="table-container" ref={tableRef} data-cartContent>
                 <table className={styles.cart_table} >
                     <thead className={styles.cart_table_header}>
                         <tr className={[styles.tr_data, styles.tr_data_upper].join(" ")}>
-                            <th colSpan={2} className={styles.cart_header_items}>Cart Items</th>
-                            <th className={styles.cart_header_price}>Price</th>
-                            <th className={styles.cart_header_quantity}>Quantity</th>
-                            <th className={styles.cart_header_subtotal}>Subtotal</th>
+                            <th colSpan={windowWidth > 700 ? 2 : 1} className={[styles.cart_header_items, styles.cart_table_headers].join(" ")}>
+                                <p className={styles.cart_table_th_right_margin}>Cart Items</p>
+                            </th>
+                            <th className={[styles.cart_header_price, styles.cart_table_headers].join(" ")}>
+                                <p className={styles.cart_table_th_right_margin}>Price</p>
+                            </th>
+                            <th className={[styles.cart_header_quantity, styles.cart_table_headers].join(" ")}>
+                                <p className={styles.cart_table_th_right_margin}>Quantity</p>
+                            </th>
+                            <th className={[styles.cart_header_subtotal, styles.cart_table_headers].join(" ")}>
+                                <p>Subtotal</p>
+                            </th>
                         </tr>
                     </thead>
                     <tbody className={styles.cart_table_body}>
                         {
-                            // LOOK HERE!! CHANGE DUMMY TO REAL VALUES!
-
-
-                            arrayDummy.map((data, index, array) => 
-                                <tr key={data.id} className={[styles.tr_data, array[index] === arrayDummy[array.length -1] && styles.tr_data_lower].join(" ")}>
-                                    <td className={styles.cart_data_image}>
-                                        <div>
-                                            <figure>
-                                                <Image src={data.img} fill />
-                                            </figure>
-                                        </div>
-                                    </td>
+                            cartList.map((data, index, array) => 
+                                <tr key={data.id} className={[styles.tr_data, array[index] === cartList[array.length -1] && styles.tr_data_lower].join(" ")}>
+                                    {
+                                        windowWidth > 700 ?
+                                        <td className={styles.cart_data_image}>
+                                            <div>
+                                                <figure>
+                                                    <Image 
+                                                        src={bufferImg(data.product.ProductBannerImage.banner_image_data)} 
+                                                        alt={data.product.ProductBannerImage.banner_image_name} 
+                                                        fill />
+                                                </figure>
+                                            </div>
+                                        </td> : null
+                                    }
                                     <td className={styles.cart_data_name}>
                                         <div>
-                                            <p>{data.name}</p>
+                                            <span onClick={(e) => handleProductName(e, data, router)}>{data.product.product_name}</span>
                                         </div>
                                     </td>
                                     <td className={styles.cart_data_price}>
-                                        <p>${data.price}</p>
+                                        <p>${data.product.price}</p>
                                     </td>
                                     <td className={styles.cart_data_quantity}>
-                                        <div>
+                                        <div className={styles.cart_input_quantities}>
                                             <input
-                                                onChange={(e) => handleInput(e, data)}
-                                                className={styles.cart_data_quantity_input} 
+                                                onChange={(e) => handleInput(e, data, updateQuantity, dispatch)}
+                                                className={[styles.cart_data_quantity_input, styles.input_heights].join(" ")} 
                                                 pattern="[0-9]" 
                                                 value={data.quantity} />
                                             <div className={styles.cart_data_quantity_button_wrapper}>
-                                                <button>+</button>
-                                                <button>-</button>
+                                                <button 
+                                                    className={styles.button_heights}
+                                                    onClick={(e) => handlePlus(e, data, updateQuantity, dispatch)}>+</button>
+                                                <button 
+                                                    className={styles.button_heights}
+                                                    onClick={(e) => handleMinus(e, data, updateQuantity, "cart", cartList, removeCartItemThunk, setFireOnce, dispatch)}>-</button>
                                             </div>
                                         </div>
-                                        {/* {data.quantity} */}
                                     </td>
                                     <td className={styles.cart_data_subtotal}>
                                         <div>
-                                            <p>${data.price * data.quantity}</p>
-                                            <p className={styles.cart_cancel}>X</p>
+                                            <p>${(data.product.price * data.quantity).toFixed(2)}</p>
+                                            <button 
+                                                onClick={(e) => handleRemove(e, data, cartList, setFireOnce, removeCartItemThunk, dispatch, tableRef, index, root, windowWidth)}
+                                                className={styles.cart_cancel}><span>X</span>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>
@@ -105,14 +106,11 @@ const CartPage = (props) => {
                         }
                     </tbody>
                 </table>
-            </div>
-            
+            </div> : null}
+            { cartList.length > 0 ? <SubTotal tableRef={tableRef.current} cartList={cartList} /> : null }
         </section>
-        {/* <img src={img} style={{width: "100%", height: "100%", position: "absolute", top: "0", bottom: "0", zIndex: "10000"}}/> */}
         </>
     )
 }
 
 export default CartPage;
-
-// https://dibruno.com/cart.php

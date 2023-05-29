@@ -74,3 +74,18 @@ export const helperArrayNewSetOfFours = (oldFour, fullArraySize) => {
     });
     return arrayTemp;
 }
+
+export const sortArrayObjectForString = (a, b, key) => {
+    // Converting to uppercase to have case-insensitive comparison
+    const name1 = a[key].toUpperCase();
+    const name2 = b[key].toUpperCase();
+
+    let comparison = 0;
+
+    if (name1 > name2) {
+        comparison = 1;
+    } else if (name1 < name2) {
+        comparison = -1;
+    }
+    return comparison;
+}

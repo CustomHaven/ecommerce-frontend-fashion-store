@@ -1,9 +1,14 @@
-const finalResponse = async (response) => {
+const finalResponse = async (response, removeDeleteMethod) => {
     if (response.ok) {
-        return {
+        const jsonResponse = {
             statusCode: response.status,
-            data: await response.json()
+            statusText: response.statusText,
+            data: !removeDeleteMethod ? await response.json() : "nothing"
         }
+        if (removeDeleteMethod) {
+            delete jsonResponse.data;
+        }
+        return jsonResponse;
     }
     throw {
         name: response.statusText,

@@ -1,0 +1,102 @@
+.overlay {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    width: 100%;
+    box-shadow: inset 0px 0px 18px 100000px rgba(0, 0, 0, 0.75);
+}
+
+.loading_container {
+    max-width: 600px;
+    /* min-width: 300px; */
+    width: 25%;
+    height: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: #297AD6; */
+    background-color: whitesmoke;
+    -webkit-box-shadow: inset 0px 0px 400px #000000;
+    box-shadow: inset 0px 0px 400px #000000;
+    border-radius: 8px;
+
+}
+
+.text {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    position: absolute;
+    bottom: 0;
+    transform: translateY(-50%);
+}
+
+@media only screen and (max-width: 900px) {
+    .loading_container {
+        width: 25%;
+        height: 30%;
+    }
+    .text {
+        font-size: 1.7rem;
+        transform: translateY(-20%);
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .loading_container {
+        width: 20%;
+        height: 25%;
+    }
+    .text {
+        font-size: 1.5rem;
+        transform: translateY(-20%);
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .loading_container {
+        width: 20%;
+        height: 20%;
+    }
+    .text {
+        font-size: 1.5rem;
+        transform: translateY(-20%);
+    }
+}
+
+
+@media only screen and (max-width: 300px) {
+    .loading_container {
+        transform: translate(-50%, -150%);
+        height: 15%;
+    }
+}
+
+@media only screen and (max-width: 200px) {
+    .loading_container {
+        transform: translate(-50%, -250%);
+        height: 10%;
+    }
+}
+
+
+@media only screen and (max-width: 160px) {
+    .loading_container {
+        transform: translate(-50%, -300%);
+        height: 10%;
+    }
+}
+
+@media only screen and (max-width: 100px) {
+    .loading_container {
+        transform: translate(-50%, -350%);
+        height: 10%;
+    }
+}

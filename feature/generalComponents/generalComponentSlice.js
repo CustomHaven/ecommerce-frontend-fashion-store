@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// Looks like will delete this entire slice all states proved useless
 
 const componentSlice = createSlice({
     name: 'components',
@@ -11,9 +12,13 @@ const componentSlice = createSlice({
         navHeader: 115,
         navCanvaHeight: 110,
         heroRef: null,
-        headerRef: null
+        headerRef: null,
+        checkOutContactDetailRef: null
     },
     reducers: {
+        saveCheckOutContactDetailDiv(state, action) {
+            state.checkOutContactDetailRef = action.payload;
+        },
         mainRef(state, action) {
             state.main = action.payload;
         },
@@ -40,7 +45,14 @@ const componentSlice = createSlice({
     }
 });
 
-export const { mainRef, mainCurrent, fireMainMarginTop, fireNavHeader, fireNavCanvaHeight, placeHeroRef, placeHeaderRef } = componentSlice.actions;
+export const { mainRef, 
+    mainCurrent, 
+    fireMainMarginTop, 
+    fireNavHeader, 
+    fireNavCanvaHeight, 
+    placeHeroRef, 
+    placeHeaderRef, 
+    saveCheckOutContactDetailDiv } = componentSlice.actions;
 export const selectMain = state => state.components.main;
 export const selectMainCurrent = state => state.components.mainCurrent;
 export const selectMainMarginTop = state => state.components.mainMarginTop;
@@ -48,4 +60,5 @@ export const selectNavHeader = state => state.components.navHeader;
 export const selectNavCanvaHeight = state => state.components.navCanvaHeight;
 export const selectHeroRef = state => state.components.heroRef;
 export const selectHeaderRef = state => state.components.headerRef;
+export const selectCheckOutContactDetailRef = state => state.components.checkOutContactDetailRef;
 export default componentSlice.reducer;

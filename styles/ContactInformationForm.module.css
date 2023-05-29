@@ -1,0 +1,133 @@
+.contact_information_form {
+    display: grid;
+    gap: 20px;
+}
+
+.contact_information_form > h4 {
+    font-size: min(4.5vw, 1.1rem);
+    font-weight: 700;
+}
+
+.contact_information_form > div {
+    display: grid;
+    gap: 20px;
+    row-gap: 0;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr;
+    grid-template-areas: "left_label right_label"
+                        "left_input right_input";
+}
+
+.left_labels {
+    grid-area: left_label;
+}
+
+.left_inputs {
+    grid-area: left_input;
+    height: 50px;
+}
+
+.right_labels {
+    grid-area: right_label;
+}
+
+.right_inputs {
+    grid-area: right_input;
+    height: 50px;
+}
+
+.contact_information_form > input,
+.contact_information_form > select {
+    height: 50px;
+}
+
+.contact_information_form > label {
+    margin-bottom: -20px;
+}
+
+.contact_information_form > label > span {
+    font-style: italic;
+}
+
+.phone_number_form {
+    display: grid;
+    width: 100%;
+    /* grid-template-columns: 1fr; */
+    position: relative;
+}
+
+.phone_number_form > label {
+    /* grid-row: 1; */
+    grid-column: 1 / -1;
+    max-width: 100%;
+}
+
+.phone_number_form > input {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 50px;
+    /* padding-left: 7%; */
+    font-size: 1rem;
+}
+
+.phone_number_form > span {
+    position: absolute;
+    bottom: 25%;
+    left: 1%;
+    padding: 0 1px;
+    z-index: 50;
+    font-size: 1rem;
+}
+
+.phone_number_form > span::after {
+    content: "";
+    position: absolute;
+    height: 50px;
+    width: 0.5px;
+    left: 110%;
+    top: 2px;
+    bottom: 0;
+    margin: auto 0;
+    z-index: 50;
+    background-color: #e1e1e1;
+    text-align: center;
+    display: flex;
+}
+
+.phone_number_form > span > select {
+    /* position: relative; */
+    /* width: 100% !important; */
+    /* height: 100% !important; */
+    margin: -18px 0;
+    border: 0 !important;
+    z-index: 50;
+    font-size: 1rem;
+    justify-self: flex-start;
+    align-self: start;
+}
+
+
+.submit_contact_form {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.submit_contact_form > input {
+    background-color: black;
+    border: none;
+    color: white;
+    height: 70px;
+    width: 100%;
+    font-size: clamp(min(4vw, 0.7rem) min(4.5vw, 1rem));
+    font-weight: 900;
+    width: max-content;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Done in JS instead */
+@media only screen and (max-width: 1400px) {
+    .phone_number_form > input {
+        /* padding-left: 8%; */
+    }
+}

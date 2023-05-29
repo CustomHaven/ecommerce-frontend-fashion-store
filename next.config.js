@@ -5,6 +5,15 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "ae01.alicdn.com"]
   },
+  redirects: () => {
+    return [
+      {
+        source: '/checkout',
+        destination: '/',
+        permanent: false,
+      },
+    ]
+  }
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -33,6 +33,8 @@ const ProdId = (props) => {
     delete singleProduct["ProductBannerImage"];
     delete singleProduct["ProductImages"];
 
+    console.log("what is query params", props.queryParams);
+
 
     return (
         <>
@@ -42,7 +44,7 @@ const ProdId = (props) => {
             <>
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
-                <Breadcrumbs divideBy={8} breadcrumbs={props.queryParams} pageType={"productPage"} />
+                <Breadcrumbs divideBy={8} breadcrumbs={props.queryParams} prodId={props.prodId} pageType={"productPage"} />
                 <ProductPage product={singleProduct}/>
             </>
         </>
@@ -73,7 +75,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
 
 
-        console.log("queryParams!", queryParams);
+        // console.log("queryParams!", queryParams);
 
 
         return {
@@ -88,5 +90,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
     }
 );
+
+ProdId.layout = "L1";
 
 export default ProdId;

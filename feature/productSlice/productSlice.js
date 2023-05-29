@@ -116,21 +116,21 @@ const productSlice = createSlice({
         },
         listOfAllWomenProducts(state, action) {
             state.allWomenProducts = action.payload.filter(products => {
-                if (products.type.match(/Wommen/)) { // spelt wrong in the backend fix to women correct spelling
+                if (products.type.match(/Women/)) { // spelt wrong in the backend fix to women correct spelling
                     return products;
                 }
             });
         },
         listWomensTop(state, action) {
             state.womensTop = action.payload.filter(products => {
-                if (products.type.match(/Wommens Top/)) { // spelt wrong in the backend fix to women correct spelling
+                if (products.type.match(/Womens Top/)) { // spelt wrong in the backend fix to women correct spelling
                     return products;
                 }
             });
         },
         listWomensBottoms(state, action) {
             state.womensBottom = action.payload.filter(products => {
-                if (products.type.match(/Wommens Bottom/)) { // spelt wrong in the backend fix to women correct spelling
+                if (products.type.match(/Womens Bottom/)) { // spelt wrong in the backend fix to women correct spelling
                     return products;
                 }
             });
@@ -266,7 +266,7 @@ const productSlice = createSlice({
                 state.singleProductErrors = false;
 
                 state.singleProductStatusCode = action.payload.statusCode;
-                state.singleProductStatusText = "";
+                state.singleProductStatusText = action.payload.statusText;
                 state.singleProductStatusMessage = "";
 
 
@@ -277,7 +277,7 @@ const productSlice = createSlice({
                 state.singleProductErrors = true;
 
                 state.singleProductStatusCode = action.payload.statusCode;
-                state.singleProductStatusText = action.payload.name;
+                state.singleProductStatusText = action.payload.statusText;
                 state.singleProductStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");
                 // .replace(/["message:'{}]/g, "") looks faster 
                 // actually not good if the original text has a needed letters from the word message they will be removed off the string

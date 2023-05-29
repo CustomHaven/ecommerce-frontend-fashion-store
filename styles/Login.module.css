@@ -1,0 +1,9 @@
+.register_login_section {
+    height: 400px;
+    width: 100vw;
+    position: relative;
+    background-image: url("../public/assets/login_background.jpg");
+    background-attachment:fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}

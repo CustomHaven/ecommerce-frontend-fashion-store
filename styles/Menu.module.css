@@ -73,6 +73,12 @@
 
 .aside_menu_drawer > .aside_menu_canva_logo_container {
     grid-area: aside-header-logo;
+    /* margin-top: 30px !important; */
+    position: relative;
+    transform: translateY(50%);
+    /* position: absolute; */
+    /* top: 100px; */
+    /* left: 20px; */
 }
 
 .aside_menu_canva_logo_container > * {

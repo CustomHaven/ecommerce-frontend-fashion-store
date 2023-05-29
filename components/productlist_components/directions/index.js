@@ -46,6 +46,7 @@ const Directions = (props) => {
         } else {
             margin = "50px auto";
         }
+
     } else {
         margin = "50px auto";
     }
@@ -103,6 +104,7 @@ const Directions = (props) => {
             }
         }
     }
+
 
     return (
         <>

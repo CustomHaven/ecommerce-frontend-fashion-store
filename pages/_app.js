@@ -1,9 +1,15 @@
 import '../styles/reset.css';
 import '../styles/globals.css';
-import Layout from '../components/Layout';
+import Layout1 from '../components/Layout/Layout';
+import CheckoutLayout from '../components/Layout/CheckoutLayout';
 import { Provider } from 'react-redux';
 // import store from '../store/store';
 import { wrapper } from '../store/store';
+
+const layouts = {
+  L1: Layout1,
+  L2: CheckoutLayout,
+};
 
 /*
 Do not add <script> tags using next/head (see <script> tag with src="https://unpkg.com/ml5@latest/dist/ml5.min.js"). Use next/script instead. 
@@ -13,8 +19,14 @@ See more info here: https://nextjs.org/docs/messages/no-script-tags-in-head-comp
 // function MyApp({ Component, pageProps }) {
 function MyApp({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest);
+  console.log("APP LEVEL WHAT IS REST?", rest);
   // const { emotionCache = clientSideEmotionCache, pageProps } = props;
   const {  pageProps } = props;
+
+
+  const Layout = layouts[Component.layout] || ((children) => <>{children}</>);
+
+
   return (
     <>
       {/* <Head> */}
@@ -23,7 +35,10 @@ function MyApp({ Component, ...rest }) {
       {/* </Head> */}
       <Provider store={store}>
         {/* <CacheProvider value={emotionCache}> */}
-          <Layout><Component {...pageProps} /></Layout>
+          {/* { */}
+              <Layout><Component {...pageProps} /></Layout>
+              
+          
         {/* </CacheProvider> */}
       </Provider>
     </>

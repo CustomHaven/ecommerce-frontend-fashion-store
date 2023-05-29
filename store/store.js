@@ -2,12 +2,24 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import componentReducer from "../feature/generalComponents/generalComponentSlice";
 import productReducer from "../feature/productSlice/productSlice";
+import cartReducer from "../feature/cartSlice/cartSlice";
+import userReducer from "../feature/userSlice/userSlice";
+import contactDetailReducer from "../feature/contactDetailSlice/contactDetailSlice";
+import authReducer from "../feature/authSlice/authSlice";
+import paymentReducer from "../feature/paymentSlice/paymentSlice";
+import orderReducer from "../feature/orderSlice/orderSlice";
 import errorReducer from "../feature/errorSlice/errorSlice";
 
 const makeStore = () => configureStore({
     reducer: {
         components: componentReducer,
         products: productReducer,
+        cart: cartReducer,
+        user: userReducer,
+        contactDetail: contactDetailReducer,
+        auth: authReducer,
+        payment: paymentReducer,
+        order: orderReducer,
         error: errorReducer
     },
     devTools: true,

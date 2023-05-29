@@ -9,7 +9,9 @@ const Footer = () => {
 
             <div className={styles.logo_link}>
                 <Link href="/">
-                    <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.footer_logo} />
+                    {/* <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.footer_logo} /> */}
+                    {/* <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={"logo"} /> */}
+                    <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={styles.footer_logo} />
                 </Link>
             </div>
 
@@ -30,9 +32,9 @@ const Footer = () => {
                 </li>
                 <li>
                     <h3>My Account</h3>
-                    <Link href="/register"><p>Sign In</p></Link>
+                    <Link href="/login"><p>Sign In</p></Link>
                     <Link href="/cart"><p>View Cart</p></Link>
-                    <Link href="/user_id/track-the-order"><p>Track My Order</p></Link>
+                    <Link href="/track-your-order"><p>Track My Order</p></Link>
                     <Link href="/wishlist"><p>Wishlist</p></Link>
                 </li>
                 <li>

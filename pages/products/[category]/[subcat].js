@@ -34,6 +34,7 @@ const SubCat = (props) => {
                     products={props.displayProductCategory}
                     displayMax={props.displayMax}
                     headerText={props.displayText}
+                    subHeader={"New Modern Design Collection"}
                     categoryPage={props.symbolHolder}
                     pageType={"Product Listing"}
                 />
@@ -113,5 +114,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
     }
 );
+
+SubCat.layout = "L1";
 
 export default SubCat;

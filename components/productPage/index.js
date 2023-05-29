@@ -23,7 +23,6 @@ const ProductPage = (props) => {
     const [currentSelectedImage, setCurrentSelectedImage] = useState(props.product.images[0].idImage);
     const [currentImage, setCurrentImage] = useState(props.product.images[0]);
     // const [largeImageSelected, setLargeImageSelected] = useState(false);
-    const [productCount, setProductCount] = useState(1);
     const { windowWidth } = useWindowDimensions();
 
     const handleLeftClick = () => {
@@ -78,18 +77,7 @@ const ProductPage = (props) => {
         setInitialFour(idIMAGE);
     }
 
-    const handleSubtraction = () => {
-        if (productCount <= 1) {
-            return;
-        }
-        setProductCount(productCount - 1);
-    }
-    const handleAddition = () => {
-        if (productCount >= props.product.quantity) {
-            return;
-        }
-        setProductCount(productCount + 1);
-    }
+
 
     useEffect(() => {
         window.addEventListener("resize", () => {
@@ -147,10 +135,7 @@ const ProductPage = (props) => {
 
                 {/* Product Details */}
                 <ProductDetails
-                    handleAddition={handleAddition}
-                    handleSubtraction= {handleSubtraction}
                     product={props.product}
-                    productCount={productCount}
                 />
             </section>
         </>

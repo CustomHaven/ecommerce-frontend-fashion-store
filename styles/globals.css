@@ -1,13 +1,22 @@
 html,
 body {
-  /* overflow-x: hidden; */
   /* overflow-y: hidden; */
+  /* overflow-y: scroll; */
   padding: 0;
   margin: 0;
+  height: 100%;
+  /* max-height: 100%; */
+  /* min-height: 100%; */
+  /* position: relative; */
+  /* min-height: 100%; */
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   /* font-family: 'Lora', serif; */
   /* background-color: aqua; */
+}
+
+body {
+  overflow-x: hidden;
 }
 
 a {
@@ -33,15 +42,32 @@ a {
   --header-footer-colors: rgba(228, 230, 244, 1);
   --nice-background-color: rgb(246, 247, 248);
   --roboto: "Roboto", "Lato", "Oswald", Helvetica, Arial, sans-serif;
-  --logo-color: rgba(100, 181, 160, 1);
+  --logo-color: rgba(41, 122, 214, 1);
+  --logo-scale-size: 0.8;
   --facebook: rgba(59, 89, 152, 1);
   --twitter: rgba(29, 161, 242, 1);
   --instagram: rgba(205, 72, 107, 1);
   --youtube: rgba(255, 0, 0, 1);
   --github: rgba(51, 51, 51, 1);
-  
+  --range-o-meter-good: rgba(0, 253, 10, 1);
+  --range-o-meter-bad: rgba(229, 127, 57, 1);
+  --range-o-meter: var(--range-o-meter-bad);
+  --first-th-table-cart: 55%;
+  --grow-shrink-ani: .7s;
+  --opera-light: light;
+  --all-browsers: dark;
+  --browser-check: var(--all-browsers);
+  --shipping-content-transform-y: 100%;
+  --checkout-aside-accordion-y: -100%;
 
   /* TYPOGRAPHY */
+}
+
+.logo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform: scale(var(--logo-scale-size));
 }
 
 h1 {
@@ -57,6 +83,18 @@ h3 {
   font-size: min(5vw, 1.2rem);
 }
 
+label {
+  display: block;
+}
+
+input {
+  position: relative;
+}
+
+input:not(:placeholder-shown) {
+  z-index: 12;
+}
+
 /* tr {
   height: 50vh;
 } */
@@ -66,6 +104,10 @@ h3 {
   position: relative;
   /* width: 100%; */
   max-width: 100vw;
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+  /* height: auto; */
+  /* top: 0; */
   /* overflow-y: hidden; */
   /* z-index: 100000; */
   /* margin-top: 115px; */
@@ -74,56 +116,111 @@ h3 {
   /* background-color: green; */
 }
 
+.show_content_accordion {
+  transform: translateY(0) !important;
+  transition: all 0.8s ease-in-out;
+}
+
 .slide-up {
+  -webkit-animation: slide-up 1.5s forwards ease-in-out;
+  -moz-animation: slide-up 1.5s forwards ease-in-out;
+  -o-animation: slide-up 1.5s forwards ease-in-out;
   animation: slide-up 1.5s forwards ease-in-out;
 }
 
+@-webkit-keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@-moz-keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@-o-keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 @keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .slide-in-right {
+  -webkit-animation: slide-in-right 1.5s forwards ease-in-out;
+  -moz-animation: slide-in-right 1.5s forwards ease-in-out;
+  -o-animation: slide-in-right 1.5s forwards ease-in-out;
   animation: slide-in-right 1.5s forwards ease-in-out;
 }
 
+@-webkit-keyframes slide-in-right {
+  from { transform: translateX(100%); -webkit-transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
+@-moz-keyframes slide-in-right {
+  from { transform: translateX(100%); -webkit-transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
+@-o-keyframes slide-in-right {
+  from { transform: translateX(100%); -webkit-transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
 @keyframes slide-in-right {
-  from {
-    transform: translateX(100%);
-    -webkit-transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    -webkit-transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(100%); -webkit-transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
 }
 
 .slide-in-left {
+  -webkit-animation: slide-in-left 1.5s forwards ease-in-out;
+  -moz-animation: slide-in-left 1.5s forwards ease-in-out;
+  -o-animation: slide-in-left 1.5s forwards ease-in-out;
   animation: slide-in-left 1.5s forwards ease-in-out;
 }
 
+@-webkit-keyframes slide-in-left {
+  from { transform: translateX(-100%); -webkit-transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
+@-moz-keyframes slide-in-left {
+  from { transform: translateX(-100%); -webkit-transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
+@-o-keyframes slide-in-left {
+  from { transform: translateX(-100%); -webkit-transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
+}
 @keyframes slide-in-left {
-  from {
-    transform: translateX(-100%);
-    -webkit-transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    -webkit-transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(-100%); -webkit-transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); -webkit-transform: translateX(0); opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
+.grow-shrink {
+  -webkit-animation: grow-shrink var(--grow-shrink-ani) ease-in-out; /* Safari 4+ */
+  -moz-animation: grow-shrink var(--grow-shrink-ani) ease-in-out; /* Fx 5+ */
+  -o-animation: grow-shrink var(--grow-shrink-ani) ease-in-out; /* Opera 12+ */
+  animation: grow-shrink var(--grow-shrink-ani) ease-in-out;
+  /* animation-name: grow-shrink; */
+  /* animation-duration: .7s; var(--grow-shrink-ani) */
+  /* animation-timing-function: ease-in-out; */
+}
+
+@-webkit-keyframes grow-shrink {
+  0%, 50%, 100% { transform: scale(1); }
+  25%, 75% { transform: scale(1.8); }
+}
+@-moz-keyframes grow-shrink {
+  0%, 50%, 100% { transform: scale(1); }
+  25%, 75% { transform: scale(1.8); }
+}
+@-o-keyframes grow-shrink {
+  0%, 50%, 100% { transform: scale(1); }
+  25%, 75% { transform: scale(1.8); }
+}
+@keyframes grow-shrink {
+  0%, 50%, 100% { transform: scale(1); }
+  25%, 75% { transform: scale(1.8); }
+}
+
+@media (prefers-color-scheme: var(--browser-check)) {
   html {
     color-scheme: dark;
   }

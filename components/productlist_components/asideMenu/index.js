@@ -8,6 +8,7 @@ import styles from "../../../styles/Aside.module.css";
 // import { useRouter } from "next/dist/client/router";
 
 const AsideMenu = () => {
+    const [hydrate, setHydrate] = useState(false);
     // Stops some error
     if (process.title === "browser" && window.location.pathname === "/") {
         console.log("empty pathname?");
@@ -133,8 +134,15 @@ const AsideMenu = () => {
 
     }, [process?.title === "browser" && window.location.pathname, pageList]);
 
+    useEffect(() => {
+        setHydrate(true);
+    }, []);
+
     return (
         <>
+        {
+            hydrate ?
+        
             <aside id="aside_product_menu_id" className={styles.aside_product_menu}>
                 <div>
                     <Link href="/">
@@ -196,7 +204,8 @@ const AsideMenu = () => {
                         <p>Account</p>
                     </Link>
                 </div>
-            </aside>
+            </aside> : null
+        }
         </>
     )
 }

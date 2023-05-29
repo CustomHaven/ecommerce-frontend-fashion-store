@@ -28,7 +28,13 @@ const AllProducts = () => {
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
                 <AsideMenu />
-                <FeatureProducts products={allProducts} displayMax={displayMax} headerText={"All Products"} categoryPage={""} pageType={"Product Listing"} />
+                <FeatureProducts
+                    products={allProducts}
+                    displayMax={displayMax}
+                    headerText={"All Products"}
+                    subHeader={"New Modern Design Collection"}
+                    categoryPage={""}
+                    pageType={"Product Listing"} />
                 <Directions />
             </>
         </>   
@@ -49,5 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
     }
 );
+
+AllProducts.layout = "L1";
 
 export default AllProducts;
