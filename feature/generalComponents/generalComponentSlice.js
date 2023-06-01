@@ -13,9 +13,13 @@ const componentSlice = createSlice({
         navCanvaHeight: 110,
         heroRef: null,
         headerRef: null,
-        checkOutContactDetailRef: null
+        checkOutContactDetailRef: null,
+        asideSwitch: true
     },
     reducers: {
+        adminHeaderController(state, action) {
+            state.asideSwitch = action.payload;
+        },
         saveCheckOutContactDetailDiv(state, action) {
             state.checkOutContactDetailRef = action.payload;
         },
@@ -46,6 +50,7 @@ const componentSlice = createSlice({
 });
 
 export const { mainRef, 
+    adminHeaderController,
     mainCurrent, 
     fireMainMarginTop, 
     fireNavHeader, 
@@ -53,6 +58,7 @@ export const { mainRef,
     placeHeroRef, 
     placeHeaderRef, 
     saveCheckOutContactDetailDiv } = componentSlice.actions;
+
 export const selectMain = state => state.components.main;
 export const selectMainCurrent = state => state.components.mainCurrent;
 export const selectMainMarginTop = state => state.components.mainMarginTop;
@@ -61,4 +67,6 @@ export const selectNavCanvaHeight = state => state.components.navCanvaHeight;
 export const selectHeroRef = state => state.components.heroRef;
 export const selectHeaderRef = state => state.components.headerRef;
 export const selectCheckOutContactDetailRef = state => state.components.checkOutContactDetailRef;
+export const selectAsideSwitch = state => state.components.asideSwitch;
+
 export default componentSlice.reducer;

@@ -1,0 +1,122 @@
+.admin_nav_header {
+    background-color: var(--header-footer-colors);
+    display: grid; 
+    grid-template-rows: 10px 50px 20px;
+    grid-template-columns: 10% 10% 10% 15% 5% 10% 10% 10% 10% 10%;
+    grid-template-areas: ". . . . . . . . . ."
+            "menu . . . logo logo . . info ."
+            ". . . . . . . . . .";
+    place-items: center;
+    width: 100%;
+    /* height: 80%; */
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.admin_header__left {
+    grid-area: menu;
+}
+
+.admin_header__middle {
+    grid-area: logo;
+    height: 120px;
+    margin-top: 60px;
+}
+
+.admin_header__right {
+    grid-area: info;
+}
+
+.admin_header_right_list {
+    display: flex;
+    position: relative;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+}
+
+.admin_initials {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    border-radius: 50%;
+    background-color: var(--logo-color);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin_text_sizes {
+    font-size: min(3vw, 0.8rem);
+    font-weight: 700;
+}
+
+.admin_header__left > :first-child,
+.admin_header_right_list > :first-child > *,
+.admin_header_right_list > :last-child > * {
+    font-size: min(7vw, 1.6rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.admin_header_right_list > :last-child > * {
+    cursor: pointer;
+}
+
+.admin_header_right_list > :first-child > * {
+    fill: yellow;
+    cursor: grab;
+}
+
+@media only screen and (max-width: 640px) {
+
+    .admin_nav_header {
+        grid-template-areas: ". . . . . . . . . ."
+        "menu . logo logo logo . . . info ."
+        ". . . . . . . . . .";
+    }
+
+    .admin_header_right_list > :nth-child(2),
+    .admin_header_right_list > :nth-child(3) {
+        position: absolute;    
+    }
+
+    .admin_header_right_list > :nth-child(2) {
+        top: calc(100% + 15px);
+        left: -30px;
+    }
+
+    .admin_header_right_list > :nth-child(3) {
+        top: calc(100% + 10px);
+        right: -10px;
+    }
+
+    .admin_initials {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .admin_header_right_list > :nth-child(2),
+    .admin_header_right_list > :nth-child(3) {
+        position: absolute;
+    }
+
+    .admin_header_right_list > :nth-child(2) {
+        top: calc(100% + 20px);
+        left: -10px;
+    }
+
+    .admin_header_right_list > :nth-child(3) {
+        top: calc(100% + 15px);
+        right: -5px;
+    }
+
+    .admin_initials {
+        width: 17px;
+        height: 17px;
+    }
+}

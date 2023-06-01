@@ -3,16 +3,22 @@ import Canvas from "../canva";
 import styles from "../../styles/Footer.module.css";
 
 
-const Footer = () => {
+const Footer = (props) => {
     return (
         <footer id="footer-elm" className={styles.footer}>
 
             <div className={styles.logo_link}>
-                <Link href="/">
-                    {/* <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.footer_logo} /> */}
-                    {/* <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={"logo"} /> */}
-                    <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={styles.footer_logo} />
-                </Link>
+                {
+                    props.pageType === "No Link Tag" ?
+                    <div>
+                        <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={styles.footer_logo} />
+                    </div> :
+                    <Link href="/">
+                        {/* <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.footer_logo} /> */}
+                        {/* <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={"logo"} /> */}
+                        <Canvas src="/assets/my_logo/logo_world_customhaven_side_stack.svg" className={styles.footer_logo} />
+                    </Link>
+                }
             </div>
 
             {/* <div > */}
@@ -44,7 +50,7 @@ const Footer = () => {
             </ul>
             {/* </div> */}
             <div className={styles.footer_copyright}>
-                <h4>&copy; {new Date().getFullYear()} Made with love by Custom Haven <span>&hearts;</span></h4>
+                <h4>&copy; {new Date().getFullYear()} Made with love by <Link href="https://www.github.com/CustomHaven"><span>Custom Haven</span></Link> <span>&hearts;</span></h4>
             </div>
         </footer>
     )

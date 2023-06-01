@@ -2,20 +2,20 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import haven from "../../utils/haven-api";
 
-export const loginGuestAuth = createAsyncThunk(
-    "auth/loginGuestAuth",
+export const loginUserAuth = createAsyncThunk(
+    "auth/loginUserAuth",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
             const { email, password } = args;
             console.log("we have the args?", args);
             console.log("email came through as well as in putted email: ", email);
-            const user = await Promise.resolve(haven.loginGuestUser(email, password));
+            const user = await Promise.resolve(haven.loginUser(email, password));
             return fulfillWithValue(user);
         } catch (error) {
             throw rejectWithValue(error);
         }
     }
-);
+)
 
 export const refreshAuth = createAsyncThunk(
     "auth/refreshAuth",
@@ -48,11 +48,11 @@ const authSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(loginGuestAuth.pending, (state) => {
+            .addCase(loginUserAuth.pending, (state) => {
                 state.loginLoading = true;
                 state.loginError = false;
             })
-            .addCase(loginGuestAuth.fulfilled, (state, action) => {
+            .addCase(loginUserAuth.fulfilled, (state, action) => {
 
                 // console.log("the fulfilled payload??", action);
 
@@ -69,7 +69,7 @@ const authSlice = createSlice({
                 state.loginErrorStatusCode = 0;
 
             })
-            .addCase(loginGuestAuth.rejected, (state, action) => {
+            .addCase(loginUserAuth.rejected, (state, action) => {
                 state.loginLoading = false;
                 state.loginError = true;
 
@@ -78,8 +78,8 @@ const authSlice = createSlice({
                 state.loginProfile = {};
 
                 state.loginErrorName = action.payload.name;
-                // state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
-                state.loginErrorStatusMessage = "Something went wrong.";
+                state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
+                // state.loginErrorStatusMessage = "Something went wrong.";
                 state.loginErrorStatusCode = action.payload.statusCode;
             })
 
@@ -115,8 +115,8 @@ const authSlice = createSlice({
                 state.loginProfile = {};
 
                 state.loginErrorName = action.payload.name;
-                // state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
-                state.loginErrorStatusMessage = "Something went wrong.";
+                state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
+                // state.loginErrorStatusMessage = "Something went wrong.";
                 state.loginErrorStatusCode = action.payload.statusCode;
             })
     }

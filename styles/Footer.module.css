@@ -94,7 +94,11 @@
     letter-spacing: 1px;
 }
 
-.footer_copyright h4 > span {
+.footer_copyright h4 > :first-child {
+    color: var(--logo-color) !important;
+}
+
+.footer_copyright h4 > :last-child {
     color: rgba(255, 0, 0, 1);
 }
 

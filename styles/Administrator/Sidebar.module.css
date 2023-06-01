@@ -1,0 +1,109 @@
+.admin__sidebar {
+    height: 100vh;
+    /* height: 3000px; */
+    width: 10vw;
+    background-color: white;
+    box-shadow: 0 30px 10px 5px rgba(0, 0, 0, 0.4);
+    position: relative;
+    padding-right: 2px;
+    /* float: left; */
+    /* z-index: 2; */
+}
+
+.admin__sidebar__list {
+    grid-area: list;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* gap: 30px; */
+    height: 80%;
+    position: relative;
+}
+
+.admin__sidebar__list > li {
+    /* background-color: antiquewhite; */
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.admin__sidebar__list > *:not(:last-child) > *,
+.admin__setting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin__sidebar__list > *:not(:last-child) > * > :first-child,
+.admin__setting > :first-child {
+    font-size: min(4vw, 3rem);
+}
+
+.admin__sidebar__list > *:not(:last-child) > * > :last-child,
+.admin__shop__window,
+.admin__setting > :last-child {
+    font-size: min(1vw, 0.8rem);
+    font-weight: 700;
+}
+
+.admin__sidebar__list > :last-child,
+.admin__sidebar__list > :last-child > * {
+    width: 100%;
+    height: 50%;
+    /* position: relative; */
+}
+
+.admin__sidebar__list > *:not(:last-child) > *::after {
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 100%;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.admin__shop__window {
+    height: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    vertical-align: middle;
+    justify-content: space-evenly;
+}
+
+.admin__shop__window > * {
+    width: max-content;
+}
+
+.admin__setting {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    right: 50%;
+    /* transform: translateX(50%); */
+    /* grid-area: setting; */
+}
+
+.make_green {
+    color: var(--logo-color);
+}
+
+@media only screen and (max-width: 700px) {
+    .admin__sidebar {
+        width: 20vw;
+        box-shadow: 0 15px 5px 5px rgba(0, 0, 0, 0.4);
+    }
+
+    .admin__sidebar__list > *:not(:last-child) > * > :first-child,
+    .admin__setting > :first-child {
+        font-size: min(7vw, 3rem);
+    }
+
+    .admin__sidebar__list > *:not(:last-child) > * > :last-child,
+    .admin__shop__window,
+    .admin__setting > :last-child {
+        font-size: min(2vw, 0.8rem);
+    }
+}

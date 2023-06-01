@@ -19,13 +19,15 @@ import { selectFirstName,
     saveContactDetailThunk, saveFullPhoneNumber } from "../../../feature/contactDetailSlice/contactDetailSlice";
 import { saveEmailAddress, selectUserFindEmailError, selectUserProfile, findUserByEmailThunk, saveNewGuestThunk } from "../../../feature/userSlice/userSlice";
 import { selectCartDeliveryInformation, updateCartDeliveryInformation, addUserThunk, selectCart } from "../../../feature/cartSlice/cartSlice";
-import { selectLoginProfile, loginGuestAuth } from "../../../feature/authSlice/authSlice";
+import { selectLoginProfile, loginUserAuth } from "../../../feature/authSlice/authSlice";
 import { selectCheckOutContactDetailRef, saveCheckOutContactDetailDiv } from "../../../feature/generalComponents/generalComponentSlice";
 import { validatePhoneNumber, emailValidator } from "../../../utils/contactFormValidation";
 import styles from "../../../styles/checkoutpage/ContactDetailCheckout.module.css";
 import axios from "axios";
 
 const ContactDetailCheckout = (props) => {
+
+    const { closeAccordion, setCloseAccordion, openAcccordionShipping, setOpenAccordionShipping, contentRef, shippingAccordionRef  } = props;
 
     const storedJwt = localStorage.getItem("access_token");
     const [jwt, setJwt] = useState(storedJwt || null);
@@ -52,8 +54,6 @@ const ContactDetailCheckout = (props) => {
     const loginProfile = useSelector(selectLoginProfile);
 
     console.log(" top level emailNotFound", emailNotFound);
-
-    const { closeAccordion, setCloseAccordion, openAcccordionShipping, setOpenAccordionShipping, contentRef, shippingAccordionRef  } = props;
 
     const dispatch = useDispatch();
 
@@ -134,60 +134,10 @@ const ContactDetailCheckout = (props) => {
         if (userProfile.id !== undefined) {
             console.log("we have user Profile?", userProfile);
 
-            dispatch(loginGuestAuth({ email: emailInput, password: "guest" }));
+            dispatch(loginUserAuth({ email: emailInput, password: "guest" }));
         } 
     }, [userProfile]);
-    
-    const axiosFetching = async () => {
 
-        console.log("inside axiosFetching")
-
-        const axiosPrivate = axios.create({
-            baseURL: "http://localhost:5000",
-            headers: {     
-                        "Accept": "application/json",
-                        "Content-Type": "application/json", },
-            withCredentials: true
-        });
-
-        axios.defaults.baseURL = "http://localhost:5000";
-
-        const requestIntercept = axiosPrivate.interceptors.request.use(
-            request => {
-                // if (!request.headers['Authorization']) {
-                //     request.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
-                // }
-                console.log("INTERCEPTORS AXIOS! REQUEST");
-                console.log(request);
-                console.log("INTERCEPTORS AXIOS! REQUEST");
-
-                request.headers.channelName = "Custom Haven";
-                // request.method = "get";
-
-                return request;
-            }//, (error) => Promise.reject(error)
-        );
-
-        console.log("requestIntercept", requestIntercept);
-
-        const responseIntercept = axiosPrivate.interceptors.response.use(response => {
-            console.log(response);
-            return response;
-        });
-
-        console.log("responseIntercept", responseIntercept);
-
-        const done = await axios.post("/api/v2/auth/login", { email: emailInput, password: "guest" });
-        console.log("done");
-        console.log(done);
-        console.log("done");
-
-
-            console.log("finfished the interceptors");
-        // await axios.post("http://localhost:4000/api/v2/auth/login", payload, {
-        //     withCredentials: true,
-        // });
-    }
 
     useEffect(() => {
         if (loginProfile.token !== undefined) {

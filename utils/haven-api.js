@@ -208,12 +208,53 @@ const haven = {
         }
     },
 
-    async loginGuestUser(email, password) {
+    async saveNewUser(email, password, confirmPassword, emailCampaign) {
+        try {
+            console.log("havenAPI email?", email);
+            response = await fetch(`${API_URL}/users/register/user`, {
+                method: "POST",
+                body: JSON.stringify({email, password, confirm_password: confirmPassword, email_campaign: emailCampaign}),
+                headers: headers
+            });
+            console.log("RESPONSE POST GUEST!!", response);
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    async loginUser(email, password) {
         try {
             console.log("what is wrong is this called?", email, password);
             response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 body: JSON.stringify({email, password}),
+                headers: headers,
+                credentials: "include" // This here
+            });
+            console.log("RESPONSE POST LOGINGUEST!!", response);
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    /**
+     * 
+     * @param {string} email 
+     * @param {string} password they need to match
+     * @param {string} confirmPassword they need to match
+     * @param {boolean} emailCampaign 
+     * @returns object of the user which have been created
+     */
+    async registerUser(email, password, confirmPassword, emailCampaign) {
+        try {
+            console.log("what is wrong is this called?", email, password, confirmPassword);
+            response = await fetch(`${API_URL}/users/register/user`, {
+                method: "POST",
+                body: JSON.stringify({email, password, confirm_password: confirmPassword, email_campaign: emailCampaign}),
                 headers: headers,
                 credentials: "include" // This here
             });

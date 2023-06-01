@@ -30,6 +30,21 @@ export const saveNewGuestThunk = createAsyncThunk(
     }
 );
 
+export const saveNewUserThunk = createAsyncThunk(
+    "user/saveNewUserThunk",
+    async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        try {
+            const { email, password, confirmPassword, emailCampaign } = args;
+            console.log("email came through as well as in putted email: ", email);
+            console.log(args);
+            const user = await Promise.resolve(haven.registerUser(email, password, confirmPassword, emailCampaign));
+            return fulfillWithValue(user);
+        } catch (error) {
+            throw rejectWithValue(error);
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "user",
     initialState: {
@@ -111,6 +126,46 @@ const userSlice = createSlice({
 
             })
             .addCase(saveNewGuestThunk.rejected, (state, action) => {
+                state.userLoading = false;
+                state.userFindEmailError = true;
+
+                console.log("the action payloooad of user REJECTED!!!!?!!", action.payload);
+
+                state.userProfile = {};
+
+                state.userProfileErrorName = action.payload.name;
+
+                // look up how the rejected message is being sent up here!
+                state.userProfileErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
+                state.userProfileErrorStatusCode = action.payload.statusCode;
+            })
+
+
+            // ---------------------------------- SAVE NEW USER! --------------------------------- //
+
+            .addCase(saveNewUserThunk.pending, (state) => {
+                state.userLoading = true;
+                state.userFindEmailError = false;
+            })
+            .addCase(saveNewUserThunk.fulfilled, (state, action) => {
+
+                // console.log("the fulfilled payload??", action);
+
+                state.userFindEmailError = false;
+
+                state.emailErrorName = ""; 
+                state.emailErrorStatusMessage = "";
+                state.emailErrorStatusCode = 0; 
+
+                state.userLoading = false;
+                state.userFindEmailError = false;
+
+                console.log("the action payloooad of user profile!!?!!", action.payload);
+
+                state.userProfile = action.payload.data;
+
+            })
+            .addCase(saveNewUserThunk.rejected, (state, action) => {
                 state.userLoading = false;
                 state.userFindEmailError = true;
 
