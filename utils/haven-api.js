@@ -321,6 +321,21 @@ const haven = {
         }
     },
 
+    // find all orders must be admiN!
+
+    async findAllOrders() {
+        try {
+            response = await fetch(`${API_URL}/orders`, {
+                credentials: "include",
+                headers: headers
+            });
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     async refreshUserAuth(tokenId) {
         try {
             response = await fetch(`${API_URL}/auth/refresh`, {
@@ -334,9 +349,20 @@ const haven = {
         } catch (error) {
             throw error;
         }
-    }
+    },
 
-    // async 
+    async bestSellers() {
+        try {
+            response = await fetch(`${API_URL}/orders/best-selling-products`, {
+                method: "GET",
+                headers: headers
+            });
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }
 

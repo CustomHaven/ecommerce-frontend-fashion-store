@@ -89,3 +89,17 @@ export const sortArrayObjectForString = (a, b, key) => {
     }
     return comparison;
 }
+
+export const directionSequence = (num, sequence) => {
+    const arr = [];
+    const numberSequence = parseInt(num / sequence);
+    for (let i = 1; i <= numberSequence; i++) {
+      arr.push(i * sequence);
+    }
+    if (arr[arr.length - 1] === num) {
+        return arr;
+    } else {
+        arr.push(num);
+        return arr;
+    }
+}

@@ -1,6 +1,7 @@
 import Head from "next/head";
 import AdminNavbar from "../components/Administrator/Navbar";
 import AdminSidebar from "../components/Administrator/Sidebar";
+import AdminDashboard from "../components/Administrator/Dashboard";
 
 const Profile = () => {
     return (
@@ -8,14 +9,9 @@ const Profile = () => {
             <Head>
                 <title>Administrator: Name</title>
             </Head>
-            <div>
-                <p>HELLO!</p>
-                <p>HELLO!</p>
-                <p>HELLO!</p>
-
-            </div>
+            <AdminDashboard />
         </>
-        
+
     )
 }
 

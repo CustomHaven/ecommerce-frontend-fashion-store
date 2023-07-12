@@ -1,6 +1,8 @@
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useQuerySelector from "../../../hooks/useQuerySelector";
+import useMediaQuery from "../../../hooks/useMediaQuery";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
@@ -9,14 +11,18 @@ import { selectAsideSwitch, adminHeaderController } from "../../../feature/gener
 import styles from "../../../styles/Administrator/AdminNavbar.module.css";
 
 const AdminNavbar = () => {
+    const [fullSize, setFullSize] = useState(false);
     const switchRef = useRef(null);
     const dispatch = useDispatch();
     const asideSwitch = useSelector(selectAsideSwitch);
+    const root = useQuerySelector(":root");
     const asideMenu = useQuerySelector("#admin__aside__id");
+    const { media } = useMediaQuery(700);
+    const { windowWidth } = useWindowDimensions();
+
 
     const handleAsideSwitch = () => {
         if (asideSwitch) {
-
             switchRef.current.disabled = true;
             switchRef.current.style.cursor = "not-allowed";
 
@@ -30,10 +36,16 @@ const AdminNavbar = () => {
                 asideMenu.current.style.display = "none";
                 switchRef.current.disabled = false;
                 switchRef.current.style.cursor = "pointer";
+                root.current.style.setProperty("--admin-main-container-grid-size", "1fr");
+                setFullSize(true);
             }, 1000);
-
-
         } else {
+            setFullSize(false);
+            if (media) {
+                root.current.style.setProperty("--admin-main-container-grid-size", "20vw 1fr");
+            } else {
+                root.current.style.setProperty("--admin-main-container-grid-size", "10vw 1fr");
+            }
 
             switchRef.current.disabled = true;
             asideMenu.current.style.display = "block";
@@ -52,8 +64,19 @@ const AdminNavbar = () => {
         }
     }
 
+    useEffect(() => {
+        if (!fullSize) {
+            if (window.innerWidth <= 700 && root.current) {
+                root.current.style.setProperty("--admin-main-container-grid-size", "20vw 1fr");
+            } else {
+                root.current.style.setProperty("--admin-main-container-grid-size", "10vw 1fr");
+            }
+        }
+    }, [root.current, windowWidth]);
+
+
     return (
-        <header className={styles.admin_nav_header}>
+        <nav className={styles.admin_nav_header}>
             <div ref={switchRef} onClick={handleAsideSwitch} className={styles.admin_header__left}>
                 {
                     asideSwitch ? 
@@ -80,7 +103,7 @@ const AdminNavbar = () => {
                     </li>
                 </ul>
             </div>
-        </header>
+        </nav>
     )
 }
 

@@ -6,7 +6,7 @@ import useResizeObserver from "../../../hooks/useResizeObserver";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import { selectArrayChunkSize, selectProductListCount, productListCounter, 
     listSlideDirection, selectOneSingleProduct, oneDisplayedProduct } from "../../../feature/productSlice/productSlice";
-
+//
 const Directions = (props) => {
 
     const listCount = useSelector(selectProductListCount);

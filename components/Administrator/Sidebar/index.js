@@ -57,7 +57,7 @@ const AdminSidebar = () => {
                         </div>
                         {
                             storeAccordion &&
-                            <Link href="/" className={styles.admin__shop__window}>
+                            <Link href="/" target="_blank" rel="noreferrer noopener" className={styles.admin__shop__window}>
                                 <AiOutlineShop />
                                 <span>Online Shop</span>
                                 <AiOutlineEye />
