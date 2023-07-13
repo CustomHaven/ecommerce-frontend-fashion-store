@@ -1,34 +1,51 @@
 .recent_order_outer_content {
     /* width: fit-content; */
-    position: relative;
+    /* position: relative; */
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
-    padding: 50px;
-    width: 30%;
+    padding: 25px;
+    width: 100%;
+    height: 100%;
+    overflow-y: hidden;
 }
 
 .recent_order_inner_content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 25px 1fr;
+    gap: 25px;
 }
 
 .recent_order_header {
     display: flex;
+    grid-row: 1;
     justify-content: space-between;
     align-items: center;
+    font-size: min(4.5vw, 1.2rem);
+    font-weight: 700;
+
 }
+
+.recent_order_header > :last-child {
+    color: #000;
+    cursor: pointer;
+}
+
 
 .recent_order_content {
     display: flex;
     flex-direction: column;
     gap: 30px;
+    /* overflow-y: hidden; */
+    grid-row: -1;
 }
 
 .recent_order_content > div {
     display: grid;
-    grid-template-columns: 1rem 3rem 1rem 60%;
-    grid-template-rows: 1rem 1rem 1rem 1rem;
+    height: 100%;
+    /* gap: 10px; */
+    grid-template-columns: 50px 0.3fr 1rem 40%;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-template-areas: "recent_img . . ."
                         "recent_img . prod_name_recent ."
                         "recent_img . . ."
@@ -38,7 +55,7 @@
 .recent_order_image_container {
     grid-area: recent_img;
     position: relative;
-    width: 50px;
+    width: 100%;
     height: 100%;
     border: 1px solid black;
     box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.25);
@@ -46,14 +63,20 @@
 
 .recent_order_content > div > :nth-child(2) {
     grid-area: prod_name_recent;
-    font-size: .8rem;
+    font-size: min(4vw, 1.1rem);
     width: max-content;
     font-weight: 700;
 }
 
 .recent_order_content > div > :last-child {
     grid-area: date_recent;
-    font-size: .8rem;
+    font-size: min(4vw, 1.1rem);
     width: max-content;
     color: rgb(53, 162, 235);
+}
+
+@media only screen and (max-width: 680px) {
+    .recent_order_outer_content {
+        overflow-y: scroll;
+    }
 }

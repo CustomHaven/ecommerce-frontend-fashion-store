@@ -93,10 +93,10 @@ const AdminNavbar = () => {
                         <BsFillSunFill />
                     </li>
                     <li>
-                        <p className={styles.admin_text_sizes}>Mohamed</p>
+                        <p className={styles.admin_text_sizes}>Haven</p>
                     </li>
                     <li>
-                        <div className={styles.admin_initials}><p className={styles.admin_text_sizes}>MA</p></div>
+                        <div className={styles.admin_initials}><p className={styles.admin_text_sizes}>CH</p></div>
                     </li>
                     <li>
                         <FiLogOut />
