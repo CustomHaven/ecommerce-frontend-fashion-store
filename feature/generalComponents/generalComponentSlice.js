@@ -14,9 +14,41 @@ const componentSlice = createSlice({
         heroRef: null,
         headerRef: null,
         checkOutContactDetailRef: null,
-        asideSwitch: true
+        asideSwitch: true,
+        pageListingController: 4,
+        pageListedArrayStorage: [],
+        pageIndex: 1,
+        slideMultiplier: 1,
+        adminOptionMenu: false,
+        slidesPagesIndex: Infinity,
+        firstList: 1,
+        lastList: 4,
     },
     reducers: {
+        controlFirstList(state, action) {
+            state.firstList = action.payload;
+        },
+        controlLastList(state, action) {
+            state.lastList = action.payload;
+        },
+        controlSlidePagesIndex(state, action) {
+            state.slidesPagesIndex = action.payload;
+        },
+        controlOptionMenu(state, action) {
+            state.adminOptionMenu = action.payload;
+        },
+        controlPageListing(state, action) {
+            state.pageListingController = action.payload;
+        },
+        storePageListingArray(state, action) {
+            state.pageListedArrayStorage = action.payload;
+        },
+        controlPageIndex(state, action) {
+            state.pageIndex = action.payload;
+        },
+        controlSlideMultiplier(state, action) {
+            state.slideMultiplier = action.payload;
+        },
         adminHeaderController(state, action) {
             state.asideSwitch = action.payload;
         },
@@ -57,7 +89,28 @@ export const { mainRef,
     fireNavCanvaHeight, 
     placeHeroRef, 
     placeHeaderRef, 
-    saveCheckOutContactDetailDiv } = componentSlice.actions;
+    saveCheckOutContactDetailDiv,
+    controlPageListing,
+    storePageListingArray,
+    controlPageIndex,
+    controlSlideMultiplier,
+    controlOptionMenu,
+    controlSlidePagesIndex,
+    controlFirstList,
+    controlLastList } = componentSlice.actions;
+
+export const selectPageListingController = state => state.components.pageListingController;
+export const selectPageListedArrayStorage = state => state.components.pageListedArrayStorage;
+export const selectPageIndex = state => state.components.pageIndex;
+export const selectSlideMultiplier = state => state.components.slideMultiplier;
+export const selectAdminOptionMenu = state => state.components.adminOptionMenu;
+export const selectSlidesPagesIndex = state => state.components.slidesPagesIndex;
+
+export const selectFirstList = state => state.components.firstList;
+export const selectLastList = state => state.components.lastList;
+
+
+
 
 export const selectMain = state => state.components.main;
 export const selectMainCurrent = state => state.components.mainCurrent;

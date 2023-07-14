@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { options, monthLabels, weekdayLabels } from "../../../../utils/barChartHelper";
 import { selectAllOrders } from "../../../../feature/orderSlice/orderSlice";
-import styles from "../../../../styles/Administrator/BarChart.module.css";
+import styles from "../../../../styles/Administrator/Dashboard/BarChart.module.css";
 
 const BarChart = () => {
     const [chart, setChart] = useState({

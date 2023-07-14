@@ -1,0 +1,89 @@
+.admin_products_main_section {
+    padding: 80px 0px 40px 100px;
+    width: 100%;
+    height: auto;
+    font-size: min(4vw, 0.8rem);
+}
+
+.admin_products_header {
+    padding: 50px 0px 5px 0px;
+    position: relative;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    row-gap: 40px;
+}
+
+.admin_products_header::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100% !important;
+    height: 2px;
+    background-color: black;
+}
+
+
+.admin_products_content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.admin_product_unit {
+    width: 90%;
+    height: 80px;
+    background-color: #fff;
+    margin: 50px 0;
+    display: grid;
+    grid-template-columns: min(10vw, 200px) min(3vw, 50px) 1fr min(3vw, 50px) 1fr min(3vw, 50px) 1fr min(3vw, 50px) 1fr min(3vw, 50px) 1fr;
+    grid-template-areas: "image . name . type . created-at . updated-at . quantity";
+    grid-template-rows: 1fr;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.25);
+    font-size: min(2vw, 0.9rem);
+}
+
+.admin_product_unit > :not(:first-child) {
+    margin: auto 0;
+}
+
+.admin_products_image_container {
+    grid-area: image;
+    position: relative;
+
+    /* border-top: none;
+    border-bottom: none; */
+}
+
+
+
+.admin_products_image_container > * {
+    border-radius: 20px;
+    z-index: 3;
+}
+
+.admin_products_product_name { grid-area: name; font-weight: 700; }
+.admin_products_type { grid-area: type; }
+.admin_products_created_at { grid-area: created-at; }
+.admin_products_updated_at {grid-area: updated-at; }
+.admin_products_quantity { grid-area: quantity; }
+
+
+
+
+@media only screen and (max-width: 1000px) {
+    .admin_products_main_section {
+        padding: 60px 0px 60px 10px;
+        margin: 0 auto;
+        width: 100vw;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .admin_products_main_section {
+        padding: 10px 0px 60px 10px;
+    }
+}

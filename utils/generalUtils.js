@@ -90,10 +90,10 @@ export const sortArrayObjectForString = (a, b, key) => {
     return comparison;
 }
 
-export const directionSequence = (num, sequence) => {
+export const directionSequence = (num, sequence, option) => {
     const arr = [];
     const numberSequence = parseInt(num / sequence);
-    for (let i = 1; i <= numberSequence; i++) {
+    for (let i = option; i <= numberSequence; i++) { // option 1 or 0 
       arr.push(i * sequence);
     }
     if (arr[arr.length - 1] === num) {

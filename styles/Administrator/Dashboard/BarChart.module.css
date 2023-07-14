@@ -5,6 +5,7 @@
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     padding: 0 25px;
+    background-color: #fff;
 }
 
 .chart_inner_container > :last-child {

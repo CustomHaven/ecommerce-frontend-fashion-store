@@ -1,0 +1,113 @@
+.admin_sub_header_nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: min(4vw, 1.1rem);
+}
+
+.admin_sub_header_first_part {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    column-gap: 30px;
+    width: 20%;
+    font-weight: 700;
+}
+
+.admin_sub_header_first_part > :last-child {
+    position: relative;
+}
+
+.admin_sub_header_first_part > :last-child > :first-child > input {
+    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: none;
+    border-radius: 10px;
+    outline: none !important;
+    box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.1);
+    height: 25px;
+    font-weight: 400 !important;
+}
+
+.admin_sub_header_first_part > :last-child > :last-child {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+}
+
+.admin_sub_header_second_part {
+    margin-right: 50px;
+    font-weight: 700;
+}
+
+.admin_sub_header_second_part > div,
+.admin_sub_header_second_part > div > :last-child {
+    display: flex;
+    align-items: center;
+}
+
+.admin_sub_header_second_part > div {
+    gap: 25px;
+}
+
+.admin_sub_header_second_part > div > :last-child {
+    gap: 5px;
+    position: relative;
+    background-color: inherit;
+    z-index: 2;
+}
+
+.admin_sub_header_second_part > div > :last-child::before {
+    content: "";
+    position: absolute;
+    width: calc(100% + 10px);
+    height: calc(100% + 5px);
+    background-color: #fff !important;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-bottom: none;
+    z-index: -1;
+    border-radius: 25px;
+    left: -5px;
+    box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.1);
+}
+
+.admin_sub_header_arrow_cursor {
+    cursor: pointer;
+}
+
+.menu_items {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    /* row-gap: 10px; */
+    top: calc(100% + 5px);
+    right: 0;
+    z-index: 2;
+    background-color: #fff;
+    /* color: #fff; */
+    width: 150px;
+    padding: 20px 0px 20px 0px;
+    font-weight: 400;
+    /* display: none; */
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.1);
+}
+
+.menu_items > * {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.menu_items > *:hover {
+    background-color: #297AD6;
+    cursor: pointer;
+    color: #fff;
+}
+
+@media only screen and (max-width: 530px) {
+    .admin_sub_header_search {
+        display: none;
+    }
+}

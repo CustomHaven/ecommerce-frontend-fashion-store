@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { GiCash, GiReturnArrow } from "react-icons/gi";
 import { GrAlarm } from "react-icons/gr";
 import { LuMailWarning } from "react-icons/lu";
-import styles from "../../../../styles/Administrator/AdminSlideShow.module.css";
+import styles from "../../../../styles/Administrator/Dashboard/AdminSlideShow.module.css";
 
 const SlideShow = (props) => {
     const [isDown, setIsDown] = useState(false);

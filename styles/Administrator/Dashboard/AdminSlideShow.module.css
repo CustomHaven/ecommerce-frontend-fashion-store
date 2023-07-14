@@ -9,6 +9,7 @@
 }
 
 .orders_info_slideshow {
+    
     /* display: flex; */
     /* gap: 40px; */
     /* overflow: hidden; */
@@ -38,6 +39,7 @@
 }
 
 .inner_slider {
+    
     position: absolute;
     top: 0;
     left: 0;
@@ -51,6 +53,7 @@
 }
 
 .slideshow_item {
+    background-color: #fff;
     width: 220px;
     height: 100%;
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.25);

@@ -5,7 +5,7 @@ import _ from "lodash";
 import { SlRefresh } from "react-icons/sl";
 import { selectAllOrders } from "../../../../feature/orderSlice/orderSlice";
 import { bufferImg } from "../../../../utils/generalUtils";
-import styles from "../../../../styles/Administrator/RecentOrder.module.css";
+import styles from "../../../../styles/Administrator/Dashboard/RecentOrder.module.css";
 
 const RecentOrders = (props) => {
     const allOrders = useSelector(selectAllOrders);
