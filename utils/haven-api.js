@@ -241,6 +241,20 @@ const haven = {
         }
     },
 
+    async logoutUser() {
+        try {
+            response = await fetch(`${API_URL}/auth/logout`, {
+                headers: headers,
+                credentials: "include"
+            });
+            console.log("RESPONSE POST LOGINGUEST!!", response);
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     /**
      * 
      * @param {string} email 
@@ -356,6 +370,20 @@ const haven = {
             response = await fetch(`${API_URL}/orders/best-selling-products`, {
                 method: "GET",
                 headers: headers
+            });
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+
+    async findAllUsersOrders() {
+        try {
+            response = await fetch(`${API_URL}/users/all-users-orders`, {
+                headers: headers,
+                credentials: "include"
             });
             jsonResponse = await finalResponse(response);
             return jsonResponse;

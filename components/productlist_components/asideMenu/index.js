@@ -103,22 +103,25 @@ const AsideMenu = () => {
         }
         if (windowWidth <= 500) {
             return pageArrayRefs.forEach(page => {
-                if (page.current !== null) {
+                if (page.current) {
                     page.current.classList.remove(styles.aside_underscore_page);
                 }
             });
         }
-        const pathNameIndex = pageParamList.indexOf(window.location.pathname);
-        if (pageArrayRefs[pathNameIndex].current !== null) {
-            pageArrayRefs.forEach(page => {
-                if (page.current !== null) {
-                    page.current.classList.remove(styles.aside_underscore_page);
+        const pathNameIndex = pageParamList.indexOf(process?.title === "browser" && window.location.pathname);
+
+        if (pathNameIndex !== -1) {
+            if (pageArrayRefs[pathNameIndex].current) {
+                pageArrayRefs.forEach(page => {
+                    if (page.current) {
+                        page.current.classList.remove(styles.aside_underscore_page);
+                    }
+                });
+                if (pathNameIndex !== -1) {
+                    pageArrayRefs[pathNameIndex].current.classList.add(styles.aside_underscore_page);                
                 }
-            });
-            pageArrayRefs[pathNameIndex].current.classList.add(styles.aside_underscore_page);
+            }
         }
-
-
     }
     
     useEffect(() => {

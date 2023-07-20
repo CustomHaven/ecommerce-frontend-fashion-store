@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { storePageListingArray,
     controlPageListing,
@@ -9,6 +9,7 @@ import { storePageListingArray,
     selectAdminOptionMenu, 
     controlOptionMenu,
     controlSlidePagesIndex,
+    controlLastList,
     selectFirstList,
     selectLastList } from "../../../feature/generalComponents/generalComponentSlice";
 import { BiSearchAlt } from "react-icons/bi";
@@ -24,6 +25,7 @@ import styles from "../../../styles/Administrator/AdminSubHeaderNav.module.css";
 
 const SubHeaderNav = (props) => {
     const [value, setValue] = useState(4);
+    const dispatch = useDispatch();
     const showMenu = useSelector(selectAdminOptionMenu);
 
     const indexing = useSelector(selectPageIndex);
@@ -33,13 +35,11 @@ const SubHeaderNav = (props) => {
     const firstList = useSelector(selectFirstList);
     const lastList = useSelector(selectLastList);
 
-    // const copySlidesReversed = pageListingArray.reverse();
-
-    console.log({pageListingArray});
-    console.log({indexing})
 
     const handlePageList = (pageList, indexed, array) => {
+
         setValue(pageList);
+        dispatch(controlLastList(pageList));
         dispatch(controlPageListing(pageList));
         dispatch(controlPageIndex(indexed));
         dispatch(controlOptionMenu(false));
@@ -49,21 +49,21 @@ const SubHeaderNav = (props) => {
 
         const reverseIndexVal = copyArrayReversed[indexed-1];
 
-        console.log({reverseIndexVal});
-
         const indexArrayVal = array.indexOf(reverseIndexVal);
-
-        console.log({indexArrayVal});
 
         dispatch(controlSlidePagesIndex(indexArrayVal+1))
     }
 
-    const dispatch = useDispatch();
     const handleArrowClick = () => {
         dispatch(controlOptionMenu(!showMenu));
     }
+
+    useEffect(() => {
+        dispatch(controlLastList(0));
+    }, []);
+
     return (
-        <nav className={styles.admin_sub_header_nav}>
+        <nav className={[styles.admin_sub_header_nav, "unselectable"].join(" ")}>
             <div className={styles.admin_sub_header_first_part}>
                 <div><FiMenu /></div>
                 <div><BsListTask /></div>
@@ -82,10 +82,17 @@ const SubHeaderNav = (props) => {
             <div className={styles.admin_sub_header_second_part}>
                 <div>
                     <span>{firstList} of {lastList === 0 ? value : lastList}</span>
-                    <span>{value}<IoIosArrowDown onClick={handleArrowClick} className={styles.admin_sub_header_arrow_cursor} />
+                    <span>{value}
+                        {
+                            !showMenu ?
+                            <IoIosArrowDown onClick={handleArrowClick} className={styles.admin_sub_header_arrow_cursor} />
+                            : 
+                            <IoIosArrowUp onClick={handleArrowClick} className={styles.admin_sub_header_arrow_cursor} />
+                        }
+                            
                         {
                             showMenu &&
-                            <div className={styles.menu_items}>
+                            <span className={styles.menu_items}>
                                 {
                                     pageListingArray.map((page, i, array) => 
                                             <span 
@@ -95,7 +102,7 @@ const SubHeaderNav = (props) => {
                                             </span>
                                     )
                                 }
-                            </div>
+                            </span>
                         }
                     </span>
                 </div>

@@ -1,26 +1,39 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "../../styles/Navbar.module.css";
-import { HiOutlineShoppingBag } from "react-icons/hi";
-import { BsMinecartLoaded, BsMinecart, BsFillBagFill, BsPersonX, BsPersonPlus, BsPerson, BsSearch } from "react-icons/bs";
+import { BiLogOut } from "react-icons/bi";
+import { BsFillBagFill, BsPerson, BsSearch } from "react-icons/bs";
 import { AiOutlineDown } from "react-icons/ai";
 import Canvas from "../canva";
 import Burger from "./burger";
 import useQuerySelector from "../../hooks/useQuerySelector";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useIntersectionObserver from "../../hooks/useIntersectionObserver";
+import { userLogedout, selectUserProfile } from "../../feature/userSlice/userSlice";
+import { logoutUserAuth } from "../../feature/authSlice/authSlice";
+import { selectLogoutBool, defaultLogoutFeature } from "../../feature/generalComponents/generalComponentSlice";
 
 const Navbar = (props) => {
     const shopRef = useRef(null);
     const aboutRef = useRef(null);
     const headerRef = useRef(null);
+    const dispatch = useDispatch();
     const { media } = useMediaQuery(700);
     // const sectionRef = useQuerySelector("section");
-    const root = useQuerySelector(":root");
 
-    // console.log("sectionRef", sectionRef);
-    // console.log("sectionRef.current", sectionRef.current);
+    const root = useQuerySelector(":root");
+    const logoutBool = useSelector(selectLogoutBool);
+    const userProfile = useSelector(selectUserProfile);
+
+    const handleLogout = () => {
+        localStorage.removeItem("refresh_token");
+        dispatch(defaultLogoutFeature(true));
+        dispatch(userLogedout({}));
+        dispatch(logoutUserAuth());
+        // router.push("/");
+    }
 
 
     const handleMouseEnter = (e) => {
@@ -53,8 +66,10 @@ const Navbar = (props) => {
                 headerRef.current.style.backgroundColor = "white";
             }
         } else {
-            headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
-            headerRef.current.style.backgroundColor = "var(--header-footer-colors)";
+            if (headerRef.current) {
+                headerRef.current.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
+                headerRef.current.style.backgroundColor = "var(--header-footer-colors)";
+            }
         }
     };
 // /assets/my_logo/logo_world_customhaven_side_stack.svg #B5DECB // old #297ad6
@@ -67,6 +82,12 @@ const Navbar = (props) => {
             root.current.style.setProperty("--logo-scale-size", "0.8");
         }
     }, [media]);
+
+    // if (userProfile.id && userProfile.ContactDetails) {
+    //     console.log("DEFAULT NAVBAR FIRST NAME", userProfile.ContactDetails[0].first_name);
+    //     console.log("DEFAULT NAVBAR SECOND NAME", userProfile.ContactDetails[0].last_name);
+    // }
+
 
     return (
         <header id="header-elem" ref={headerRef} className={styles.headerNavbar}>
@@ -99,7 +120,12 @@ const Navbar = (props) => {
                             <Link href="/cart">
                                 <BsFillBagFill />
                             </Link>
-                            <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link>
+                            {
+                                logoutBool ?
+                                    <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link> :
+                                    <div onClick={handleLogout}><BiLogOut fill="white" stroke="black" strokeWidth="0.1"/></div>
+
+                            }
                             <Link href="/search"><BsSearch /></Link>
                             <select>
                                 <option value="USD">USD</option>

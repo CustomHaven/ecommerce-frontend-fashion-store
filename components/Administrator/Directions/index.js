@@ -76,7 +76,7 @@ const Directions = (props) => {
     // }, [props.max]);
 
     return (
-        <div className={styles.direction_container}>
+        <div className={[styles.direction_container, "unselectable"].join(" ")}>
             <div
                 className={styles.arrow_directions}
                 onClick={handleLeftClick}

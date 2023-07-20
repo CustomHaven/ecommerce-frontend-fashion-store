@@ -23,10 +23,6 @@ const AdminProductListing = () => {
 
     const dispatch = useDispatch();
 
-    const handleOptionMenu = () => {
-        dispatch(controlOptionMenu(false));
-    }
-
     useEffect(() => {
         dispatch(allProductsThunk());
     }, []);
@@ -38,13 +34,13 @@ const AdminProductListing = () => {
     console.log({allProducts});
 
     return (
-        <section className={styles.admin_products_main_section}>
+        <section className={[styles.admin_products_main_section, "unselectable"].join(" ")}>
             <header className={styles.admin_products_header}>
                 <h1>Products</h1>
                 <SubHeaderNav />
             </header>
 
-            <section onClick={handleOptionMenu} className={styles.admin_products_content}>
+            <section onClick={() => dispatch(controlOptionMenu(false))} className={styles.admin_products_content}>
                 <article ref={slidesRef}>
                     {
                         allProducts.slice(pageListing * (slideNumber - 1), pageListing * slideNumber).map(product => 
@@ -56,11 +52,11 @@ const AdminProductListing = () => {
                                         alt={product.ProductBannerImage.banner_image_name}
                                     />
                                 </div>
-                                <span className={styles.admin_products_product_name}>{product.product_name}</span>
-                                <span className={styles.admin_products_type}>{product.type}</span>
-                                <span className={styles.admin_products_created_at}>{product.created_at.replace(/[T].+$/, "").replace(/[-]/g, "/")}</span>
-                                <span className={styles.admin_products_updated_at}>{product.updated_at.replace(/[T].+$/, "").replace(/[-]/g, "/")}</span>
-                                <span className={styles.admin_products_quantity}>{product.quantity} stock{parseInt(product.quantity) > 1 ? "s" : ""} available</span>
+                                <p className={styles.admin_products_product_name}>{product.product_name}</p>
+                                <p className={styles.admin_products_type}>{product.type}</p>
+                                <p className={styles.admin_products_created_at}>{product.created_at.replace(/[-]/g, "/").replace(/^(\d+)\/(\d+)\/(\d+)T.+$/, "$3/$2/$1")}</p>
+                                <p className={styles.admin_products_updated_at}>{product.updated_at.replace(/[-]/g, "/").replace(/^(\d+)\/(\d+)\/(\d+)T.+$/, "$3/$2/$1")}</p>
+                                <p className={styles.admin_products_quantity}>{product.quantity} stock{parseInt(product.quantity) > 1 ? "s" : ""} available</p>
                             </article>
                         )
                     }

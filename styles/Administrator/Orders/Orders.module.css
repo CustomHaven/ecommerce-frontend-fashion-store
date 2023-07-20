@@ -1,0 +1,213 @@
+.admin_many_pages_main_section {
+    padding: 80px 0px 40px 100px;
+    width: 100%;
+    height: auto;
+    font-size: min(4vw, 0.8rem);
+}
+
+.admin_many_pages_header {
+    padding: 50px 0px 5px 0px;
+    position: relative;
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    row-gap: 40px;
+}
+
+.admin_many_pages_header::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100% !important;
+    height: 2px;
+    background-color: black;
+}
+
+
+/* THE ABOVE MAKE IT GLOBAL */
+
+.admin_orders_content {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    row-gap: 25px;
+    width: 90%;
+    margin: 50px 0;
+    background-color: #fff;
+    /* margin: 50px 25px 25px 0px; */
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+.admin_orders_content > ul {
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: start;
+    column-gap: min(6vw, 150px);
+    line-height: 25px;
+    position: relative;
+    color: #8F8F8F;
+}
+
+.admin_orders_content > ul::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 1px;
+    background-color: #8F8F8F;
+    padding-right: 50px;
+}
+
+.admin_orders_content > ul > li {
+    position: relative;
+}
+
+.admin_orders_content > ul > li > p {
+    width: max-content;
+    font-size: min(4vw, 0.8rem);
+}
+
+.underline::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    /* width: 100%; */
+    height: 3px;
+    background-color: var(--logo-color);
+    z-index: 2;
+    animation: underlines 2s ease-in-out 1s 1 forwards;
+    /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+}
+
+.admin_filter_search {
+    display: flex;
+    justify-content: start;
+    padding: 0 20px;
+    /* background-color: aqua; */
+}
+
+.admin_filter_search > :first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 30px;
+    width: 20%;
+    /* background-color: green; */
+    border: 1px solid #000;
+    /* font-size: 2rem; */
+    font-size: min(4vw, 0.8rem);
+    font-weight: 700;
+
+}
+
+.admin_filter_search > :first-child > * {
+    margin: 0 5px;
+    /* width: max-content !important; */
+}
+
+.filter_order {
+    width: max-content !important;
+    /* background-color: green; */
+}
+
+.admin_filter_search > :last-child {
+    width: 80%;
+    line-height: 30px;
+    /* border: 1px solid #000; */
+    position: relative;
+    font-size: min(5vw, 1rem);
+    font-weight: 700;
+    /* display: flex; */
+}
+
+.admin_filter_search > :last-child > :first-child {
+    position: absolute;
+    z-index: 2;
+    top: 10%;
+    left: 5px;
+}
+
+.admin_filter_search > :last-child > :last-child {
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    /* border: none; */
+    /* outline: none; */
+
+}
+
+@keyframes underlines {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+/* THESE MEDIA 1000px AND 600px
+ concerning .admin_many_pages_main_section make it global */
+
+@media only screen and (max-width: 1000px) {
+    .admin_many_pages_main_section {
+        padding: 60px 0px 60px 10px;
+        margin: 0 auto;
+        width: 100vw;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .admin_orders_content {
+        width: 98%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .admin_many_pages_main_section {
+        padding: 10px 0px 60px 10px;
+    }
+
+    .admin_orders_content {
+        padding: 50px 0;
+    }
+
+    .admin_orders_content > ul::after {
+        padding-right: 0;
+    }
+}
+
+@media only screen and (max-width: 815px) {
+    .admin_filter_search > :first-child {
+        width: 30%;
+    }
+    .admin_filter_search > :last-child {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .admin_filter_search > :first-child {
+        width: 40%;
+    }
+    .admin_filter_search > :last-child {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .admin_filter_search > :first-child {
+        width: 45%;
+    }
+    .admin_filter_search > :last-child {
+        width: 55%;
+    }
+}
+
+@media only screen and (max-width: 345px) {
+    .admin_filter_search > :first-child {
+        width: max-content;
+    }
+    .admin_filter_search > :last-child {
+        width: auto;
+    }
+}

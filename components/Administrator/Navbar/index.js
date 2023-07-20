@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import {  useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import useQuerySelector from "../../../hooks/useQuerySelector";
 import useMediaQuery from "../../../hooks/useMediaQuery";
@@ -7,18 +8,31 @@ import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import Canvas from "../../canva";
-import { selectAsideSwitch, adminHeaderController } from "../../../feature/generalComponents/generalComponentSlice";
+import { capitalizeWords } from "../../../utils/generalUtils";
+import { userLogedout, selectUserProfile } from "../../../feature/userSlice/userSlice";
+import { logoutUserAuth } from "../../../feature/authSlice/authSlice";
+import { selectAsideSwitch, adminHeaderController, defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
 import styles from "../../../styles/Administrator/AdminNavbar.module.css";
 
 const AdminNavbar = () => {
+    const router = useRouter();
     const [fullSize, setFullSize] = useState(false);
     const switchRef = useRef(null);
     const dispatch = useDispatch();
     const asideSwitch = useSelector(selectAsideSwitch);
+    const userProfile = useSelector(selectUserProfile);
     const root = useQuerySelector(":root");
     const asideMenu = useQuerySelector("#admin__aside__id");
     const { media } = useMediaQuery(700);
     const { windowWidth } = useWindowDimensions();
+
+    const handleLogout = () => {
+        localStorage.removeItem("refresh_token");
+        dispatch(defaultLogoutFeature(true));
+        dispatch(userLogedout({}));
+        dispatch(logoutUserAuth());
+        router.push("/");
+    }
 
 
     const handleAsideSwitch = () => {
@@ -75,8 +89,17 @@ const AdminNavbar = () => {
     }, [root.current, windowWidth]);
 
 
+    if (userProfile.id) {
+        console.log("ADMIN ID NAVBAR FIRST NAME", userProfile);
+        console.log("ADMIN ID NAVBAR SECOND NAME", userProfile);
+        if (userProfile.ContactDetails) {
+            console.log("ADMIN ContactDetails NAVBAR FIRST NAME", userProfile.ContactDetails);
+            console.log("ADMIN ContactDetails NAVBAR SECOND NAME", userProfile);
+        }
+    }
+
     return (
-        <nav className={styles.admin_nav_header}>
+        <nav className={[styles.admin_nav_header, "unselectable"].join(" ")}>
             <div ref={switchRef} onClick={handleAsideSwitch} className={styles.admin_header__left}>
                 {
                     asideSwitch ? 
@@ -93,12 +116,18 @@ const AdminNavbar = () => {
                         <BsFillSunFill />
                     </li>
                     <li>
-                        <p className={styles.admin_text_sizes}>Haven</p>
+                        <p className={styles.admin_text_sizes}>
+                            {userProfile.ContactDetails !== undefined ? userProfile.ContactDetails.length > 0 && userProfile.ContactDetails[0].last_name : "Haven"}
+                        </p>
                     </li>
                     <li>
-                        <div className={styles.admin_initials}><p className={styles.admin_text_sizes}>CH</p></div>
+                        <div className={styles.admin_initials}>
+                            <p className={styles.admin_text_sizes}>
+                                {userProfile.ContactDetails !== undefined ? userProfile.ContactDetails.length > 0 && userProfile.ContactDetails[0].first_name.slice(0, 1).toUpperCase() + userProfile.ContactDetails[0].last_name.slice(0, 1).toUpperCase() : "CH"}
+                            </p>
+                        </div>
                     </li>
-                    <li>
+                    <li onClick={handleLogout}>
                         <FiLogOut />
                     </li>
                 </ul>

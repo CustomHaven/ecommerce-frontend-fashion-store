@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectBestSeller, retrieveBestSellers } from "../../../../feature/orderSlice/orderSlice";
+import { selectPageListingController,
+    selectSlideMultiplier,
+    storePageListingArray } from "../../../../feature/generalComponents/generalComponentSlice";
+import { directionSequence } from "../../../../utils/generalUtils";
 import Directions from "../../Directions"
 import styles from "../../../../styles/Administrator/Dashboard/BestSeller.module.css";
 
 const BestSeller = () => {
 
-    const [slideNumber, setSlideNumber] = useState(1);
-    const [pageListing] = useState(5);
+    const pageListing = useSelector(selectPageListingController);
+    const slideNumber = useSelector(selectSlideMultiplier);
 
     const dispatch = useDispatch();
     const frequentOrders = useSelector(selectBestSeller);
@@ -15,6 +19,10 @@ const BestSeller = () => {
     useEffect(() => {
         dispatch(retrieveBestSellers());
     }, []);
+
+    useEffect(() => {
+        dispatch(storePageListingArray(directionSequence(frequentOrders.length, pageListing, 1)));
+    }, [frequentOrders]);
 
     return (
         <div className={styles.best_seller_outer_container}>
@@ -51,7 +59,6 @@ const BestSeller = () => {
                     max={frequentOrders.length}
                     pageListing={pageListing}
                     slideNumber={slideNumber}
-                    setSlideNumber={setSlideNumber}
                     option={1}
                 />
             </div>

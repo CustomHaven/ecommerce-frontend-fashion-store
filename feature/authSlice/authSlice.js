@@ -31,6 +31,19 @@ export const refreshAuth = createAsyncThunk(
     }
 )
 
+export const logoutUserAuth = createAsyncThunk(
+    "auth/logoutUserAuth",
+    async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        try {
+            // const { } = args;
+            const token = await Promise.resolve(haven.logoutUser());
+            return fulfillWithValue(token);
+        } catch (error) {
+            throw rejectWithValue(error);
+        }
+    }
+)
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
@@ -117,6 +130,47 @@ const authSlice = createSlice({
                 state.loginErrorName = action.payload.name;
                 state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
                 // state.loginErrorStatusMessage = "Something went wrong.";
+                state.loginErrorStatusCode = action.payload.statusCode;
+            })
+
+
+
+
+
+            .addCase(logoutUserAuth.pending, (state) => {
+                state.loginLoading = true;
+                state.loginError = false;
+            })
+            .addCase(logoutUserAuth.fulfilled, (state, action) => {
+
+                // console.log("the fulfilled payload??", action);
+
+                state.loginLoading = false;
+                state.loginError = false;
+
+                console.log("LOGOUT the action payloooad of user profile!!?!!", action.payload);
+
+                state.loginProfile = {};
+
+                state.token_id = action.payload.data.refresh_token
+
+                state.loginErrorName = "";
+                // state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
+                state.loginErrorStatusMessage = "";
+                state.loginErrorStatusCode = 0;
+
+            })
+            .addCase(logoutUserAuth.rejected, (state, action) => {
+                state.loginLoading = false;
+                state.loginError = true;
+
+                console.log("LOGOUT the action payloooad of user REJECTED!!!!?!!", action.payload);
+
+                state.loginProfile = {};
+
+                state.loginErrorName = action.payload.name;
+                // state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
+                state.loginErrorStatusMessage = "Something went wrong.";
                 state.loginErrorStatusCode = action.payload.statusCode;
             })
     }

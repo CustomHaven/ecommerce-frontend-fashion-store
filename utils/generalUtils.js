@@ -103,3 +103,8 @@ export const directionSequence = (num, sequence, option) => {
         return arr;
     }
 }
+
+export const capitalizeWords = (str) => {
+    const reg = /\b([a-zA-Z]{3,})/g;
+    return str.replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1));
+}

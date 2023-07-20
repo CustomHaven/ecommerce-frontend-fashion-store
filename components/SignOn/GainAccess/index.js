@@ -3,8 +3,9 @@ import {  useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Canvas from "../../canva";
-import { saveNewUserThunk } from "../../../feature/userSlice/userSlice";
+import { saveNewUserThunk, findUserByEmailThunk, selectUserProfile } from "../../../feature/userSlice/userSlice";
 import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError } from "../../../feature/authSlice/authSlice";
+import { defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
 
 // Parent Component for both Login and Register Components as these two are very similar 
 // I dont know what I should name this component exactly can't name it Login or Register 
@@ -24,8 +25,7 @@ const GainAccess = (props) => {
     const dispatch = useDispatch();
     const loginError = useSelector(selectLoginError);
     const loginProfile = useSelector(selectLoginProfile);
-    const [startLoginAccess, setStartLoginAccess] = useState(false);
-    const [startLoginRefresh, setStartLoginRefresh] = useState(false);
+    const userProfile = useSelector(selectUserProfile);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,6 +43,7 @@ const GainAccess = (props) => {
 
             dispatch(saveNewUserThunk({ email, password, confirmPassword, emailCampaign: emailSubRef.current.checked }));
 
+            // console.log("LOGIN WAS success!!!!!")
             router.push("/login");
 
         } else {
@@ -63,10 +64,16 @@ const GainAccess = (props) => {
     useEffect(() => {
         if (loginProfile.user) {
             if (loginError === false && loginProfile.user.id) {
+                dispatch(findUserByEmailThunk({ email: email }));
                 // setStartLoginRefresh(true);
+                // setEmail("");
+                // setPassword("");
+                // router.push("/admin/dashboard");
+                console.log("loginProfile", loginProfile);
+                localStorage.setItem("refresh_token", loginProfile.refresh_token);
+                
                 setEmail("");
                 setPassword("");
-                router.push("/");
             }
         }
 
@@ -76,6 +83,19 @@ const GainAccess = (props) => {
             setInvalidCredentials(true);
         }
     }, [loginError, loginProfile]);
+
+    useEffect(() => {
+        if (userProfile.id) {
+            dispatch(refreshAuth({ refresh_token: localStorage.getItem("refresh_token") }));
+            console.log("loginProfile BEFORE ADMIN PAGE", loginProfile);
+            if (loginProfile.user.role === "Administrator") {
+                router.push("/admin/dashboard");
+            } else {
+                dispatch(defaultLogoutFeature(false));
+                router.push("/");
+            }
+        }
+    }, [process?.title === "browser" && localStorage.getItem("refresh_token"), userProfile]);
 
     // }, [startLoginAccess]);
 

@@ -45,6 +45,19 @@ export const saveNewUserThunk = createAsyncThunk(
     }
 );
 
+export const allUsersOrdersThunk = createAsyncThunk(
+    "user/allUsersOrdersThunk",
+    async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        try {
+            // const { } = args;
+            const user = await Promise.resolve(haven.findAllUsersOrders());
+            return fulfillWithValue(user);
+        } catch (error) {
+            throw rejectWithValue(error);
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "user",
     initialState: {
@@ -64,10 +77,20 @@ const userSlice = createSlice({
         emailErrorName: "",
         emailErrorStatusMessage: "",
         emailErrorStatusCode: 0,
+
+        allUsersOrdersLoading: false,
+        allUsersOrdersError: false,
+        allUsersOrders: [],
+        allUsersOrdersStatusCode: 200,
+        allUsersOrdersStatusText: "",
+        allUsersOrdersStatusMessage: "",
     },
     reducers: {
         saveEmailAddress(state, action) {
             state.email = action.payload;
+        },
+        userLogedout(state, action) {
+            state.userProfile = action.payload;
         }
     },
     extraReducers: builder => {
@@ -179,11 +202,41 @@ const userSlice = createSlice({
                 state.userProfileErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
                 state.userProfileErrorStatusCode = action.payload.statusCode;
             })
+
+            .addCase(allUsersOrdersThunk.pending, (state) => {
+                state.allUsersOrdersLoading = true;
+                state.allUsersOrdersError = false;
+            })
+            .addCase(allUsersOrdersThunk.fulfilled, (state, action) => {
+
+                // console.log("the fulfilled payload??", action);
+
+                state.allUsersOrdersLoading = false;
+                state.allUsersOrdersError = false;
+
+                state.allUsersOrders = action.payload.data;
+
+                state.allUsersOrdersStatusCode = action.payload.statusCode;
+                state.allUsersOrdersStatusText = action.payload.statusText;
+                state.allUsersOrdersStatusMessage = "";
+            })
+            .addCase(allUsersOrdersThunk.rejected, (state, action) => {
+                state.allUsersOrdersLoading = false;
+                state.allUsersOrdersError = true;
+
+                state.allUsersOrders = [];
+
+                state.allUsersOrdersStatusCode = action.payload.statusCode;
+                state.allUsersOrdersStatusText = action.payload.statusText;
+                // state.bestSellerStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");
+                state.allUsersOrdersStatusMessage = action.payload.message //.split(":")[1].replace(/["'{}]/g, "");
+            })
     }
 });
 
 export const {
-    saveEmailAddress
+    saveEmailAddress,
+    userLogedout
 } = userSlice.actions;
 
 
@@ -194,5 +247,17 @@ export const selectGuest = state => state.user.is_guest;
 export const selectUserProfile = state => state.user.userProfile;
 export const selectUserLoading = state => state.user.userLoading;
 export const selectUserFindEmailError = state => state.user.userFindEmailError;
+
+
+export const selectUsersOrdersLoading = state => state.user.allUsersOrdersLoading;
+export const selectUsersOrdersError = state => state.user.allUsersOrdersError;
+export const selectUsersOrders = state => state.user.allUsersOrders;
+export const selectUsersOrdersStatusCode = state => state.user.allUsersOrdersStatusCode;
+export const selectUsersOrdersStatusText = state => state.user.allUsersOrdersStatusText;
+export const selectUsersOrdersStatusMessage = state => state.user.allUsersOrdersStatusMessage;
+
+
+
+
 
 export default userSlice.reducer;

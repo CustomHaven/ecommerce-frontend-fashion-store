@@ -17,7 +17,7 @@ const AdminDashboard = (props) => {
     }, []);
 
     return (
-        <section className={styles.dashboard_main_section}>
+        <section className={[styles.dashboard_main_section, "unselectable"].join(" ")}>
             <header className={styles.dashboard_header}>
                 <h1>Dashboard</h1>
             </header>

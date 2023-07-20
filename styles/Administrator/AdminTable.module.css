@@ -1,0 +1,148 @@
+.admin_table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-size: min(2vw, 0.8rem);
+    font-weight: 700;
+}
+
+.admin_table_checkbox_container_outer {
+    width: 100%;
+    /* height: 100%; */
+    border: 1px solid #000;
+    display: grid;
+    place-items: center;
+    height: 35px;
+    /* line-height: 50px; */
+    position: relative;
+}
+
+.admin_table_checkbox_container_inner {
+    width: 80%;
+    height: 80%;
+    /* border: 1px solid #000; */
+    /* line-height: 50px; */
+    display: flex;
+    position: relative;
+    /* justify-content: space-between; */
+}
+
+
+/* The admin_checkbox_styling */
+.admin_checkbox_styling {
+    width: 60%;
+    height: 100%;
+    display: block;
+    position: relative;
+    /* padding-left: 35px;
+    margin-bottom: 12px; */
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: min(4vw, 0.8rem);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+  /* Hide the browser's default checkbox */
+.admin_checkbox_styling input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+  /* Create a custom checkbox */
+.admin_checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #fff;
+}
+
+  /* On mouse-over, add a grey background color */
+.admin_checkbox_styling:hover input ~ .admin_checkmark {
+    background-color: #ccc;
+}
+
+  /* When the checkbox is checked, add a blue background */
+.admin_checkbox_styling input:checked ~ .admin_checkmark {
+    background-color: #2196F3;
+}
+
+  /* Create the admin_checkmark/indicator (hidden when not checked) */
+.admin_checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+  /* Show the admin_checkmark when checked */
+.admin_checkbox_styling input:checked ~ .admin_checkmark:after {
+    display: block;
+}
+
+  /* Style the admin_checkmark/indicator */
+.admin_checkbox_styling .admin_checkmark:after {
+    left: 10px;
+    top: 7px;
+    width: 10%;
+    height: 5px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.admin_table_checkbox_container_inner > :last-child {
+    /* position: absolute; */
+    /* top: 10%; */
+    margin: 5px 0 0 5px;
+}
+
+.admin_table_body {
+
+}
+
+
+.admin_checks_container {
+    height: 25px;
+    width: 80%;
+}
+
+.data_rows { margin-bottom: 200px; }
+.td { text-align: center; }
+
+.logo_color { color: var(--logo-color); }
+.green { color: rgba(0, 150, 0, 1); }
+.red { color: rgba(255, 0, 0, 1); }
+.gray { color: #8F8F8F; }
+
+@media only screen and (max-width: 1600px) {
+    .admin_checkbox_styling .admin_checkmark:after {
+        left: 8px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .admin_checkbox_styling .admin_checkmark:after {
+        left: 6px;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .admin_checkbox_styling .admin_checkmark:after {
+        left: 5px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .admin_checkbox_styling .admin_checkmark:after {
+        left: 4px;
+        width: 15%;
+    }
+}

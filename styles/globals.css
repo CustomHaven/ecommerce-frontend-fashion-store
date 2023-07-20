@@ -73,6 +73,11 @@ a {
   transform: scale(var(--logo-scale-size));
 }
 
+.unselectable {
+  -webkit-user-select: none; /* Safari */
+  user-select: none;
+}
+
 h1 {
   font-size: min(6vw, 2.5rem);
   font-weight: 700;

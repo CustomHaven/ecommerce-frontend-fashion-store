@@ -4,11 +4,11 @@
     /* height: 3000px; */
     /* width: 10vw; */
     background-color: white;
-    box-shadow: 0 30px 10px 5px rgba(0, 0, 0, 0.4);
+    box-shadow: 15px 0 15px -10px rgba(0, 0, 0, 0.4);
     position: relative;
     padding-right: 2px;
     /* float: left; */
-    /* z-index: 2; */
+    /* z-index: 5; */
 }
 
 .admin__sidebar__list {
@@ -87,7 +87,7 @@
     /* grid-area: setting; */
 }
 
-.make_green {
+.logo_color {
     color: var(--logo-color);
 }
 
@@ -96,14 +96,14 @@
         position: absolute !important;
         left: 0;
         top: 0;
-        z-index: 2;
+        z-index: 5;
     }
 }
 
 @media only screen and (max-width: 700px) {
     .admin__sidebar {
         /* width: 20vw; */
-        box-shadow: 0 15px 5px 5px rgba(0, 0, 0, 0.4);
+        box-shadow: 15px 0 15px -10px rgba(0, 0, 0, 0.4);
     }
 
     .admin__sidebar__list > *:not(:last-child) > * > :first-child,

@@ -1,22 +1,21 @@
 import Head from "next/head";
 import { useDispatch } from "react-redux";
-import AdminDashboard from "../../components/Administrator/Dashboard";
+import AdminCustomers from "../../components/Administrator/Customers";
 import { controlAdminSideBar } from "../../feature/generalComponents/generalComponentSlice";
 
-const Profile = () => {
+const Customers = () => {
     const dispatch = useDispatch();
-    dispatch(controlAdminSideBar(0));
-
+    dispatch(controlAdminSideBar(3));
     return (
         <>
             <Head>
-                <title>Administrator: Name</title>
+                <title>Customers</title>
             </Head>
-            <AdminDashboard />
+            <AdminCustomers />
         </>
     )
 }
 
-Profile.layout = "L3";
+Customers.layout = "L3";
 
-export default Profile;
+export default Customers;

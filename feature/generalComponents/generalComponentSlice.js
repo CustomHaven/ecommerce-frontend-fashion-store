@@ -22,9 +22,18 @@ const componentSlice = createSlice({
         adminOptionMenu: false,
         slidesPagesIndex: Infinity,
         firstList: 1,
-        lastList: 4,
+        lastList: 0,
+
+        adminSideIndexing: 0,
+        logoutBool: true,
     },
     reducers: {
+        defaultLogoutFeature(state, action) {
+            state.logoutBool = action.payload;
+        },
+        controlAdminSideBar(state, action) {
+            state.adminSideIndexing = action.payload;
+        },
         controlFirstList(state, action) {
             state.firstList = action.payload;
         },
@@ -97,7 +106,9 @@ export const { mainRef,
     controlOptionMenu,
     controlSlidePagesIndex,
     controlFirstList,
-    controlLastList } = componentSlice.actions;
+    controlLastList,
+    controlAdminSideBar,
+    defaultLogoutFeature } = componentSlice.actions;
 
 export const selectPageListingController = state => state.components.pageListingController;
 export const selectPageListedArrayStorage = state => state.components.pageListedArrayStorage;
@@ -109,6 +120,8 @@ export const selectSlidesPagesIndex = state => state.components.slidesPagesIndex
 export const selectFirstList = state => state.components.firstList;
 export const selectLastList = state => state.components.lastList;
 
+export const selectAdminSideIndex = state => state.components.adminSideIndexing;
+export const selectLogoutBool = state => state.components.logoutBool;
 
 
 
