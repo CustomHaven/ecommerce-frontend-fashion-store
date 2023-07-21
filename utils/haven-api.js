@@ -1,6 +1,6 @@
 import finalResponse from "./api-helper";
 
-const API_URL = process?.env.BACKEND;
+const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
 
 
 console.log("API_URL WORKED!", API_URL);
