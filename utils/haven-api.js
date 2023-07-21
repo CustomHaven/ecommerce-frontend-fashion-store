@@ -1,10 +1,7 @@
 import finalResponse from "./api-helper";
 
-let API_URL
+const API_URL = process?.env.BACKEND;
 
-if (process?.title === "browser") {
-    API_URL = process?.env.BACKEND;
-}
 
 console.log("API_URL WORKED!", API_URL);
 
