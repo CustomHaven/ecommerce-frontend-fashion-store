@@ -1,6 +1,8 @@
 import finalResponse from "./api-helper";
 
-const API_URL = "http://localhost:5000/api/v2";
+const API_URL = process.env.BACKEND;
+
+console.log("API_URL WORKED!", API_URL);
 
 let response, jsonResponse;
 const headers = {
@@ -227,6 +229,7 @@ const haven = {
     async loginUser(email, password) {
         try {
             console.log("what is wrong is this called?", email, password);
+            console.log("API_URL WHAT IS THE API URL??", API_URL);
             response = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
                 body: JSON.stringify({email, password}),

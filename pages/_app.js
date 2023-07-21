@@ -21,7 +21,7 @@ See more info here: https://nextjs.org/docs/messages/no-script-tags-in-head-comp
 // function MyApp({ Component, pageProps }) {
 function MyApp({ Component, ...rest }) {
   const { store, props } = wrapper.useWrappedStore(rest);
-  console.log("APP LEVEL WHAT IS REST?", rest);
+  // console.log("APP LEVEL WHAT IS REST?", rest);
   // const { emotionCache = clientSideEmotionCache, pageProps } = props;
   const {  pageProps } = props;
 
