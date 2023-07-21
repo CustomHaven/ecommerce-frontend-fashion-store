@@ -24,4 +24,6 @@ const Error = (props) => {
     )
 }
 
+Error.layout = "L1";
+
 export default Error;
