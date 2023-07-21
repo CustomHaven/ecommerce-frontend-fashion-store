@@ -37,7 +37,7 @@ const ShippingMethodCheckout = (props) => {
     }
 
     const handleReturn = (e) => {
-        console.log("handleReturn clicked!");
+        // console.log("handleReturn clicked!");
         setCloseAccordionContact(false);
         // console.log("DO WE HAVE THIS?! contactAccordionRef", contactAccordionRef);
         contactAccordionRef.current.classList.add("show_content_accordion");

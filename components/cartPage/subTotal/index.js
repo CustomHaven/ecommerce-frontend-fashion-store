@@ -86,7 +86,7 @@ const SubTotal = (props) => {
 
                 <div style={{ height: ctaSize.blockSize, margin: "50px 0" }} className={styles.subtotal_cta_container}>
                     <div id="cta-container" ref={ctaRef} className={styles.subtotal_cta}>
-                        <Link href="/checkout">
+                        <Link href="/checkouts">
                             <button onClick={handleProceed} className={styles.subtotal_cta_buttons}>
                                 <p>Proceed to checkout</p>
                             </button>

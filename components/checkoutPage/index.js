@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCart } from "../../feature/cartSlice/cartSlice";
@@ -21,7 +22,12 @@ import { selectShippingMethod, selectShippingPrice, updateCartDeliveryInformatio
 import styles from "../../styles/checkoutpage/Checkout.module.css";
 
 const CheckoutPage = () => {
+    const router = useRouter();
     const cart = useSelector(selectCart);
+    if (cart.id === undefined && process?.title === "browser") {
+        console.log("WE ARE RETURNING!");
+        router.push("/login");
+    }
     const { windowWidth } = useWindowDimensions();
     const [hydrate, setHydrate] = useState(false);
     const [closeAccordionContact, setCloseAccordionContact] = useState(false);
