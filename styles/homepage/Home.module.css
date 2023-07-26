@@ -52,7 +52,7 @@
 }
 
 .heroText h1:nth-child(3) {
-  color: var(--submit-button);
+  color: var(--logo-color);
 }
 
 .imgContainer {
@@ -99,11 +99,13 @@
   letter-spacing: 1.3px;
   font-weight: 700;
   color: rgb(255, 255, 255);
-  background: #4FD1C5;
-  background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%);
+  background: rgba(129,170,200,1);
+  background: linear-gradient(90deg, rgba(91,143,214,1) 0%, rgba(41, 122, 194,1) 100%);
+  /* background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 100%); */
+  /* rgba(79, 209, 197, 1) */
   border: none;
   border-radius: 1000px;
-  box-shadow: 12px 12px 24px rgba(79,209,197,.64);
+  box-shadow: 12px 12px 24px rgba(129,170,200,.64);
   transition: all 0.3s ease-in-out 0s;
   cursor: pointer;
   outline: none;
@@ -116,8 +118,8 @@
   border-radius: 1000px;
   min-width: calc(300px + 12px);
   min-height: calc(60px + 12px);
-  border: 6px solid #00FFCB;
-  box-shadow: 0 0 60px rgba(0,255,203,.64);
+  border: 6px solid rgba(129,170,200,1);
+  box-shadow: 0 0 60px rgba(91,143,294,1);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -132,7 +134,7 @@
 }
 
 .shop_now_button:hover:before, .shop_now_button:focus:before {
-  opacity: 1;
+  opacity: .8;
 }
 
 .shop_now_button:after {
@@ -140,7 +142,7 @@
   width: 30px; 
   height: 30px;
   border-radius: 100%;
-  border: 6px solid #00FFCB;
+  border: 6px solid rgba(129,170,200,1);
   position: absolute;
   z-index: -1;
   top: 50%;

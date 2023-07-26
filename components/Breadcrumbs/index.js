@@ -21,7 +21,7 @@ const Breadcrumbs = (props) => {
 
     const styles = {
         fontSize: "min(2vw, 0.8rem)",
-        color: "green",
+        color: "var(--logo-color)",
         display: "inline"
     }
 

@@ -49,7 +49,7 @@ const RecentOrders = (props) => {
                                         />
                                     </div>
                                     <p>{order.OrderLists[randoms[idx]]?.Product.product_name}</p>
-                                    <p>{order.created_at.replace(/[A-Z].+$/, "").replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</p>
+                                    <p>{order.updated_at.replace(/[A-Z].+$/, "").replace(/(\d{4})-(\d{2})-(\d{2})/, "$3/$2/$1")}</p>
                                 </div>
                             )
                         })
