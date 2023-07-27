@@ -16,7 +16,7 @@ export default async function handler(req, res) {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ email: req.body.email, password: req.body.password }),
+            body: JSON.stringify({ email: req.body.email, password: req.body.password, frontend: "incoming frontend" }),
             credentials: "include"
         });
 
