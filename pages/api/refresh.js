@@ -22,7 +22,7 @@ export default async function handler(req, res) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ refresh_token: req.body.refresh_token, frontend: "incoming frontend" }),
-            credentials: "include"
+            // credentials: "include"
         });
     
         const data = await response.json();
