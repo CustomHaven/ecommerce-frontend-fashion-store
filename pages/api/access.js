@@ -7,9 +7,9 @@ export default async function handler(req, res) {
     try {
         console.log("inside the /api/refresh");
         // console.log(req.body.refresh_token);
-        console.log("inside the /api/refresh");
+        console.log("req.body.email");
 
-        process.stdout.write("req.body.email");
+        process.stdout.write("req.body.email process");
         process.stdout.clearLine();
         process.stdout.write(JSON.stringify(req.body.email));
         process.stdout.clearLine();
