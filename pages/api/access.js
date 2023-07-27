@@ -34,7 +34,6 @@ export default async function handler(req, res) {
         console.log("inside the /api/refresh looking at data we got?");
         console.log(data);
         console.log("inside the /api/refresh looking at data we got?");
-
         console.log("res");
         console.log(res);
         console.log("res");
@@ -45,7 +44,7 @@ export default async function handler(req, res) {
                 serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
             ])
             .status(200)
-            .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
+            .json(JSON.stringify({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token }))
             .end(res.getHeader('Set-Cookie'))
             // .end();
     

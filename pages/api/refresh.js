@@ -44,12 +44,12 @@ export default async function handler(req, res) {
                 serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
             ])
             .status(200)
-            .json({ message: "refresh token done!", user: data.user, token: data.refresh_token, refresh_token: data.token })
+            .json(JSON.stringify({ message: "refresh token done!", user: data.user, token: data.refresh_token, refresh_token: data.token }))
             .end(res.getHeader('Set-Cookie'))
             // .end();
 
     } catch (error) {
-        res.status(500).json({ message: "failed to load data" })
+        res.status(500).json(JSON.stringify({ message: "failed to load data" }))
     }
 
 
