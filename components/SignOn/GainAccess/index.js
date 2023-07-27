@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Canvas from "../../canva";
 import { saveNewUserThunk, findUserByEmailThunk, selectUserProfile } from "../../../feature/userSlice/userSlice";
-import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError } from "../../../feature/authSlice/authSlice";
+import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError, loginPerson } from "../../../feature/authSlice/authSlice";
 import { defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
+import { fetchMethod } from "../../../utils/generalUtils";
 
 // Parent Component for both Login and Register Components as these two are very similar 
 // I dont know what I should name this component exactly can't name it Login or Register 
@@ -18,6 +19,13 @@ const GainAccess = (props) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordNotSame, setPasswordNotSame] = useState(false);
+    const [fetchLLoading, setFetchLoading] = useState(false);
+    const [loginData, setLoginData] = useState();
+
+    // useFecth("/api/cookie", "GET", { "Accept": "application/json", "Content-Type": "application/json" }, {
+    //     user: userDone, token: getToken.token, refresh_token: token,
+    //     expiration: expirationTime
+    // })
 
     const emailSubRef = useRef(null);
     const confirmPasswordRef = useRef(null);
@@ -47,7 +55,20 @@ const GainAccess = (props) => {
             router.push("/login");
 
         } else {
-            dispatch(loginUserAuth({ email, password }));
+            setFetchLoading(true);
+            fetchMethod("/api/access", "POST", {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }, {
+                email: email,
+                password: password
+                // user: loginProfile.user,
+                // access_token: loginProfile.token,
+                // refresh_token: loginProfile.refresh_token,
+                // expiration: loginProfile.expiration
+            }).then(res => {console.log("what is res?", res); return res}).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
+            // dispatch(loginUserAuth({ email, password }));
+            
         }
 
     }
@@ -63,15 +84,24 @@ const GainAccess = (props) => {
 
     useEffect(() => {
         if (loginProfile.user) {
-            if (loginError === false && loginProfile.user.id) {
+            if (loginProfile.user.id) {
                 dispatch(findUserByEmailThunk({ email: email }));
                 // setStartLoginRefresh(true);
                 // setEmail("");
                 // setPassword("");
                 // router.push("/admin/dashboard");
-                console.log("loginProfile", loginProfile);
+                console.log("loginProfile!!!!!!!!!", loginProfile);
                 localStorage.setItem("refresh_token", loginProfile.refresh_token);
-                
+                // setFetchLoading(true);
+                // fetchMethod("/api/access", "POST", {
+                //     "Accept": "application/json",
+                //     "Content-Type": "application/json",
+                // }, {
+                //     user: loginProfile.user,
+                //     access_token: loginProfile.token,
+                //     refresh_token: loginProfile.refresh_token,
+                //     expiration: loginProfile.expiration
+                // }).then(res => res.json()).then(res => { setLoginData(res); setFetchLoading(false); });
                 setEmail("");
                 setPassword("");
             }
@@ -86,7 +116,16 @@ const GainAccess = (props) => {
 
     useEffect(() => {
         if (userProfile.id) {
-            dispatch(refreshAuth({ refresh_token: localStorage.getItem("refresh_token") }));
+            setFetchLoading(true);
+            fetchMethod("/api/refresh", "POST", {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            }, {
+                refresh_token: localStorage.getItem("refresh_token")
+            }).then(res => { console.log("final res what is it?", res); return res }).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
+
+            console.log("loginData IN THE END??", loginData);
+            // dispatch(refreshAuth({ refresh_token: localStorage.getItem("refresh_token") }));
             console.log("loginProfile BEFORE ADMIN PAGE", loginProfile);
             if (loginProfile.user.role === "Administrator") {
                 router.push("/admin/dashboard");

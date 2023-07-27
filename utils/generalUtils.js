@@ -108,3 +108,13 @@ export const capitalizeWords = (str) => {
     const reg = /\b([a-zA-Z]{3,})/g;
     return str.replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1));
 }
+
+export const fetchMethod = async (url, method, headers, body) => {
+    const res = await fetch(url, {
+        method: method,
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+    const jsonResponse = await res.json();
+    return jsonResponse;
+}

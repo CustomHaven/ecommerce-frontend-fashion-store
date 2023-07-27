@@ -59,6 +59,14 @@ const authSlice = createSlice({
         token_id: ""
 
     },
+    reducers: {
+        loginPerson(state, action) {
+            state.loginProfile = action.payload;
+        },
+        logoutPerson(state, action) {
+            state.loginProfile = action.payload;
+        }
+    },
     extraReducers: builder => {
         builder
             .addCase(loginUserAuth.pending, (state) => {
@@ -175,6 +183,11 @@ const authSlice = createSlice({
             })
     }
 });
+
+export const {
+    loginPerson,
+    logoutPerson
+} = authSlice.actions;
 
 
 export const selectLoginProfile = state => state.auth.loginProfile;
