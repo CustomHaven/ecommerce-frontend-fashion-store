@@ -6,8 +6,15 @@ export default async function handler(req, res) {
 
     try {
         console.log("inside the /api/refresh");
-        console.log(req.body.refresh_token);
+        // console.log(req.body.refresh_token);
         console.log("inside the /api/refresh");
+
+        process.stdout.write("req.body.email");
+        process.stdout.clearLine();
+        process.stdout.write(JSON.stringify(req.body.email));
+        process.stdout.clearLine();
+        process.stdout.write("req.body.email");
+        process.stdout.clearLine();
     
         const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/login", {
         // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
@@ -22,6 +29,14 @@ export default async function handler(req, res) {
 
     
         const data = await response.json();
+
+        process.stdout.write("inside the /api/refresh looking at data we got?");
+        process.stdout.clearLine();
+        process.stdout.write(JSON.stringify(data));
+        process.stdout.clearLine();
+        process.stdout.write("inside the /api/refresh looking at data we got?");
+        process.stdout.clearLine();
+
         console.log("inside the /api/refresh looking at data we got?");
         console.log(data);
         console.log("inside the /api/refresh looking at data we got?");

@@ -124,7 +124,7 @@ const GainAccess = (props) => {
                 refresh_token: localStorage.getItem("refresh_token")
             }).then(res => { console.log("final res what is it?", res); return res }).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
 
-            console.log("loginData IN THE END??", loginData);
+            // console.log("loginData IN THE END??", loginData);
             // dispatch(refreshAuth({ refresh_token: localStorage.getItem("refresh_token") }));
             console.log("loginProfile BEFORE ADMIN PAGE", loginProfile);
             if (loginProfile.user.role === "Administrator") {
