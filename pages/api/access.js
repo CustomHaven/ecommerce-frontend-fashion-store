@@ -10,13 +10,6 @@ export default async function handler(req, res) {
         // console.log(req.body.refresh_token);
         console.log("req.body.email");
 
-        // process.stdout.write("req.body.email process");
-        // process.stdout.clearLine();
-        // process.stdout.write(JSON.stringify(req.body.email));
-        // process.stdout.clearLine();
-        // process.stdout.write("req.body.email");
-        // process.stdout.clearLine();
-    
         const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/login", {
         // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
             method: "POST",
@@ -54,11 +47,4 @@ export default async function handler(req, res) {
         res.status(500).json({ message: "failed to load data" })
     }
 
-
-
-    // res
-        // .cookie("token_id", data.refresh_token, { httpOnly: true, maxAge: expirationTime * 1000, secure: process.env.NODE_ENV === "production" ? true : false })
-        // .cookie("refreshed_token", data.token, { httpOnly: true, maxAge: expirationTime * 1000, secure: process.env.NODE_ENV === "production" ? true : false })
-        // .status(200).json({ user: data.user, token: data.token, refresh_token: data.refresh_token });
-    // res.status(200).json({ name: 'John Doe' });
 }
