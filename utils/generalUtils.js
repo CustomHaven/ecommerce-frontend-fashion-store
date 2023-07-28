@@ -118,3 +118,8 @@ export const fetchMethod = async (url, method, headers, body) => {
     const jsonResponse = await res.json();
     return jsonResponse;
 }
+
+export const headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}

@@ -8,7 +8,7 @@ import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import Canvas from "../../canva";
-import { capitalizeWords } from "../../../utils/generalUtils";
+import { fetchMethod, headers } from "../../../utils/generalUtils";
 import { userLogedout, selectUserProfile } from "../../../feature/userSlice/userSlice";
 import { logoutUserAuth } from "../../../feature/authSlice/authSlice";
 import { selectAsideSwitch, adminHeaderController, defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
@@ -28,6 +28,9 @@ const AdminNavbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("refresh_token");
+        fetchMethod("/api/logout", "GET", headers, {})
+            .then(res => { console.log("final res what is it?", res); return res })
+            .then(res => { return res });
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
         dispatch(logoutUserAuth());

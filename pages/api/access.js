@@ -11,7 +11,7 @@ export default async function POST(req, res) {
             // console.log(req.body.refresh_token);
             console.log("req.body.email");
     
-            const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/login", {
+            const response = await fetch(process.env.BACKEND + "/auth/login", {
             // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
                 method: "POST",
                 headers: {
@@ -33,17 +33,12 @@ export default async function POST(req, res) {
             console.log("res");
         
             res
-                // .setHeader("Set-Cookie", [
-                //     serialize("token_id", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
-                //     serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
-                // ])
+                .setHeader("Set-Cookie", [
+                    serialize("token_id", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
+                    serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
+                ])
                 .status(201)
                 .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
-                // .json({ worked: "OKAY?!" })
-                // .end(res.getHeader('Set-Cookie'))
-                // .end();
-        
-            // res.status(200).end();
         }
 
     } catch (error) {

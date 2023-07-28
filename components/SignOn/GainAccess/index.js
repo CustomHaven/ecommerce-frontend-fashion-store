@@ -6,7 +6,7 @@ import Canvas from "../../canva";
 import { saveNewUserThunk, findUserByEmailThunk, selectUserProfile } from "../../../feature/userSlice/userSlice";
 import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError, loginPerson } from "../../../feature/authSlice/authSlice";
 import { defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
-import { fetchMethod } from "../../../utils/generalUtils";
+import { fetchMethod, headers } from "../../../utils/generalUtils";
 
 // Parent Component for both Login and Register Components as these two are very similar 
 // I dont know what I should name this component exactly can't name it Login or Register 
@@ -56,10 +56,7 @@ const GainAccess = (props) => {
 
         } else {
             setFetchLoading(true);
-            fetchMethod("/api/access", "POST", {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            }, {
+            fetchMethod("/api/access", "POST", headers, {
                 email: email,
                 password: password
             }).then(res => {console.log("what is res?", res); return res}).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
@@ -113,10 +110,7 @@ const GainAccess = (props) => {
     useEffect(() => {
         if (userProfile.id) {
             setFetchLoading(true);
-            fetchMethod("/api/refresh", "POST", {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            }, {
+            fetchMethod("/api/refresh", "POST", headers, {
                 refresh_token: localStorage.getItem("refresh_token")
             }).then(res => { console.log("final res what is it?", res); return res }).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
 

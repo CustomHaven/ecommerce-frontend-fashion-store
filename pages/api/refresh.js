@@ -15,7 +15,7 @@ export default async function POST(req, res) {
             console.log("req.body.refresh_token");
     
     
-            const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/refresh", {
+            const response = await fetch(process.env.BACKEND + "/auth/refresh", {
             // const response = await fetch("http://localhost:5000/api/v2/auth/refresh", {
                 method: "POST",
                 headers: {
