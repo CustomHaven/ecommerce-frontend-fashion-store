@@ -43,7 +43,7 @@ export default async function POST(req, res) {
                 serialize("token_id", data.token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
                 serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
             ])
-            .status(200)
+            .status(201)
             .json(JSON.stringify({ message: "refresh token done!", user: data.user, token: data.refresh_token, refresh_token: data.token }))
             .end(res.getHeader('Set-Cookie'))
             // .end();
