@@ -33,7 +33,7 @@ const AdminNavbar = () => {
             .then(res => { return res });
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
-        dispatch(logoutUserAuth());
+        // dispatch(logoutUserAuth());
         router.push("/");
     }
 
