@@ -27,6 +27,8 @@ const AdminNavbar = () => {
     const { windowWidth } = useWindowDimensions();
     const [logout, setLogout] = useState(false);
 
+    console.log("what is the logout value: ", logout);
+
     const handleLogout = () => {
         localStorage.removeItem("refresh_token");
         // fetchMethod("/api/refresh", "POST", headers, {
