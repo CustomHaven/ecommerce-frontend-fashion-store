@@ -32,9 +32,14 @@ const AdminNavbar = () => {
         // fetchMethod("/api/refresh", "POST", headers, {
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
-        fetchMethod("/api/signout", "GET", headers, {}, true)
-            .then(res => { console.log("final res what is it?", res); return res })
-            .then(res => { setLogout(true) });
+        fetch("/api/signout", {
+            method: "GET",
+            headers,
+            credentials: "include"
+        }).then(res => res.json()).then(res => { setLogout(true) });
+        // fetchMethod("/api/signout", "GET", headers, {}, true)
+        //     .then(res => { console.log("final res what is it?", res.json()); return res })
+        //     .then(res => { setLogout(true) });
         // dispatch(logoutUserAuth());
         // router.push("/");
     }
