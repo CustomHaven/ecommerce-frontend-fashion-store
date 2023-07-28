@@ -11,22 +11,22 @@ export default async function POST(req, res) {
             // console.log(req.body.refresh_token);
             console.log("req.body.email");
     
-            // const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/login", {
-            // // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
-            //     method: "POST",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Content-Type": "application/json"
-            //     },
-            //     body: JSON.stringify({ email: req.body.email, password: req.body.password, frontend: "incoming frontend" }),
-            //     credentials: "include"
-            // });
+            const response = await fetch("https://api-custom-ecommerce-pern.onrender.com/api/v2/auth/login", {
+            // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email: req.body.email, password: req.body.password, frontend: "incoming frontend" }),
+                credentials: "include"
+            });
     
         
-            // const data = await response.json();
+            const data = await response.json();
     
             console.log("inside the /api/refresh looking at data we got?");
-            // console.log(data);
+            console.log(data);
             console.log("inside the /api/refresh looking at data we got?");
             console.log("res");
             console.log(res);
@@ -38,8 +38,8 @@ export default async function POST(req, res) {
                 //     serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
                 // ])
                 .status(201)
-                // .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
-                .json({ worked: "OKAY?!" })
+                .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
+                // .json({ worked: "OKAY?!" })
                 // .end(res.getHeader('Set-Cookie'))
                 // .end();
         

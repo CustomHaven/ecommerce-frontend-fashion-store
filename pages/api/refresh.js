@@ -46,7 +46,7 @@ export default async function POST(req, res) {
                 ])
                 .status(201)
                 .json(JSON.stringify({ message: "refresh token done!", user: data.user, token: data.refresh_token, refresh_token: data.token }))
-                .end(res.getHeader('Set-Cookie'))
+                // .end(res.getHeader('Set-Cookie'))
                 // .end();
         }
 
