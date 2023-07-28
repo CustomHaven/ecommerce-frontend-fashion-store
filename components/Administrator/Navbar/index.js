@@ -25,17 +25,18 @@ const AdminNavbar = () => {
     const asideMenu = useQuerySelector("#admin__aside__id");
     const { media } = useMediaQuery(700);
     const { windowWidth } = useWindowDimensions();
+    const [logout, setLogout] = useState(false);
 
     const handleLogout = () => {
         localStorage.removeItem("refresh_token");
         // fetchMethod("/api/refresh", "POST", headers, {
-        fetchMethod("/api/signout", "GET", headers, {}, true)
-            .then(res => { console.log("final res what is it?", res); return res })
-            .then(res => { return res });
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
+        fetchMethod("/api/signout", "GET", headers, {}, true)
+            .then(res => { console.log("final res what is it?", res); return res })
+            .then(res => { setLogout(true) });
         // dispatch(logoutUserAuth());
-        router.push("/");
+        // router.push("/");
     }
 
 
@@ -91,6 +92,12 @@ const AdminNavbar = () => {
             }
         }
     }, [root.current, windowWidth]);
+
+    useEffect(() => {
+        if (logout === true) {
+            router.push("/");
+        }
+    }, [logout]);
 
 
     if (userProfile.id) {
