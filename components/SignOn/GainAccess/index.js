@@ -62,10 +62,6 @@ const GainAccess = (props) => {
             }, {
                 email: email,
                 password: password
-                // user: loginProfile.user,
-                // access_token: loginProfile.token,
-                // refresh_token: loginProfile.refresh_token,
-                // expiration: loginProfile.expiration
             }).then(res => {console.log("what is res?", res); return res}).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
             // dispatch(loginUserAuth({ email, password }));
             
