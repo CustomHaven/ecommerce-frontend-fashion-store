@@ -109,11 +109,12 @@ export const capitalizeWords = (str) => {
     return str.replace(reg, (w) => w.charAt(0).toUpperCase() + w.slice(1));
 }
 
-export const fetchMethod = async (url, method, headers, body) => {
+export const fetchMethod = async (url, method, headers, body, credentials) => {
     const res = await fetch(url, {
         method: method,
         headers: headers,
-        body: JSON.stringify(body)
+        body: JSON.stringify(body),
+        credentials: !credentials ? "same-origin" : "include"
     });
     const jsonResponse = await res.json();
     return jsonResponse;

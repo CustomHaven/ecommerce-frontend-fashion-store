@@ -28,7 +28,7 @@ const AdminNavbar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem("refresh_token");
-        fetchMethod("/api/logout", "GET", headers, {})
+        fetchMethod("/api/logout", "GET", headers, {}, true)
             .then(res => { console.log("final res what is it?", res); return res })
             .then(res => { return res });
         dispatch(defaultLogoutFeature(true));
