@@ -8,7 +8,7 @@ export default async function GET(req, res) {
         if (req.method === "GET") {
             res
                 .setHeader("Set-Cookie", [
-                    serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
+                    // serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
                     serialize("token_id", "", { path: "/", httpOnly: true, maxAge: 0, /* secure: true, sameSite: "lax" */ }),
                     serialize("refreshed_token", "", { path: "/", httpOnly: true, maxAge: 0, /* secure: true, sameSite: "lax" */ })
                 ])
