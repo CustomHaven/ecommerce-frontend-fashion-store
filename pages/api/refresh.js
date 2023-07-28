@@ -1,7 +1,7 @@
 import { serialize } from "cookie";
 import finalResponse from "../../utils/api-helper";
 
-export default async function handler(req, res) {
+export default async function POST(req, res) {
     // process.env.BACKEND
 
     try {
