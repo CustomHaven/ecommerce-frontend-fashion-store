@@ -40,7 +40,7 @@ export default async function POST(req, res) {
                 .status(201)
                 // .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
                 .json({ worked: "OKAY?!" })
-                .end(res.getHeader('Set-Cookie'))
+                // .end(res.getHeader('Set-Cookie'))
                 // .end();
         
             // res.status(200).end();
