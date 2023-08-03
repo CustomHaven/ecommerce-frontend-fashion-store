@@ -44,8 +44,7 @@ export default async function GET(req, res) {
                     serialize("refresh_token", "deleted", { path: "/", maxAge: -1, secure: process.env.NODE_ENV === "production" ? true : false })
                 ])
                 .status(200)
-                .json(JSON.stringify(data))
-                .end()
+                .json(JSON.stringify(data));
         }
 
     } catch(error) {
