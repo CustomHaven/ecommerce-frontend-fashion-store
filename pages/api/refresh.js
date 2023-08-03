@@ -40,10 +40,10 @@ export default async function POST(req, res) {
     
             res
                 .setHeader("Set-Cookie", [
-                    serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0, expires: 0 }),
-                    serialize("token_id", data.token, { path: "/", httpOnly: true, maxAge: data.expiration, expires: data.expiration /* secure: true, sameSite: "lax" */ }),
-                    serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, expires: data.expiration /* secure: true, sameSite: "lax" */ }),
-                    serialize("refresh_token", data.token, { path: "/", httpOnly: false, maxAge: data.expiration, expires: data.expiration })
+                    serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
+                    serialize("token_id", data.token, { path: "/", httpOnly: true, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("refresh_token", data.token, { path: "/", httpOnly: false, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false })
                 ])
                 .status(201)
                 .json({ user: data.user, token: data.refresh_token, refresh_token: data.token })
