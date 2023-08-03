@@ -7,7 +7,7 @@ export default async function POST(req, res) {
 
     try {
         if (req.method === "POST") {
-            console.log("inside the /api/refresh");
+            console.log("inside the /api/access");
             console.log(req.body.email);
             // console.log(req.body.refresh_token);
             console.log("req.body.email");
@@ -33,9 +33,9 @@ export default async function POST(req, res) {
                 }
             }
 
-            console.log("inside the /api/refresh looking at data we got?");
+            console.log("inside the /api/access looking at data we got?");
             console.log(data);
-            console.log("inside the /api/refresh looking at data we got?");
+            console.log("inside the /api/access looking at data we got?");
 
 
             res

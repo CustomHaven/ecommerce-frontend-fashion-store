@@ -8,9 +8,9 @@ import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 import { BsFillSunFill } from "react-icons/bs";
 import { FiLogOut } from "react-icons/fi";
 import Canvas from "../../canva";
-import { fetchMethod, headers } from "../../../utils/generalUtils";
+import { fetchMethod, headers, adminHeaders } from "../../../utils/generalUtils";
 import { userLogedout, selectUserProfile } from "../../../feature/userSlice/userSlice";
-import { logoutUserAuth } from "../../../feature/authSlice/authSlice";
+import { logoutUserAuth, selectLoginProfile } from "../../../feature/authSlice/authSlice";
 import { selectAsideSwitch, adminHeaderController, defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
 import styles from "../../../styles/Administrator/AdminNavbar.module.css";
 
@@ -19,6 +19,7 @@ const AdminNavbar = () => {
     const [fullSize, setFullSize] = useState(false);
     const switchRef = useRef(null);
     const dispatch = useDispatch();
+    const loginProfile = useSelector(selectLoginProfile);
     const asideSwitch = useSelector(selectAsideSwitch);
     const userProfile = useSelector(selectUserProfile);
     const root = useQuerySelector(":root");
@@ -30,13 +31,14 @@ const AdminNavbar = () => {
     console.log("what is the logout value: ", logout);
 
     const handleLogout = () => {
+        setLogout(false);
         localStorage.removeItem("refresh_token");
         // fetchMethod("/api/refresh", "POST", headers, {
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
         fetch("/api/signout", {
             method: "GET",
-            headers,
+            headers: adminHeaders(loginProfile.token, "refresh"),
             credentials: "include"
         }).then(res => res.json()).then(res => { console.log("final res what?!", res); setLogout(true) });
         // fetchMethod("/api/signout", "GET", headers, {}, true)

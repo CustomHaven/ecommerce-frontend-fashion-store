@@ -1,35 +1,18 @@
 import Head from "next/head";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import AdminCustomers from "../../components/Administrator/Customers";
-import { selectLoginProfile } from "../../feature/authSlice/authSlice";
+import { loginPerson } from "../../feature/authSlice/authSlice";
 import { controlAdminSideBar } from "../../feature/generalComponents/generalComponentSlice";
+import { wrapper } from "../../store/store";
+import { fetchMethod, headers } from "../../utils/generalUtils";
 
 const Customers = () => {
     const dispatch = useDispatch();
-    const user = useSelector(selectLoginProfile);
-    const router = useRouter();
-
-    if (process.title === "browser") {
-        if (user.token) {
-            if (user.user.role !== "Administrator") {
-                // redirect to user page or homepage
-                // redirect("/");
-                router.push("/");
-    
-            }
-        } else {
-            // redirect to login page
-            // redirect("/login");
-            router.push("/login");
-            
-        }
-    }
     dispatch(controlAdminSideBar(3));
     return (
         <>
             <Head>
-                <title>Customers</title>
+                <title>Admin Customers</title>
             </Head>
             {
                 user?.user?.role === "Administrator" &&
@@ -38,6 +21,48 @@ const Customers = () => {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) => async (context) => {
+        // /
+        if (Object.keys(store.getState().auth?.loginProfile).length === 0) {
+            // await fetchMethod("http://localhost:3000/api/refresh", "POST", headers, {
+            await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
+                refresh_token: context.req.cookies.refresh_token
+            }, true).then(res => { 
+                store.dispatch(loginPerson(res)); 
+            }).catch(err => store.dispatch(loginPerson(res)));
+        }
+
+        const user = store.getState().auth.loginProfile;
+        console.log("CONTEXT.req.cookies.refresh_token", context.req.cookies.refresh_token);
+        if (!user.token) {
+            console.log("OKAY WE ARE HERE?!");
+            console.log(store.getState().auth);
+            console.log("USER VALUES?");
+            return {
+                redirect: {
+                    destination: '/login',
+                    permanent: false,
+                },
+            }
+        }
+        if (user?.user?.role !== "Administrator") {
+            return {
+                redirect: {
+                    destination: "/",
+                    permanent: false
+                }
+            }
+        }
+
+        return {
+            props: {
+                customers: "done 4 now!"
+            }
+        }
+    }
+);
 
 Customers.layout = "L3";
 

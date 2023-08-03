@@ -389,10 +389,10 @@ const haven = {
     },
 
 
-    async findAllUsersOrders() {
+    async findAllUsersOrders(token) {
         try {
             response = await fetch(`${API_URL}/users/all-users-orders`, {
-                headers: headers,
+                headers: adminHeaders(token, "refresh"),
                 credentials: "include"
             });
             jsonResponse = await finalResponse(response);

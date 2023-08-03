@@ -5,6 +5,7 @@ import Directions from "../Directions";
 import AdminTable from "../Table";
 import { BiSearchAlt } from "react-icons/bi";
 import { IoIosArrowDown } from "react-icons/io";
+import { selectLoginProfile } from "../../../feature/authSlice/authSlice";
 import { controlOptionMenu,
     storePageListingArray,
     selectPageListingController,
@@ -16,6 +17,7 @@ import styles from "../../../styles/Administrator/Orders/Orders.module.css";
 const AdminCustomers = () => {
     const dispatch = useDispatch();
 
+    const loginProfile = useSelector(selectLoginProfile);
     const allUsersOrders = useSelector(selectUsersOrders);
     const pageListing = useSelector(selectPageListingController);
     const slideNumber = useSelector(selectSlideMultiplier);
@@ -25,7 +27,7 @@ const AdminCustomers = () => {
     console.log({allUsersOrders})
 
     useEffect(() => {
-        dispatch(allUsersOrdersThunk());
+        dispatch(allUsersOrdersThunk({ refreshed_token: loginProfile.token }));
     }, []);
 
     useEffect(() => {
