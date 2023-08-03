@@ -40,9 +40,9 @@ export default async function POST(req, res) {
 
             res
                 .setHeader("Set-Cookie", [
-                    serialize("token_id", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
-                    serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
-                    serialize("refresh_token", data.refresh_token, { path: "/", httpOnly: false, maxAge: data.expiration})
+                    serialize("token_id", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("access_token", data.access_token, { path: "/", httpOnly: true, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("refresh_token", data.refresh_token, { path: "/", httpOnly: false, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false })
                 ])
                 .status(201)
                 .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
