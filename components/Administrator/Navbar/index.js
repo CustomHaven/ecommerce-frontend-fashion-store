@@ -37,8 +37,9 @@ const AdminNavbar = () => {
         dispatch(defaultLogoutFeature(true));
         dispatch(userLogedout({}));
         fetch("/api/signout", {
-            method: "GET",
+            method: "POST",
             headers: adminHeaders(loginProfile.token, "refresh"),
+            body: JSON.stringify({static: "key"}),
             credentials: "include"
         }).then(res => res.json()).then(res => { console.log("final res what?!", res); setLogout(true) });
         // fetchMethod("/api/signout", "GET", headers, {}, true)

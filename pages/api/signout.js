@@ -1,11 +1,11 @@
 import { serialize } from "cookie";
 
-export default async function GET(req, res) {
+export default async function POST(req, res) {
     // process.env.BACKEND
 
     try {
 
-        if (req.method === "GET") {
+        if (req.method === "POST") {
 
             console.log("NEXTJS LOGOUT ROUTE REACHED!");
 
@@ -45,7 +45,7 @@ export default async function GET(req, res) {
 
             // res.end();
 
-            res.status(200).json(JSON.stringify(data));
+            res.status(201).json(JSON.stringify(data));
         }
 
     } catch(error) {
