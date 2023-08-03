@@ -48,9 +48,10 @@ export const saveNewUserThunk = createAsyncThunk(
 export const allUsersOrdersThunk = createAsyncThunk(
     "user/allUsersOrdersThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        const { refreshed_token } = args;
         try {
             // const { } = args;
-            const user = await Promise.resolve(haven.findAllUsersOrders());
+            const user = await Promise.resolve(haven.findAllUsersOrders(refreshed_token));
             return fulfillWithValue(user);
         } catch (error) {
             throw rejectWithValue(error);

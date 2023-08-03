@@ -15,9 +15,9 @@ export default async function GET(req, res) {
             console.log("req THE COOOKIE!!!! FIND IT!", req.headers["cookie"].replace(/^(token_id=)(.+)(;\srefresh_token=.+)$/, "$2"));
 
 
-            const authorization = req.headers["authorization"].split(" ")[1];
+            const token = req.headers["authorization"].split(" ")[1];
 
-            console.log("authorization header value:", authorization);
+            console.log("authorization header value:", token);
 
             const response = await fetch(process.env.BACKEND + "/auth/logout", {
             // const response = await fetch("http://localhost:5000/api/v2/auth/logout", {
@@ -25,7 +25,7 @@ export default async function GET(req, res) {
                     headers: {
                         "Accept": "application/json",
                         "Content-Type": "application/json",
-                        "Authorization": "Bearer " + authorization,
+                        "Authorization": "Bearer " + token,
                         "Login-Stage": "refresh",
                         "Cookie": req.headers["cookie"].replace(/^(token_id=)(.+)(;\srefresh_token=.+)$/, "$2")
                     },
@@ -39,9 +39,9 @@ export default async function GET(req, res) {
             res
                 .setHeader("Set-Cookie", [
                     // serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
-                    serialize("token_id", "", { path: "/", httpOnly: true, maxAge: 0, /* secure: true, sameSite: "lax" */ }),
-                    serialize("refreshed_token", "", { path: "/", httpOnly: true, maxAge: 0, /* secure: true, sameSite: "lax" */ }),
-                    serialize("refresh_token", "", { path: "/", maxAge: 0})
+                    serialize("token_id", "", { path: "/", httpOnly: true, maxAge: 1, /* secure: true, sameSite: "lax" */ }),
+                    serialize("refreshed_token", "", { path: "/", httpOnly: true, maxAge: 1, /* secure: true, sameSite: "lax" */ }),
+                    serialize("refresh_token", "", { path: "/", maxAge: 1 })
                 ])
                 .status(200)
                 .json(JSON.stringify(data))
