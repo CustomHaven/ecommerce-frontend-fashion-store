@@ -43,7 +43,7 @@ export default async function GET(req, res) {
                     serialize("refresh_token", "deleted", { path: "/", maxAge: -1 })
                 ]);
 
-            res.end();
+            // res.end();
 
             res.status(200).json(JSON.stringify(data));
         }
