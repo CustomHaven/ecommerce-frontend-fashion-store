@@ -7,8 +7,8 @@ export default async function GET(req, res) {
 
         if (req.method === "GET") {
 
-            // const response = await fetch(process.env.BACKEND + "/auth/logout", {
-                const response = await fetch("http://localhost:5000/api/v2/auth/logout", {
+            const response = await fetch(process.env.BACKEND + "/auth/logout", {
+                // const response = await fetch("http://localhost:5000/api/v2/auth/logout", {
                     method: "GET",
                     headers: {
                         "Accept": "application/json",
