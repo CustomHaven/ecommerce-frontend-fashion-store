@@ -8,11 +8,11 @@ export const newOrderThunk = createAsyncThunk(
     "order/newOrderThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
-            const { user_id, cart_id, body } = args;
+            const { user_id, cart_id, body, refreshed_token, loginStage } = args;
             // console.log("is this even called?!")
             // console.log("what is the ID?", id);
             // console.log("what is abandonded?", abandonded);
-            const order = await Promise.resolve(haven.newOrder(user_id, cart_id, body));
+            const order = await Promise.resolve(haven.newOrder(user_id, cart_id, body, refreshed_token, loginStage));
             // console.log("CARTTT CALLED IN THUNK!", order);
             return fulfillWithValue(order);
         } catch (error) {
@@ -25,9 +25,9 @@ export const retrieveAllOrderThunk = createAsyncThunk(
     "order/retrieveAllOrderThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
-            // const {  } = args;
+            const { refreshed_token } = args;
 
-            const allOrders = await Promise.resolve(haven.findAllOrders());
+            const allOrders = await Promise.resolve(haven.findAllOrders(refreshed_token));
             return fulfillWithValue(allOrders);
         } catch (error) {
             throw rejectWithValue(error);
@@ -76,6 +76,9 @@ const orderSlice = createSlice({
         bestSellerStatusMessage: "",
     },
     reducers: {
+        fetchedOrders(state, action) {
+            state.allOrders = action.payload;
+        },
     },
     extraReducers: builder => {
         builder
@@ -120,7 +123,7 @@ const orderSlice = createSlice({
 
                 state.allOrdersLoading = false;
                 state.allOrdersError = false;
-
+                // console.log("action.payload", action.payload);
                 state.allOrders = action.payload.data;
 
                 state.allOrdersStatusCode = action.payload.statusCode;
@@ -130,12 +133,14 @@ const orderSlice = createSlice({
             .addCase(retrieveAllOrderThunk.rejected, (state, action) => {
                 state.allOrdersLoading = false;
                 state.allOrdersError = true;
-
+                console.log("FAILEDDDDDD");
+                // console.log(action.payload);
+                console.log("DDDDDDDDDDDDD")
                 state.allOrders = [];
 
                 state.allOrdersStatusCode = action.payload.statusCode;
-                state.allOrdersStatusText = action.payload.statusText;
-                // state.allOrdersStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");
+                // state.allOrdersStatusText = action.payload.message;
+                state.allOrdersStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");
                 state.allOrdersStatusMessage = action.payload.message //.split(":")[1].replace(/["'{}]/g, "");
             })
 

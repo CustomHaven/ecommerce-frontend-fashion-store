@@ -5,7 +5,8 @@ import { options, monthLabels, weekdayLabels } from "../../../../utils/barChartH
 import { selectAllOrders } from "../../../../feature/orderSlice/orderSlice";
 import styles from "../../../../styles/Administrator/Dashboard/BarChart.module.css";
 
-const BarChart = () => {
+const BarChart = (props) => {
+    const { allOrders } = props;
     const [chart, setChart] = useState({
         labels: monthLabels,
         datasets: []
@@ -13,7 +14,8 @@ const BarChart = () => {
     const [clientOption, setClientOption] = useState("Month");
     const weekRef = useRef(null);
     const monthRef = useRef(null);
-    const allOrders = useSelector(selectAllOrders);
+    // const allOrders = useSelector(selectAllOrders);
+    
 
     const totalSales = (inputType) => {
 
@@ -83,7 +85,7 @@ const BarChart = () => {
                 }
             ]
         }));
-    }, [allOrders, clientOption]);
+    }, [clientOption]);
 
     return (
         <div className={styles.chart_inner_container}>

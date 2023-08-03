@@ -124,3 +124,18 @@ export const headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
 }
+
+export const adminHeaders = (token, loginStage) => {
+    return {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+        "Login-Stage": loginStage
+    }
+};
+
+export const customError = (statusCode, message) => {
+    const error = new Error(message);
+    error.status = statusCode;
+    return error;
+}

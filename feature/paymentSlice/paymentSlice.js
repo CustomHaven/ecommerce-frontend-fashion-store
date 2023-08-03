@@ -6,7 +6,7 @@ export const makePaymentThunk = createAsyncThunk(
     "auth/makePaymentThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
-            const { nameOnCard, cardType, cardNumber, expiryDate, cvv, amount, userId, paymentType, currency } = args;
+            const { nameOnCard, cardType, cardNumber, expiryDate, cvv, amount, userId, paymentType, currency, refreshed_token, loginStage } = args;
             // const { email, password } = ;
             console.log("we have the args?", args);
             console.log("EXPIRY DATE!", expiryDate);
@@ -20,7 +20,7 @@ export const makePaymentThunk = createAsyncThunk(
                 expiry_date: expiryDateStr,
                 cvv: cvv,
                 amount: amount
-            }, paymentType, currency));
+            }, paymentType, currency, refreshed_token, loginStage));
             return fulfillWithValue(payment);
         } catch (error) {
             throw rejectWithValue(error);

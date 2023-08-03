@@ -14,7 +14,7 @@ import { selectFirstName,
     selectFullPhoneNumber,
     saveContactDetailThunk,
     selectContactDetail } from "../../../feature/contactDetailSlice/contactDetailSlice";
-import { selectLoginProfile, refreshAuth } from "../../../feature/authSlice/authSlice";
+import { selectLoginProfile, refreshAuth, loginPerson } from "../../../feature/authSlice/authSlice";
 import { selectCart,
     selectCartFullPriceWithShipping,
     selectCartFullPrice,
@@ -26,14 +26,18 @@ import { HiLockClosed } from "react-icons/hi"; // 16 x 16
 import { RiQuestionFill } from "react-icons/ri"; // 16 x 16
 import useQuerySelector from "../../../hooks/useQuerySelector";
 import { insertHyphen, validateCreditCardNumber, creditCardType, noInputScenario } from "../../../utils/contactFormValidation";
+import { fetchMethod, headers } from "../../../utils/generalUtils";
 import styles from "../../../styles/checkoutpage/PaymentCheckout.module.css";
 
 const PaymentCheckout = (props) => {
     const { contentRef, openAccordion, setOpenAccordion, setOpenAccordionShipping, shippingAccordionRef } = props;
+    const router = useRouter();
     const root = useQuerySelector(":root");
     const [longCardNum, setLongCardNum] = useState("");
     const [cardTypeSrc, setCardTypeSrc] = useState("");
     const [cardTypeAlt, setCardTypeAlt] = useState("");
+    const [fetchLoading, setFetchLoading] = useState(false);
+    const [logingSuccess, setLoginSuccess] = useState(false);
     const cardTypeRef = useRef(null);
 
     const [nameOnCard, setNameOnCard] = useState("");
@@ -61,6 +65,7 @@ const PaymentCheckout = (props) => {
     const cartPrice = useSelector(selectCartFullPrice);
     const cart = useSelector(selectCart);
     const paymentConfirmed = useSelector(selectPaymentConfirmed);
+    const orderCompleted = useSelector(selectOrder);
 
     const luhnAlgorithm = (e) => {
         let cardNumber = e.target.value;
@@ -150,6 +155,15 @@ const PaymentCheckout = (props) => {
 
             dispatch(refreshAuth({ refresh_token: loginProfile.refresh_token }));
 
+            setFetchLoading(true);
+            fetchMethod("/api/refresh", "POST", headers, {
+                refresh_token: localStorage.getItem("refresh_token")
+            }, true)
+                .then(res => { console.log("final res what is it?", res); return res })
+                .then(res => { 
+                dispatch(loginPerson(res)); setFetchLoading(false); setLoginSuccess(true);
+            });
+
             // dispatch(saveContactDetailThunk({ userId: loginProfile.user.id, bodyObj: {
             //     firstName: fName,
             //     lastName: lName,
@@ -164,19 +178,26 @@ const PaymentCheckout = (props) => {
     }
 
     useEffect(() => {
-        if (loginProfile.user?.token !== undefined) {
-            dispatch(saveContactDetailThunk({ userId: loginProfile.user.id, bodyObj: {
-                firstName: fName,
-                lastName: lName,
-                addressLine1: address,
-                addressLine2: apartment,
-                townCity: town,
-                postcode: postcode,
-                country: country,
-                phoneNumber: phoneNumber,
-            }}));
+        if (logingSuccess) {
+            if (loginProfile.user?.token !== undefined) {
+                dispatch(saveContactDetailThunk({ 
+                    userId: loginProfile.user.id, 
+                    bodyObj: {
+                        firstName: fName,
+                        lastName: lName,
+                        addressLine1: address,
+                        addressLine2: apartment,
+                        townCity: town,
+                        postcode: postcode,
+                        country: country,
+                        phoneNumber: phoneNumber,
+                    },
+                    refreshed_token: loginProfile.token,
+                    loginStage: "refresh"
+                }));
+            }
         }
-    }, [loginProfile.token]);
+    }, [logingSuccess]);
 
     useEffect(() => {
         if (contactDetail.id) {
@@ -190,7 +211,9 @@ const PaymentCheckout = (props) => {
                 cvv: cvv,
                 amount: finalPrice,
                 paymentType: "card", // for now, but as this section is a card payment we might leave it. it is passed into the query and it is card_type 
-                currency: "GBP" // for now, modify later to check for the users default currency
+                currency: "GBP", // for now, modify later to check for the users default currency
+                refreshed_token: loginProfile.token,
+                loginStage: "refresh"
             }));
         }
     }, [contactDetail.id]);
@@ -206,10 +229,21 @@ const PaymentCheckout = (props) => {
                     final_price: finalPrice,
                     cart_price: cartPrice,
                     payment_provider_id: paymentConfirmed
-                }
+                },
+                refreshed_token: loginProfile.token,
+                loginStage: "refresh"
             }));
         }
     }, [paymentConfirmed]);
+
+    useEffect(() => {
+        if (orderCompleted.id) {
+            // send an email to them where I am congratulating them for their order!
+            router.push("/");
+            // on the homepage make modal showing their order number and flex-row in direction of card containing the banner images/price quantity of the units in their order
+            // and as a master class stage do firework animation around the modal
+        }
+    }, [orderCompleted]);
 
     return (
         <article id="payment_method" className={styles.payment_method}>

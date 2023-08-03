@@ -8,7 +8,8 @@ import { bufferImg } from "../../../../utils/generalUtils";
 import styles from "../../../../styles/Administrator/Dashboard/RecentOrder.module.css";
 
 const RecentOrders = (props) => {
-    const allOrders = useSelector(selectAllOrders);
+    const { allOrders } = props;
+    // const allOrders = useSelector(selectAllOrders);
     const [sortedDates, setSortedDates] = useState([]);
     const [randoms, setRandoms] = useState([]);
 
@@ -18,7 +19,7 @@ const RecentOrders = (props) => {
             // setSortedDates(copyArray.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)));
             setSortedDates([...allOrders].sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at)));
         }
-    }, [allOrders]);
+    }, []);
 
     useEffect(() => {
         const tempRandoms = [];

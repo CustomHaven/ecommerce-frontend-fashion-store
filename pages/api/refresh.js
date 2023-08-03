@@ -10,13 +10,13 @@ export default async function POST(req, res) {
             console.log(req.body.refresh_token);
             console.log("inside the /api/refresh");
     
-            console.log("req.body.refresh_token");
-            console.log(req.body.refresh_token);
-            console.log("req.body.refresh_token");
+            // console.log("req.body.refresh_token");
+            // console.log(req.body.refresh_token);
+            // console.log("req.body.refresh_token");
     
     
-            const response = await fetch(process.env.BACKEND + "/auth/refresh", {
-            // const response = await fetch("http://localhost:5000/api/v2/auth/refresh", {
+            // const response = await fetch(process.env.BACKEND + "/auth/refresh", {
+            const response = await fetch("http://localhost:5000/api/v2/auth/refresh", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -29,20 +29,21 @@ export default async function POST(req, res) {
             const data = await response.json();
     
             console.log("inside the /api/refresh looking at data we got?");
-            console.log(data);
+            // console.log(data);
             console.log("inside the /api/refresh looking at data we got?");
     
     
-            console.log("res");
-            console.log(res);
-            console.log("res");
+            // console.log("res");
+            // console.log(res);
+            // console.log("res");
     
     
             res
                 .setHeader("Set-Cookie", [
                     serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
                     serialize("token_id", data.token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
-                    serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ })
+                    serialize("refreshed_token", data.refresh_token, { path: "/", httpOnly: true, maxAge: data.expiration, /* secure: true, sameSite: "lax" */ }),
+                    serialize("refresh_token", data.token, { path: "/", httpOnly: false, maxAge: data.expiration})
                 ])
                 .status(201)
                 .json({ user: data.user, token: data.refresh_token, refresh_token: data.token })

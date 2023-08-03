@@ -12,9 +12,9 @@ const AdminDashboard = (props) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(retrieveAllOrderThunk());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(retrieveAllOrderThunk());
+    // }, []);
 
     return (
         <section className={[styles.dashboard_main_section, "unselectable"].join(" ")}>
@@ -24,14 +24,18 @@ const AdminDashboard = (props) => {
             <section className={styles.dashboard_section_container}>
                 <article className={styles.slideshow_container}>
                     <SlideShow
-                        styles={styles}
+                        // styles={styles}
                     />
                 </article>
                 <article className={styles.sales_graph}>
-                    <BarChart />
+                    <BarChart 
+                        allOrders={props.allOrders}
+                    />
                 </article>
                 <article className={styles.recent_orders}>
-                    <RecentOrders />
+                    <RecentOrders 
+                        allOrders={props.allOrders}
+                    />
                 </article>
                 <article className={styles.calendar}>
                     <Calendar />

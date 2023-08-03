@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Canvas from "../../canva";
 import { saveNewUserThunk, findUserByEmailThunk, selectUserProfile } from "../../../feature/userSlice/userSlice";
-import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError, loginPerson } from "../../../feature/authSlice/authSlice";
+import { loginUserAuth, refreshAuth, selectLoginProfile, selectLoginError, loginPerson, errorInLogin } from "../../../feature/authSlice/authSlice";
 import { defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
 import { fetchMethod, headers } from "../../../utils/generalUtils";
 
@@ -19,8 +19,10 @@ const GainAccess = (props) => {
     const [invalidCredentials, setInvalidCredentials] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordNotSame, setPasswordNotSame] = useState(false);
-    const [fetchLLoading, setFetchLoading] = useState(false);
+    const [fetchLoading, setFetchLoading] = useState(false);
+    const [logingSuccess, setLoginSuccess] = useState(false);
     const [loginData, setLoginData] = useState();
+    // const [loginError, setLoginError] = useState(false);
 
     // useFecth("/api/cookie", "GET", { "Accept": "application/json", "Content-Type": "application/json" }, {
     //     user: userDone, token: getToken.token, refresh_token: token,
@@ -54,12 +56,20 @@ const GainAccess = (props) => {
             // console.log("LOGIN WAS success!!!!!")
             router.push("/login");
 
-        } else {
+        } else {//
+            dispatch(errorInLogin(false));
             setFetchLoading(true);
             fetchMethod("/api/access", "POST", headers, {
                 email: email,
                 password: password
-            }).then(res => {console.log("what is res?", res); return res}).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
+            }).then(res => {console.log("what is res?", res); return res}).then(res => {
+                if (res.failed) {
+                    dispatch(errorInLogin(true));
+                    setFetchLoading(false);
+                } else {
+                    console.log("VALUE ACCESS RES?!", res); dispatch(loginPerson(res)); setFetchLoading(false);
+                }
+            });
             // dispatch(loginUserAuth({ email, password }));
             
         }
@@ -108,21 +118,25 @@ const GainAccess = (props) => {
     }, [loginError, loginProfile]);
 
     useEffect(() => {
-        if (userProfile.id) {
+        if (userProfile.id && loginError !== true) {
             setFetchLoading(true);
             fetchMethod("/api/refresh", "POST", headers, {
                 refresh_token: localStorage.getItem("refresh_token")
-            }).then(res => { console.log("final res what is it?", res); return res }).then(res => { dispatch(loginPerson(res)); setFetchLoading(false); });
+            }, true)
+                .then(res => { console.log("final res what is it?", res); return res })
+                .then(res => { 
+                dispatch(loginPerson(res)); setFetchLoading(false); setLoginSuccess(true);
+            });
 
             // console.log("loginData IN THE END??", loginData);
             // dispatch(refreshAuth({ refresh_token: localStorage.getItem("refresh_token") }));
             console.log("loginProfile BEFORE ADMIN PAGE", loginProfile);
-            if (loginProfile.user.role === "Administrator") {
-                router.push("/admin/dashboard");
-            } else {
-                dispatch(defaultLogoutFeature(false));
-                router.push("/");
-            }
+            // if (loginProfile.user.role === "Administrator") {
+            //     router.push("/admin/dashboard");
+            // } else {
+            //     dispatch(defaultLogoutFeature(false));
+            //     router.push("/");
+            // }
         }
     }, [process?.title === "browser" && localStorage.getItem("refresh_token"), userProfile]);
 
@@ -136,6 +150,18 @@ const GainAccess = (props) => {
     //         router.push("/");
     //     }
     // }, [startLoginRefresh]);
+
+    useEffect(() => {
+        if (logingSuccess) {
+            // router.push("/admin/dashboard");
+            if (loginProfile.user.role === "Administrator") {
+                router.push("/admin/dashboard");
+            } else {
+                dispatch(defaultLogoutFeature(false));
+                router.push("/");
+            }
+        }
+    }, [logingSuccess]);
 
     return (
         <>

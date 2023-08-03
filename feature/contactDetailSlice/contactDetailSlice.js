@@ -6,7 +6,7 @@ export const saveContactDetailThunk = createAsyncThunk(
     "contactDetail/saveContactDetailThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
-            const { userId, bodyObj } = args;
+            const { userId, bodyObj, refreshed_token, loginStage } = args;
             console.log("ARGS FOR saveContactDetailThunk ARGS! we have the args?", args);
             const user = await Promise.resolve(haven.saveContactDetails(userId, {
                 first_name: bodyObj.firstName,
@@ -17,7 +17,7 @@ export const saveContactDetailThunk = createAsyncThunk(
                 zip_code: bodyObj.postcode,
                 country: bodyObj.country,
                 phone_number: bodyObj.phoneNumber
-            }));
+            }, refreshed_token, loginStage));
             return fulfillWithValue(user);
         } catch (error) {
             throw rejectWithValue(error);

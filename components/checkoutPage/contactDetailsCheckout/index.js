@@ -19,9 +19,10 @@ import { selectFirstName,
     saveContactDetailThunk, saveFullPhoneNumber } from "../../../feature/contactDetailSlice/contactDetailSlice";
 import { saveEmailAddress, selectUserFindEmailError, selectUserProfile, findUserByEmailThunk, saveNewGuestThunk } from "../../../feature/userSlice/userSlice";
 import { selectCartDeliveryInformation, updateCartDeliveryInformation, addUserThunk, selectCart } from "../../../feature/cartSlice/cartSlice";
-import { selectLoginProfile, loginUserAuth } from "../../../feature/authSlice/authSlice";
+import { selectLoginProfile, loginUserAuth, errorInLogin, loginPerson } from "../../../feature/authSlice/authSlice";
 import { selectCheckOutContactDetailRef, saveCheckOutContactDetailDiv } from "../../../feature/generalComponents/generalComponentSlice";
 import { validatePhoneNumber, emailValidator } from "../../../utils/contactFormValidation";
+import { fetchMethod, headers } from "../../../utils/generalUtils";
 import styles from "../../../styles/checkoutpage/ContactDetailCheckout.module.css";
 import axios from "axios";
 
@@ -31,6 +32,7 @@ const ContactDetailCheckout = (props) => {
 
     const storedJwt = localStorage.getItem("access_token");
     const [jwt, setJwt] = useState(storedJwt || null);
+    const [fetchLoading, setFetchLoading] = useState(false);
 
     const root = useQuerySelector(":root");
     const countryCodeRefSpan = useRef(null);
@@ -134,13 +136,26 @@ const ContactDetailCheckout = (props) => {
         if (userProfile.id !== undefined) {
             console.log("we have user Profile?", userProfile);
 
-            dispatch(loginUserAuth({ email: emailInput, password: "guest" }));
-        } 
+            // dispatch(loginUserAuth({ email: emailInput, password: "guest" }));//
+            setFetchLoading(true);
+            fetchMethod("/api/access", "POST", headers, {
+                email: emailInput,
+                password: "guest"
+            }).then(res => {console.log("what is res?", res); return res}).then(res => {
+                if (res.failed) {
+                    dispatch(errorInLogin(true));
+                    setFetchLoading(false);
+                } else {
+                    console.log("VALUE ACCESS RES?!", res); dispatch(loginPerson(res)); setFetchLoading(false);
+                }
+            });
+        }
     }, [userProfile]);
 
 
     useEffect(() => {
         if (loginProfile.token !== undefined) {
+            localStorage.setItem("refresh_token", loginProfile.refresh_token);
             console.log("contryCodeREF VALS", "+" + countryCodeRefSpan.current.innerText);
             dispatch(saveFullPhoneNumber("+" + countryCodeRefSpan.current.innerText + " " + phoneNumber.replace(/[-]/g, " ")));
             dispatch(addUserThunk({ cartId: cart.id, userId: loginProfile.user.id })); // the cart add user_id here

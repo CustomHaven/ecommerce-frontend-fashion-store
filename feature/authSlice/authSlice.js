@@ -65,6 +65,12 @@ const authSlice = createSlice({
         },
         logoutPerson(state, action) {
             state.loginProfile = action.payload;
+        },
+        errorInLogin(state, action) {
+            state.loginError = action.payload;
+        },
+        loadingLogin(state, action) {
+            state.loginLoading = action.payload;
         }
     },
     extraReducers: builder => {
@@ -119,7 +125,7 @@ const authSlice = createSlice({
 
                 state.loginProfile = action.payload.data;
 
-                state.token_id = action.payload.data.refresh_token
+                state.token_id = action.payload.data.refresh_token;
 
                 state.loginErrorName = "";
                 // state.loginErrorStatusMessage = action.payload.message.split(":")[1].replace(/["'{}\\\/]/g, "");
@@ -181,12 +187,22 @@ const authSlice = createSlice({
                 state.loginErrorStatusMessage = "Something went wrong.";
                 state.loginErrorStatusCode = action.payload.statusCode;
             })
+
+            .addCase(HYDRATE, (state, action) => {
+                console.log("HYDRATE LOGIN AUTH;", action.payload.auth);
+                if (!action.payload.auth.loginProfile) {
+                    return state;
+                }
+                state.loginProfile = action.payload.auth.loginProfile;
+            })
     }
 });
 
 export const {
     loginPerson,
-    logoutPerson
+    logoutPerson,
+    errorInLogin,
+    loadingLogin
 } = authSlice.actions;
 
 

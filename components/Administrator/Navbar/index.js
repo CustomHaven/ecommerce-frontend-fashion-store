@@ -38,7 +38,7 @@ const AdminNavbar = () => {
             method: "GET",
             headers,
             credentials: "include"
-        }).then(res => res.json()).then(res => { setLogout(true) });
+        }).then(res => res.json()).then(res => { console.log("final res what?!", res); setLogout(true) });
         // fetchMethod("/api/signout", "GET", headers, {}, true)
         //     .then(res => { console.log("final res what is it?", res.json()); return res })
         //     .then(res => { setLogout(true) });

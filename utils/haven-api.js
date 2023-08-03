@@ -1,16 +1,19 @@
 import finalResponse from "./api-helper";
+import { headers, adminHeaders } from "./generalUtils";
 
-const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
-// const API_URL = "http://localhost:5000/api/v2";
+// const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
+const API_URL = "http://localhost:5000/api/v2";
 
 
 console.log("API_URL WORKED!", API_URL);
 
 let response, jsonResponse;
-const headers = {
-    "Accept": "application/json",
-    "Content-Type": "application/json",
-};
+// const headers = {
+//     "Accept": "application/json",
+//     "Content-Type": "application/json",
+// };
+
+
 
 const haven = {
     async getAllProductsListed() {
@@ -285,12 +288,12 @@ const haven = {
         }
     },
 
-    async saveContactDetails(userId, bodyObj) {
+    async saveContactDetails(userId, bodyObj, token, accessOrRefresh) {
         try {
             response = await fetch(`${API_URL}/contact-details/${userId}`, {
                 method: "POST",
                 body: JSON.stringify(bodyObj),
-                headers: headers,
+                headers: adminHeaders(token, accessOrRefresh),
                 credentials: "include"
             });
             // console.log("RESPONSE FOR SAVE CONTACT DETAILS POST REQ IS!", response);
@@ -303,7 +306,7 @@ const haven = {
 
     /////////////////// PAYMENT AND ORDER /////////////////////////////////
 
-    async makePayment(userId, obj, paymentType, currency) {
+    async makePayment(userId, obj, paymentType, currency, token, loginStage) {
         try {
             console.log("MAKEPAYMENT PAYMENTTYPE", paymentType);
             console.log("MAKEPAYMENT CURRENCY", currency);
@@ -312,7 +315,7 @@ const haven = {
             response = await fetch(`${API_URL}/payment-details/${userId}?card_type=${paymentType}&currency=${currency}`, {
                 method: "POST",
                 body: JSON.stringify(obj),
-                headers: headers,
+                headers: adminHeaders(token, loginStage),
                 credentials: "include"
             });
             jsonResponse = await finalResponse(response);
@@ -322,13 +325,13 @@ const haven = {
         }
     },
 //
-    async newOrder(user_id, cart_id, body) { // body.final_price body.payment_provider_id
+    async newOrder(user_id, cart_id, body, token, loginStage) { // body.final_price body.payment_provider_id
         try {
             //  is mandatory, id is not
             response = await fetch(`${API_URL}/orders/order-fulfilled?user_id=${user_id}&cart_id=${cart_id}`, {
                 method: "POST",
                 body: JSON.stringify(body),
-                headers: headers,
+                headers: adminHeaders(token, loginStage),
                 credentials: "include"
             });
             // console.log("RESPONSE!!", response);
@@ -342,11 +345,13 @@ const haven = {
 
     // find all orders must be admiN!
 
-    async findAllOrders() {
+    async findAllOrders(token, accessOrRefresh) {
         try {
+            console.log("IS THIS CALLED?!");
             response = await fetch(`${API_URL}/orders`, {
+                method: "GET",
                 credentials: "include",
-                headers: headers
+                headers: adminHeaders(token, accessOrRefresh)
             });
             jsonResponse = await finalResponse(response);
             return jsonResponse;
