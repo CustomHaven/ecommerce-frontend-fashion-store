@@ -12,8 +12,8 @@ export default async function POST(req, res) {
             // console.log(req.body.refresh_token);
             console.log("req.body.email");
 
-            // const response = await fetch(process.env.BACKEND + "/auth/login", {
-            const response = await fetch("http://localhost:5000/api/v2/auth/login", {
+            const response = await fetch(process.env.BACKEND + "/auth/login", {
+            // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
