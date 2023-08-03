@@ -39,9 +39,9 @@ export default async function GET(req, res) {
             res
                 .setHeader("Set-Cookie", [
                     // serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),
-                    serialize("token_id", "", { path: "/", httpOnly: true, maxAge: 1, expires: 1, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
-                    serialize("refreshed_token", "", { path: "/", httpOnly: true, maxAge: 1, expires: 1, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
-                    serialize("refresh_token", "", { path: "/", maxAge: 1, expires: 1, secure: process.env.NODE_ENV === "production" ? true : false })
+                    serialize("token_id", "", { path: "/", httpOnly: true, maxAge: 1, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("refreshed_token", "", { path: "/", httpOnly: true, maxAge: 1, secure: process.env.NODE_ENV === "production" ? true : false /* secure: true, sameSite: "lax" */ }),
+                    serialize("refresh_token", "", { path: "/", maxAge: 1, secure: process.env.NODE_ENV === "production" ? true : false })
                 ])
                 .status(200)
                 .json(JSON.stringify(data))
