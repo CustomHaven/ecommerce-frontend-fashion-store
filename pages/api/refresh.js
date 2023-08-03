@@ -53,7 +53,7 @@ export default async function POST(req, res) {
 
 
     } catch (error) {
-        res.status(500).json(JSON.stringify({ message: "failed to load data" }))
+        res.status(500).json(JSON.stringify(error))
     }
 
 
