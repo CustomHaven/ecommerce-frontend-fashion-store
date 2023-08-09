@@ -13,6 +13,12 @@ const RecentOrders = (props) => {
     const [sortedDates, setSortedDates] = useState([]);
     const [randoms, setRandoms] = useState([]);
 
+    console.log("allOrders RECENTORDERS", allOrders);
+
+    const handleRefresh = () => {
+        
+    }
+
     useEffect(() => {
         if (allOrders) {
             // const copyArray = [].concat(allOrders);
@@ -30,12 +36,16 @@ const RecentOrders = (props) => {
         setRandoms(tempRandoms.splice(0, 8));
     }, [allOrders]);
 
+    console.log("sortedDates", sortedDates);
+
     return (
         <div className={styles.recent_order_outer_content}>
             <div className={styles.recent_order_inner_content}>
                 <div className={styles.recent_order_header}>
                     <h4>Recent Orders</h4>
-                    <SlRefresh />
+                    <SlRefresh 
+                        onClick={handleRefresh}
+                    />
                 </div>
                 <div className={styles.recent_order_content}>
                     {

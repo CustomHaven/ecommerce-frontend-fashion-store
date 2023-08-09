@@ -21,6 +21,7 @@ const Dashboard = (props) => {
                 // user?.user?.role === "Administrator" &&
                 <AdminDashboard 
                     allOrders={props.allOrders}
+                    refT={props.ctx_refresh}
                 />
             }
         </>
@@ -38,8 +39,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (context) => {
         // /
         if (Object.keys(store.getState().auth?.loginProfile).length === 0) {
-            // await fetchMethod("http://localhost:3000/api/refresh", "POST", headers, {
-            await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
+            console.log("process.env.FRONTEND", process.env.FRONTEND);
+            await fetchMethod(`${process.env.FRONTEND}/api/refresh`, "POST", headers, {
+            // await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
                 refresh_token: context.req.cookies.refresh_token
             }, true).then(res => { 
                 store.dispatch(loginPerson(res)); 
@@ -74,7 +76,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
         return {
             props: {
-                allOrders: store.getState().order.allOrders
+                allOrders: store.getState().order.allOrders,
+                ctx_refresh: context.req.cookies.refreshed_token
             }
         }
     }

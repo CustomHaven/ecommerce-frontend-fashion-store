@@ -14,20 +14,21 @@ import { directionSequence } from "../../../utils/generalUtils";
 import styles from "../../../styles/Administrator/Orders/Orders.module.css";
 
 
-const AdminOrders = () => {
+const AdminOrders = (props) => {
+    const { allOrders } = props;
     const dispatch = useDispatch();
 
-    const allOrders = useSelector(selectAllOrders);
+    // const allOrders = useSelector(selectAllOrders);
     const pageListing = useSelector(selectPageListingController);
     const slideNumber = useSelector(selectSlideMultiplier);
 
     const slidesRef = useRef(null);
 
-    console.log({allOrders})
+    // console.log({allOrders})
 
-    useEffect(() => {
-        dispatch(retrieveAllOrderThunk());
-    }, []);
+    // useEffect(() => {
+    //     dispatch(retrieveAllOrderThunk());
+    // }, []);
 
     useEffect(() => {
         dispatch(storePageListingArray(directionSequence(allOrders.length, pageListing, 1)));

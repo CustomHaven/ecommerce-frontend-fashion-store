@@ -1,19 +1,67 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useSWR from "swr";
 import useMediaQuery from "../../../hooks/useMediaQuery"; // this 1 done the trick!
 import styles from "../../../styles/Feature.module.css";
 import MinitureProductSize from "./minitureProduct";
 import { chunkArray } from "../../../utils/generalUtils";
 import { selectProductListCount, productArrayChunkSize, selectDisplayMax, 
     productDisplayMax, productListCounter, focusSingleProduct, 
-    selectOneSingleProduct, oneDisplayedProduct } from "../../../feature/productSlice/productSlice";
+    selectOneSingleProduct, oneDisplayedProduct, allProductsThunk, 
+    selectAllProductsRandomized, selectAllProducts } from "../../../feature/productSlice/productSlice";
 
 
 const Featured = (props) => {
+    const [localProductState, setLocalProductState] = useState(null);
     const listCount = useSelector(selectProductListCount);
+    const randomListedProducts = useSelector(selectAllProductsRandomized);
+    const allTheProducts = useSelector(selectAllProducts);
     const dispatch = useDispatch();
     const featureProductsContainerRef = useRef(null);
 
+    console.log("right above the SWR", props.products);
+
+
+    useEffect(() => {
+        if (!props.products) {
+            dispatch(allProductsThunk());
+        }
+    }, [])
+
+    useEffect(() => {
+        if (allProductsThunk.length > 0) {
+            fetcher();
+        }
+    }, [allTheProducts]);
+
+    const fetcher = async () => {
+        console.log("inside the useSWR!");
+        // dispatch(allProductsThunk());
+        const response = await fetch("/api/redis", {
+            method: "POST",
+            body: JSON.stringify({
+                allProducts: props.allProducts,
+                randomProducts: props.products,
+                reduxAllProducts: allTheProducts,
+                reduxRandomProducts: randomListedProducts
+            })
+        });
+        console.log("OKAY RESPONSE SWR DONE!");
+        console.log("RESPONSE DONE FROM SWR!", response);
+        const jsonRespons = await response.json();
+        console.log("jsonRespons in the useSWR:!!", jsonRespons);
+        if (jsonRespons.message) {
+            return null;
+        } else {
+            props.setAllRandomProducts(jsonRespons.allRandomProducts);
+            return;
+            // return randomListedProducts;
+        }
+    }
+
+    // const { data: swrData } = useSWR("randomListing", fetcher);
+
+    // console.log("SWRDATA WE GOT SOMETHING!", swrData);
 
     let width;
     if (props.pageType === "Home") {
@@ -38,6 +86,7 @@ const Featured = (props) => {
         dispatch(productArrayChunkSize(props.displayMax));
         let copy;
         if (process?.title === "browser" && window.location.pathname === "/") {
+            console.log("are you entering here SHOW URSELF?!")
             const tempArray = props.products.slice(0, props.displayMax);
             if (media) {
                 dispatch(focusSingleProduct(true));
@@ -66,8 +115,32 @@ const Featured = (props) => {
     }
 
     useEffect(() => {
-        pageArrayFunc();
+        if (props.products !== null) {
+            pageArrayFunc();
+        }
     }, [props.products, props.categoryPage, process?.title === "browser" && window.location.pathname, props.displayMax, media]);
+
+    // useEffect(() => {
+    //     fetcher();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (localProductState) {
+    //         props.setAllRandomProducts(localProductState);
+    //     }
+    // }, [localProductState]);
+
+    // useEffect(() => {
+    //     if (swrData) {
+    //         console.log("look at swrData again!", swrData);
+    //         // console.log("swrData we have what next? swrData.swrData ", swrData);
+    //         if (swrData.length > 0) {
+    //             console.log("SWRDATA SHOULD FIRE UP NOW!!!");
+    //             props.setAllRandomProducts(swrData);
+    //             console.log("SWRDATA IS FINALLY!!", swrData);
+    //         }
+    //     }
+    // }, [swrData]);
 
     return (
         <>

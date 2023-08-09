@@ -8,7 +8,6 @@ export default async function POST(req, res) {
             const token = req.headers["authorization"].split(" ")[1];
 
             const response = await fetch(process.env.BACKEND + "/auth/logout", {
-            // const response = await fetch("http://localhost:5000/api/v2/auth/logout", {
                     method: "GET",
                     headers: {
                         "Accept": "application/json",

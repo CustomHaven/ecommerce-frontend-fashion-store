@@ -4,9 +4,8 @@ export default async function POST(req, res) {
 
     try {
         if (req.method === "POST") {
-
+            console.log("we are at access")
             const response = await fetch(process.env.BACKEND + "/auth/login", {
-            // const response = await fetch("http://localhost:5000/api/v2/auth/login", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

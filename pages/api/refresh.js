@@ -6,7 +6,6 @@ export default async function POST(req, res) {
         if (req.method === "POST") {
 
             const response = await fetch(process.env.BACKEND + "/auth/refresh", {
-            // const response = await fetch("http://localhost:5000/api/v2/auth/refresh", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",

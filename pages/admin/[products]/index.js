@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useDispatch } from "react-redux";
 import AdminProductListing from "../../../components/Administrator/ProductListing";
 import { controlAdminSideBar } from "../../../feature/generalComponents/generalComponentSlice";
+import { loginPerson } from "../../../feature/authSlice/authSlice";
 import { wrapper } from "../../../store/store";
 import { fetchMethod, headers } from "../../../utils/generalUtils";
 
@@ -23,8 +24,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (context) => {
         // /
         if (Object.keys(store.getState().auth?.loginProfile).length === 0) {
-            // await fetchMethod("http://localhost:3000/api/refresh", "POST", headers, {
-            await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
+            await fetchMethod(`${process.env.FRONTEND}/api/refresh`, "POST", headers, {
+            // await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
                 refresh_token: context.req.cookies.refresh_token
             }, true).then(res => { 
                 store.dispatch(loginPerson(res)); 

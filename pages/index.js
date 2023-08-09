@@ -1,5 +1,7 @@
 import Head from 'next/head';
-import { useSelector } from "react-redux";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import redis from '../utils/redis';
 import Hero from "../components/homepage_components/hero";
 import FeatureProducts from "../components/productlist_components/featuredProducts";
 import Directions from '../components/productlist_components/directions';
@@ -10,7 +12,14 @@ import { wrapper } from '../store/store';
 import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice";
 
 export default function Home(props) {
-  const allProducts = useSelector(selectAllProductsRandomized);
+  console.log("allProducts INSIDE MAIN FUNC REDIS?!??!??", props.allProducts);
+  const [allProducts, setAllProducts] = useState(props.allProducts);
+  const [allRandomProducts, setAllRandomProducts] = useState(props.allProductsRandomized);
+  // const dispatch = useDispatch();
+  // if (!props.allProducts) {
+  //   dispatch(allProductsThunk());
+  // }
+  // const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
   console.log(allProducts)
   return (
@@ -21,7 +30,9 @@ export default function Home(props) {
       <>
         <Hero src={src} />
         <FeatureProducts 
-          products={allProducts}
+          allProducts={allProducts}
+          products={allRandomProducts}
+          setAllRandomProducts={setAllRandomProducts}
           displayMax={8}
           headerText={"Featured Products"}
           subHeader={"New Modern Design Collection"}
@@ -38,12 +49,45 @@ export default function Home(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
-    await store.dispatch(allProductsThunk());
+    // redisClient.hSet("allProducts",)
 
+    const allProducts = await redis.get("all_products", async (err, products) => {
+      if (err) console.error("err");
+      if (products != null) {
+        return products;
+      } else {
+        await store.dispatch(allProductsThunk());
+        console.log("THE HOME INDEX WRAPPER INSIDE THE REDIS ELSE,", typeof store.getState().products.allProducts);
+        await redis.set("all_products", JSON.stringify(store.getState().products.allProducts));
+        return store.getState().products.allProducts;
+      }
+    });
+
+    console.log("allProducts REDIS?!??!??", typeof allProducts);
+    console.log("WORKED!?")
+
+    const allRandomProducts = await redis.get("all_products_randomized", async (err, products) => {
+      if (err) console.error(err);
+      if (products != null) {
+        return products;
+      } else {
+        await store.dispatch(allProductsThunk());
+        await redis.set("all_products_randomized", JSON.stringify(store.getState().products.allProductsRandomized));
+        return store.getState().products.allProductsRandomized;
+      }
+    });
+
+    // console.log("allProducts REDIS?!??!??", typeof allProducts);
+
+    // await store.dispatch(allProductsThunk());
+    // redisClient.set("all_products", JSON.stringify(store.getState().products.allProducts));
+    // redisClient.set("all_products_randomized", JSON.stringify(store.getState().products.allProductsRandomized));
     return {
       props: {
-        allProducts: store.getState().products.allProducts,
-        allProductsRandomized: store.getState().products.allProductsRandomized
+        storeProducts: store.getState().products.allProducts,
+        storeRandom: store.getState().products.allProductsRandomized,
+        allProducts: JSON.parse(allProducts),
+        allProductsRandomized: JSON.parse(allRandomProducts),
       }
     }
   }

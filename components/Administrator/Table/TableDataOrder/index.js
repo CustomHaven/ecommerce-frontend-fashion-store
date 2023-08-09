@@ -3,6 +3,7 @@ import RowCheckbox from "../RowCheckbox";
 import { capitalizeWords } from "../../../../utils/generalUtils";
 
 const TableDataOrder = (props) => {
+    console.log("props.data.User.ContactDetails", props.data.User.ContactDetail);
     return (
         <tr className={props.styles.data_rows}>
 
@@ -18,7 +19,7 @@ const TableDataOrder = (props) => {
                 {props.data.updated_at.replace(/-/g, "/").replace(/^(\d+)\/(\d+)\/(\d+)T.+$/, "$3/$2/$1")} <hr style={{ width: "100%" }}/>
             </td>
             <td className={[props.styles.td, props.styles.gray].join(" ")}>
-                {capitalizeWords(props.data.User.ContactDetails[0].first_name) + " " + capitalizeWords(props.data.User.ContactDetails[0].last_name)} 
+                {capitalizeWords(props.data.User.ContactDetail.first_name) + " " + capitalizeWords(props.data.User.ContactDetail.last_name)} 
                 <hr style={{ width: "100%" }}/>
             </td>
             <td className={[props.styles.td, props.data.tracking_id !== "not available" ? props.styles.green : props.styles.red].join(" ")}>

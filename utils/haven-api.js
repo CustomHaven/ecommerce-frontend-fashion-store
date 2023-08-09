@@ -1,8 +1,8 @@
 import finalResponse from "./api-helper";
 import { headers, adminHeaders } from "./generalUtils";
 
-const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
-// const API_URL = "http://localhost:5000/api/v2";
+// const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
+const API_URL = "http://localhost:5000/api/v2";
 
 
 console.log("API_URL WORKED!", API_URL);

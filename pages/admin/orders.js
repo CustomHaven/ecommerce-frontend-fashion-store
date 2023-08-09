@@ -7,7 +7,7 @@ import { controlAdminSideBar } from "../../feature/generalComponents/generalComp
 import { wrapper } from "../../store/store";
 import { fetchMethod, headers } from "../../utils/generalUtils";
 
-const Orders = () => {
+const Orders = (props) => {
     const dispatch = useDispatch();
 
     dispatch(controlAdminSideBar(1));
@@ -30,8 +30,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (context) => {
         // /
         if (Object.keys(store.getState().auth?.loginProfile).length === 0) {
-            // await fetchMethod("http://localhost:3000/api/refresh", "POST", headers, {
-            await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
+            await fetchMethod(`${process.env.FRONTEND}/api/refresh`, "POST", headers, {
+            // await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
                 refresh_token: context.req.cookies.refresh_token
             }, true).then(res => { 
                 store.dispatch(loginPerson(res)); 

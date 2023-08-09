@@ -12,9 +12,11 @@ const AdminDashboard = (props) => {
 
     const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     dispatch(retrieveAllOrderThunk());
-    // }, []);
+    console.log("refT", props.refT);
+
+    useEffect(() => {
+        dispatch(retrieveAllOrderThunk( { refreshed_token: props.refT } ));
+    }, []);
 
     return (
         <section className={[styles.dashboard_main_section, "unselectable"].join(" ")}>
