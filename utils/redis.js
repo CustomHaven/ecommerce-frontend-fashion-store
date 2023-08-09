@@ -6,6 +6,7 @@ let redis;
 if (process.env.NODE_ENV === "production") {
     console.log("IN PRODUCTION! process.env.REDIS_CACHING", process.env.REDIS_CACHING);
     redis = new Redis(process.env.REDIS_CACHING);
+    console.log("REDIS CONNECTED IN PRODUCTION!");
 } else {
     redis = new Redis();
 }
