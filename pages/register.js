@@ -30,8 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         console.log(context.cookies);
         console.log("CONTEXT COOKIE DONE!");
         if (Object.keys(store.getState().auth?.loginProfile).length === 0) {
-            await fetchMethod("http://localhost:3000/api/refresh", "POST", headers, {
-            // await fetchMethod("https://custom-haven-ecommerce.vercel.app/api/refresh", "POST", headers, {
+            await fetchMethod(`${process.env.FRONTEND}/api/refresh`, "POST", headers, {
                 refresh_token: context.req.cookies.refresh_token
             }, true).then(res => { 
                 store.dispatch(loginPerson(res)); 

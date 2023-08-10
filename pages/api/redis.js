@@ -1,5 +1,3 @@
-// import redis from "../../utils/redis";
-
 export default async function POST(req, res) {
     try {
         if (req.method === "POST") {
