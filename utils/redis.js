@@ -11,9 +11,9 @@ if (process.env.NODE_ENV === "production") {
     redis = new Redis();
 }
 
-const f = async () => {
-    await client.set('foo', 'bar');
-}
-f();
+// const f = async () => {
+//     await client.set('foo', 'bar');
+// }
+// f();
 
 export default redis;
