@@ -52,6 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // redisClient.hSet("allProducts",)
 
     const allProducts = await redis.get("all_products", async (err, products) => {
+      console.log("We are in the redis.get! allProducts");
       if (err) console.error("err");
       if (products != null) {
         return products;
@@ -67,6 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     console.log("WORKED!?")
 
     const allRandomProducts = await redis.get("all_products_randomized", async (err, products) => {
+      console.log("We are in the redis.get! randoms");
       if (err) console.error(err);
       if (products != null) {
         return products;
