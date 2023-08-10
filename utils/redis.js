@@ -7,9 +7,13 @@ if (process.env.NODE_ENV === "production") {
     console.log("IN PRODUCTION! process.env.REDIS_CACHING", process.env.REDIS_CACHING);
     redis = new Redis(process.env.REDIS_CACHING);
     console.log("REDIS CONNECTED IN PRODUCTION!");
-    await client.set('foo', 'bar');
 } else {
     redis = new Redis();
 }
+
+const f = async () => {
+    await client.set('foo', 'bar');
+}
+f();
 
 export default redis;
