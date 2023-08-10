@@ -1,3 +1,5 @@
+import redis from "../../utils/redis";
+
 export default async function POST(req, res) {
     try {
         if (req.method === "POST") {
@@ -31,6 +33,8 @@ export default async function POST(req, res) {
                         message: { failed: "Bad request" }
                     }
                 }
+                await redis.set("all_products", JSON.stringify(req.body.reduxAllProducts));
+                await redis.set("all_products_randomized", JSON.stringify(req.body.reduxRandomProducts));
                 return res.status(201).json({
                     allProducts: req.body.reduxAllProducts,
                     allRandomProducts: req.body.reduxRandomProducts
@@ -41,6 +45,8 @@ export default async function POST(req, res) {
                     // await redis.set("all_products_randomized", JSON.stringify(req.body.reduxRandomProducts));
                     // await redis.set("all_products", JSON.stringify(req.body.reduxAllProducts));
                     // return props.setAllRandomProducts(randomListedProducts);
+                    await redis.set("all_products", JSON.stringify(req.body.reduxAllProducts));
+                    await redis.set("all_products_randomized", JSON.stringify(req.body.reduxRandomProducts));
                     return res.status(201).json({
                         allProducts: req.body.reduxAllProducts,
                         allRandomProducts: req.body.reduxRandomProducts
