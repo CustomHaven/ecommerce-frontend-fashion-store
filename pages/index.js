@@ -50,6 +50,7 @@ export default function Home(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     // redisClient.hSet("allProducts",)
+    console.log("before we start the redis.get");
 
     const allProducts = await redis.get("all_products", async (err, products) => {
       console.log("We are in the redis.get! allProducts");
