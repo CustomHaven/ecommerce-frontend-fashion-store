@@ -12,16 +12,17 @@ import { wrapper } from '../store/store';
 import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice";
 
 export default function Home(props) {
-  console.log("allProducts INSIDE MAIN FUNC REDIS?!??!??", props.allProducts);
+  // console.log("allProducts INSIDE MAIN FUNC REDIS?!??!??", props.allProducts);
   const [allProducts, setAllProducts] = useState(props.allProducts);
   const [allRandomProducts, setAllRandomProducts] = useState(props.allProductsRandomized);
+  console.log("WE SEE THIS FRONTEND?!", allRandomProducts);
   // const dispatch = useDispatch();
   // if (!props.allProducts) {
   //   dispatch(allProductsThunk());
   // }
   // const allProducts = useSelector(selectAllProductsRandomized);
   const src = "/assets/ladybanner-removebg.png";
-  console.log(allProducts)
+  // console.log(allProducts)
   return (
     <>
       <Head>
@@ -31,7 +32,7 @@ export default function Home(props) {
         <Hero src={src} />
         <FeatureProducts 
           allProducts={allProducts}
-          products={allRandomProducts}
+          allTheRandomProducts={allRandomProducts}
           setAllRandomProducts={setAllRandomProducts}
           displayMax={8}
           headerText={"Featured Products"}
@@ -54,8 +55,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     const allProducts = await redis.get("all_products", async (err, products) => {
       console.log("We are in the redis.get! allProducts");
-      if (err) console.error("err");
+      if (err) console.error("err", err);
       if (products != null) {
+        console.log("allProducts DONE IT COMPLETELY!");
+        await store.dispatch(allProductsThunk());
+        // console.log("store.getState().products.allProducts", store.getState().products.allProducts.length);
         return products;
       } else {
         await store.dispatch(allProductsThunk());
@@ -72,6 +76,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       console.log("We are in the redis.get! randoms");
       if (err) console.error(err);
       if (products != null) {
+        // console.log("WE HAVE THE RANDOMPRODUCTS!", products.length);
         return products;
       } else {
         await store.dispatch(allProductsThunk());
@@ -81,7 +86,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     });
 
     // console.log("allProducts REDIS?!??!??", typeof allProducts);
-
+    console.log("randoms Backend START!", typeof allRandomProducts);
+    console.log("RANDOMS backendDONE FISNIHED!");
     // await store.dispatch(allProductsThunk());
     // redisClient.set("all_products", JSON.stringify(store.getState().products.allProducts));
     // redisClient.set("all_products_randomized", JSON.stringify(store.getState().products.allProductsRandomized));

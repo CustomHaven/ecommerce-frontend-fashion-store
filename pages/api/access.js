@@ -34,6 +34,7 @@ export default async function POST(req, res) {
                 .json({ message: "Access log in successfully 😊 👌", user: data.user, token: data.access_token, refresh_token: data.refresh_token })
         }
     } catch (error) {
-        return res.status(error.status).json(error.message);
+        console.log("ERROR HIT FOR ACCESS!", error);
+        return res.status(error.status ? error.status : 500).json(error.message);
     }
 }

@@ -33,6 +33,7 @@ export default async function POST(req, res) {
                 .json(JSON.stringify(data));
         }
     } catch(error) {
+        console.log("ERROR HIT FOR SIGNOUT!", error);
         res.status(500).json(JSON.stringify({ message: "failed to load data" }))
     }
 }

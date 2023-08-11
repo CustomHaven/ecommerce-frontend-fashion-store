@@ -1,19 +1,11 @@
 import finalResponse from "./api-helper";
 import { headers, adminHeaders } from "./generalUtils";
 
-const API_URL = "https://api-custom-ecommerce-pern.onrender.com/api/v2";
-// const API_URL = "http://localhost:5000/api/v2";
-
+const API_URL = process.env.NEXT_PUBLIC_BACKEND;
 
 console.log("API_URL WORKED!", API_URL);
 
 let response, jsonResponse;
-// const headers = {
-//     "Accept": "application/json",
-//     "Content-Type": "application/json",
-// };
-
-
 
 const haven = {
     async getAllProductsListed() {
