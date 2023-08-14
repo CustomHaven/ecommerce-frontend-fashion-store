@@ -32,7 +32,7 @@ export default async function POST(req, res) {
                 delete newBody.noKey;
             });
 
-            if (Object.values(newBody).every(a => !a || (Array.isArray(a) && a.length < 1))) {
+            if (Object.values(newBody).every(a => !a || (Array.isArray(a) && a.length < 1)) && newBody.usingKey.length < 1) {
                 console.log("WE HIT THE FLAG FOR BAD REQUEST!");
                 throw {
                     status: 400,
@@ -41,7 +41,7 @@ export default async function POST(req, res) {
             }
 
             if (newBody.evaluationKey) {
-                if (Object.values(newBody).every(a => !a || (Array.isArray(a) && a.length < 1))) {
+                if (Object.values(newBody).every(a => !a || (Array.isArray(a) && a.length < 1)) && newBody.usingKey.length < 1) {
                     console.log("WE HIT THE FLAG FOR BAD REQUEST A SECOND TIME!");
                     throw {
                         status: 400,

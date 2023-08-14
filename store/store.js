@@ -38,3 +38,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
 */
 
 export const wrapper = createWrapper(makeStore);
+export const doStore = makeStore();

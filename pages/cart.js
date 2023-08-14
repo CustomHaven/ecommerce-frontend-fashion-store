@@ -1,4 +1,6 @@
 import Head from 'next/head';
+import { useState } from 'react';
+import { redisGet } from '../utils/redis';
 import HiddenHeader from "../components/HiddenHeader";
 import Breadcrumbs from "../components/Breadcrumbs";
 import CartPage from '../components/cartPage';
@@ -7,7 +9,11 @@ import { wrapper } from '../store/store';
 import { allProductsThunk } from "../feature/productSlice/productSlice";
 
 const Cart = (props) => {
-
+    const [allProducts, setAllProducts] = useState(props.allProducts);
+    const [allRandomProducts, setAllRandomProducts] = useState(props.allProductsRandomized);
+    console.log("WE SEE THIS FRONTEND?!", typeof allRandomProducts);
+    // allTheRandomProducts={allRandomProducts}
+    // setAllRandomProducts={setAllRandomProducts}
     return (
         <>
             <Head>
@@ -18,7 +24,9 @@ const Cart = (props) => {
             <Breadcrumbs divideBy={8} breadcrumbs={["Home", "All Products", "Cart"]} prodId={""} pageType={"cartPage"} />
             <CartPage randomProducts={props.allProductsRandomized}/>
             <Featured 
-                products={props.allProductsRandomized}
+                allProducts={allProducts}
+                usingProducts={allRandomProducts}
+                setUsingProducts={setAllRandomProducts}
                 displayMax={4}
                 headerText={""}
                 subHeader={"YOU MIGHT ALSO LIKE"}
@@ -29,12 +37,16 @@ const Cart = (props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async () => {
-        await store.dispatch(allProductsThunk());
+        // await store.dispatch(allProductsThunk());
+
+        const allProducts = await redisGet("all_products", store, "products", "allProducts", allProductsThunk);
+
+        const allRandomProducts = await redisGet("all_products_randomized", store, "products", "allProductsRandomized", allProductsThunk);
 
         return {
             props: {
-                allProducts: store.getState().products.allProducts,
-                allProductsRandomized: store.getState().products.allProductsRandomized
+                allProducts: JSON.parse(allProducts),
+                allProductsRandomized: JSON.parse(allRandomProducts),
             }
         }
     }

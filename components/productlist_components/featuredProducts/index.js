@@ -9,6 +9,8 @@ import { selectProductListCount, productArrayChunkSize, selectDisplayMax,
     productDisplayMax, productListCounter, focusSingleProduct, 
     selectOneSingleProduct, oneDisplayedProduct, allProductsThunk, 
     selectAllProductsRandomized, selectAllProducts } from "../../../feature/productSlice/productSlice";
+import { doStore } from "../../../store/store";
+import { productCategoriesSeparator } from "../../../utils/subCatHelper";
 
 
 const Featured = (props) => {
@@ -22,6 +24,17 @@ const Featured = (props) => {
     const allTheProducts = useSelector(selectAllProducts);
     const dispatch = useDispatch();
     const featureProductsContainerRef = useRef(null);
+
+    useEffect(() => {
+
+    }, [])
+    useEffect(() => {
+        if (props.pageType === "Product Listing") {
+            console.log("MUST CALL THIS NOW!");
+            const productsCategory = productCategoriesSeparator(doStore, props.theProductsAll, props.pagePath, null, "");
+            props.setUsingProducts(productsCategory.productCategory);
+        }
+    }, [props.theProductsAll])
 
     // console.log("THE START! props.allProducts", props.allProducts);
 
@@ -37,11 +50,11 @@ const Featured = (props) => {
         {
             noKey: "empty",
             evaluationKey: props.allProducts,
-            randomProducts: props.allTheRandomProducts
+            randomProducts: props.usingProducts
         }
     ];
 
-    console.log("right above the SWR", props.allTheRandomProducts);
+    console.log("right above the SWR", props.usingProducts);
 
     // API?CAHCED WE ARE IN! REQ.body {"set":"foo","value":"get"}
     // API?CAHCED WE ARE IN! TYPEOF req.body string
@@ -56,9 +69,15 @@ const Featured = (props) => {
                 value
             })
         });
+        console.log("resposne befoer the response.json()", response);
+        // if (!response.ok) {
+        //     return;
+        // }
         const res = await response.json();
-        if (res.message === "Not found") {
+        console.log("response before the if block", res);
+        if (!response.ok) {
             // console.log("RES ERROR CACHING RETURNS:!, ", res);
+            console.log("response WAS NOT OK!", response);
             setCachedProducts(null);
             setFinalCachingStage(0);
             return;
@@ -76,7 +95,7 @@ const Featured = (props) => {
     }, []);
 
     useEffect(() => {
-        if (!props.allTheRandomProducts) {
+        if (!props.usingProducts) {
             setLocalProductState(10);
         }
     }, []);
@@ -99,7 +118,7 @@ const Featured = (props) => {
                 body: JSON.stringify(input)
                 // body: JSON.stringify({
                 //     allProducts: props.allProducts,
-                //     randomProducts: props.allTheRandomProducts,
+                //     randomProducts: props.usingProducts,
                 //     reduxAllProducts: allTheProducts,
                 //     reduxRandomProducts: randomListedProducts,
                 //     key_str: "all_products",
@@ -108,14 +127,15 @@ const Featured = (props) => {
             });
             // console.log("OKAY RESPONSE SWR DONE!");
             // console.log("RESPONSE DONE FROM SWR!", response);
-            const jsonRespons = await response.json();
+            
             // console.log("jsonRespons in the useSWR:!!", jsonRespons);
-            if (jsonRespons.message) {
+            if (!response.ok) {
                 return null;
             } else {
+                const jsonRespons = await response.json();
                 // console.log("ARE WE ABOVE SET MONITOR CACHING?", jsonRespons.usingKey);
                 setMonitorCaching(allTheProducts);
-                props.setAllRandomProducts(jsonRespons.usingKey);
+                props.setUsingProducts(jsonRespons.usingKey);
                 return;
             }
         }
@@ -149,7 +169,7 @@ const Featured = (props) => {
         let copy;
         if (process?.title === "browser" && window.location.pathname === "/") {
             console.log("are you entering here SHOW URSELF?!")
-            const tempArray = props.allTheRandomProducts.slice(0, props.displayMax);
+            const tempArray = props.usingProducts.slice(0, props.displayMax);
             if (media) {
                 dispatch(focusSingleProduct(true));
                 dispatch(oneDisplayedProduct(0));
@@ -165,22 +185,22 @@ const Featured = (props) => {
             if (media) {
                 dispatch(focusSingleProduct(true));
                 dispatch(oneDisplayedProduct(0));
-                copy = copyArrayHelper(props.allTheRandomProducts, 1);
+                copy = copyArrayHelper(props.usingProducts, 1);
                 setPageArray(copy);
             } else {
                 dispatch(focusSingleProduct(false));
                 dispatch(productListCounter(0));
-                copy = copyArrayHelper(props.allTheRandomProducts, props.displayMax);
+                copy = copyArrayHelper(props.usingProducts, props.displayMax);
                 setPageArray(copy);
             }
         }
     }
 
     useEffect(() => {
-        if (props.allTheRandomProducts !== null) {
+        if (props.usingProducts !== null) {
             pageArrayFunc();
         }
-    }, [props.allTheRandomProducts, props.categoryPage, process?.title === "browser" && window.location.pathname, props.displayMax, media]);
+    }, [props.usingProducts, props.categoryPage, process?.title === "browser" && window.location.pathname, props.displayMax, media]);
 
     useEffect(() => {
         cached("get", "all_products");
@@ -219,7 +239,7 @@ const Featured = (props) => {
                 {
                     noKey: "empty",
                     evaluationKey: props.allProducts,
-                    randomProducts: props.allTheRandomProducts
+                    randomProducts: props.usingProducts
                 }
             ];
             fetcher(ll);

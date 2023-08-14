@@ -129,6 +129,7 @@ const productSlice = createSlice({
             });
         },
         listWomensBottoms(state, action) {
+            console.log("women bottom payload", action);
             state.womensBottom = action.payload.filter(products => {
                 if (products.type.match(/Womens Bottom/)) { // spelt wrong in the backend fix to women correct spelling
                     return products;
@@ -206,6 +207,10 @@ const productSlice = createSlice({
                 }
                 state.womensTop = action.payload.products.womensTop;
 
+                if (!action.payload.products.displayCategoryList) {
+                    return state;
+                }
+                state.displayCategoryList = action.payload.products.displayCategoryList;
 
                 if (!action.payload.products.displayMax) {
                     return state;
