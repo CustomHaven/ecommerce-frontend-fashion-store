@@ -2,26 +2,10 @@ import Redis from "ioredis";
 
 let redis;
 if (process.env.NODE_ENV === "production") {
-    redis = new Redis(process.env.REDIS_LAB_CONNECTION_STRING);
+    redis = new Redis(process.env.REDIS_CONNECTION_URL_STRING);
 } else {
     redis = new Redis();
-    console.log("REDIS", redis);
 }
-//process.env.REDIS_LAB_CONNECTION_STRING
-//process.env.REDIS_CONNECTION_URL_STRING
-
-// await redis.get("all_products_randomized", async (err, products) => {
-//     console.log("We are in the redis.get! randoms");
-//         if (err) console.error(err);
-//         if (products != null) {
-//         // console.log("WE HAVE THE RANDOMPRODUCTS!", products.length);
-//             return products;
-//         } else {
-//             await store.dispatch(allProductsThunk());
-//             await redis.set("all_products_randomized", JSON.stringify(store.getState().products.allProductsRandomized));
-//             return store.getState().products.allProductsRandomized;
-//         }
-// });
 
 export const redisGet = async (key, store, reducer, state, thunk, options = {}) => {
     console.log("redisGET IS BEING CALLED!", store, reducer, state);
@@ -36,12 +20,12 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
             return items;
         } else {
             await store.dispatch(thunk(options));
-            const fetchingItems = store.getState()[reducer][state];
-            await redis.set(key, JSON.stringify(fetchingItems));
+            const fetchedItems = store.getState()[reducer][state];
+            await redis.set(key, JSON.stringify(fetchedItems));
             console.log("fetchingITEMS");
-            console.log("fetchingITEMS ARE:", fetchingItems);
+            console.log("fetchingITEMS ARE:", JSON.stringify(fetchedItems).length);
             console.log("fetchingITEMS DONE!!");
-            return fetchingItems;
+            return fetchedItems;
         }
     })
 };
