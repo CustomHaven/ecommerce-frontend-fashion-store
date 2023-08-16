@@ -1,7 +1,7 @@
 export default async function POST(req, res) {
     try {
         if (req.method === "POST") {
-            if (process.env.NODE_ENV === "production") {
+            // if (process.env.NODE_ENV === "production") {
                 console.log("API?CAHCED WE ARE IN! REQ.body", req.body);
                 console.log("API?CAHCED WE ARE IN! TYPEOF req.body", typeof req.body);
                 if (typeof req.body === "string") req.body = JSON.parse(req.body);
@@ -13,24 +13,26 @@ export default async function POST(req, res) {
                         Authorization: "Bearer " + process.env.REDIS_REST_TOKEN
                     }
                 });
+                console.log("REDIS is what? in cached", redis);
                 const redisResponse = await redis.json();
+                console.log("redisResponse cached!", redisResponse);
                 // console.log(process.env.REDIS_REST_URL + `/${req.body.method}/${req.body.key}${req.body.value ? `/${req.body.value}` : ""}`);
                 // console.log(redisResponse);
 
-                if (!redisResponse) {
+                if (!redisResponse || !redisResponse.result) {
                     throw {
                         status: 404,
                         message: "Not found"
                     }
                 }
                 return res.status(200).json({ redis: redisResponse });
-            } else {
-                console.log("NOT IN PRODUCTION");
-                throw {
-                    status: 405,
-                    message: "Method not allowed"
-                }
-            }
+            // } else {
+            //     console.log("NOT IN PRODUCTION");
+            //     throw {
+            //         status: 405,
+            //         message: "Method not allowed"
+            //     }
+            // }
         }
     } catch (error) {
         console.log("ERROR HIT FOR CACHED!", error);

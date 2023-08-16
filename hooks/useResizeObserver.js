@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useResizeObserver = (element, selector, child) => {
+const useResizeObserver = (element, selector, child, updateVar) => {
     const [inlineSize, setInlineSize] = useState(0); // width
     const [blockSize, setBlockSize] = useState(0); // height
     const [inlineSizeChild, setBlockSizeChild] = useState(0); // height? strange..
@@ -60,7 +60,7 @@ const useResizeObserver = (element, selector, child) => {
             window.addEventListener("resize", resizeObserver(element));
             window.addEventListener("change", resizeObserver(element));
         }
-    }, [element, selector]);
+    }, [element, selector, updateVar]);
 
     return {
         inlineSize,

@@ -26,8 +26,17 @@ const componentSlice = createSlice({
 
         adminSideIndexing: 0,
         logoutBool: true,
+
+        productsDirectionsHelper: 0,
+        subCatPathLocation: ""
     },
     reducers: {
+        changeSubCatPathLocation(state, action) {
+            state.subCatPathLocation = action.payload;
+        },
+        controlProductDirectionHelper(state, action) {
+            state.productsDirectionsHelper = action.payload;
+        },
         defaultLogoutFeature(state, action) {
             state.logoutBool = action.payload;
         },
@@ -108,7 +117,13 @@ export const { mainRef,
     controlFirstList,
     controlLastList,
     controlAdminSideBar,
-    defaultLogoutFeature } = componentSlice.actions;
+    defaultLogoutFeature,
+    controlProductDirectionHelper,
+    changeSubCatPathLocation } = componentSlice.actions;
+
+
+export const selectSubCatPathLocation = state => state.components.subCatPathLocation;
+export const selectProductsDirectionsHelper = state => state.components.productsDirectionsHelper;
 
 export const selectPageListingController = state => state.components.pageListingController;
 export const selectPageListedArrayStorage = state => state.components.pageListedArrayStorage;

@@ -1,26 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BsFillArrowLeftCircleFill, BsFillArrowRightCircleFill } from "react-icons/bs";
 import useQuerySelector from "../../../hooks/useQuerySelector";
 import useResizeObserver from "../../../hooks/useResizeObserver";
 import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import { selectArrayChunkSize, selectProductListCount, productListCounter, 
-    listSlideDirection, selectOneSingleProduct, oneDisplayedProduct } from "../../../feature/productSlice/productSlice";
+    listSlideDirection, selectOneSingleProduct, oneDisplayedProduct,
+    selectPageArrayLength, addSlideShowCount } from "../../../feature/productSlice/productSlice";
+import { selectProductsDirectionsHelper, controlProductDirectionHelper } from "../../../feature/generalComponents/generalComponentSlice";
 //
 const Directions = (props) => {
 
     const listCount = useSelector(selectProductListCount);
     const chunkSize = useSelector(selectArrayChunkSize);
     const focusSingleProduct = useSelector(selectOneSingleProduct);
+    const productsDirectionsHelper = useSelector(selectProductsDirectionsHelper);
+    const pageArrayLength = useSelector(selectPageArrayLength);
     const dispatch = useDispatch();
     const { windowWidth } = useWindowDimensions();
-    
-    const productSectionSize = useResizeObserver(null, "#feature-product-section > div", true);
-    const asideInFloat = useQuerySelector("#aside_product_menu_id");
+    const [updateVar, setUpdateVar] = useState(0);
+
+    console.log("listCount", listCount);
+
+    const productSectionSize = useResizeObserver(null, "#feature-product-section > div", true, updateVar);
+
+    const asideInFloat = useQuerySelector("#aside_product_menu_id", updateVar);
     const asideSectionSize = useResizeObserver(asideInFloat.current, "#aside_product_menu_id");
 
     const [styleRightArrow, setStyleRightArrow] = useState({ color: "var(--submit-button-100)", cursor: "pointer" });
     const [styleLeftArrow, setStyleLeftArrow] = useState({ color: "var(--submit-button-100)", cursor: "pointer" });
+
+    useEffect(() => {
+        setUpdateVar(updateVar + 1);
+    }, [productsDirectionsHelper]);
 
     let margin;
 
@@ -72,34 +84,48 @@ const Directions = (props) => {
     const handleMouseLeaveRight = () => setStyleRightArrow(prev => ({ ...prev, fontSize: "min(8vw, 2.5rem)"}));
 
     const handleLeftClick = () => {
+        if (pageArrayLength === 1) {
+            return;
+        }
+        // dispatch(addSlideShowCount(1));
+
         if (focusSingleProduct || process.title === "browser" && window.location.pathname !== "/") {
             dispatch(listSlideDirection("left"));
             if (listCount === 0) {
-                dispatch(productListCounter(chunkSize - 1));
+                dispatch(productListCounter(pageArrayLength - 1));
                 if (focusSingleProduct) {
-                    dispatch(oneDisplayedProduct(chunkSize - 1));
+                    dispatch(addSlideShowCount(1));
+                    // dispatch(oneDisplayedProduct(chunkSize - 1));
                 }
             } else {
                 dispatch(productListCounter(listCount - 1));
                 if (focusSingleProduct) {
-                    dispatch(oneDisplayedProduct(listCount - 1));
+                    dispatch(addSlideShowCount(1));
+                    // dispatch(oneDisplayedProduct(listCount - 1));
                 }
             }
         }
     }
 
     const handleRightClick = () => {
+        if (pageArrayLength === 1) {
+            return;
+        }
+        // dispatch(addSlideShowCount(1));
+
         if (focusSingleProduct || process.title === "browser" && window.location.pathname !== "/") {
             dispatch(listSlideDirection("right"));
-            if (listCount + 1 === chunkSize) {
+            if (listCount + 1 === pageArrayLength) {
                 dispatch(productListCounter(0));
                 if (focusSingleProduct) {
-                    dispatch(oneDisplayedProduct(0));
+                    dispatch(addSlideShowCount(1));
+                    // dispatch(oneDisplayedProduct(0));
                 }
             } else {
                 dispatch(productListCounter(listCount + 1));
                 if (focusSingleProduct) {
-                    dispatch(oneDisplayedProduct(listCount + 1));
+                    dispatch(addSlideShowCount(1));
+                    // dispatch(oneDisplayedProduct(listCount + 1));
                 }
             }
         }

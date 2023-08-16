@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useState } from 'react';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { redisGet } from '../utils/redis';
 import Hero from "../components/homepage_components/hero";
 import FeatureProducts from "../components/productlist_components/featuredProducts";
@@ -10,11 +10,13 @@ import ShopCategory from "../components/homepage_components/shopCategory";
 import Newsletter from "../components/homepage_components/newsletter";
 import { wrapper } from '../store/store';
 import { selectAllProductsRandomized, allProductsThunk } from "../feature/productSlice/productSlice";
+import { selectProductsDirectionsHelper } from '../feature/generalComponents/generalComponentSlice';
 
 export default function Home(props) {
   // console.log("allProducts INSIDE MAIN FUNC REDIS?!??!??", props.allProducts);
   const [allProducts, setAllProducts] = useState(props.allProducts);
   const [allRandomProducts, setAllRandomProducts] = useState(props.allProductsRandomized);
+  const productsDirectionsHelper = useSelector(selectAllProductsRandomized);
   // console.log("WE SEE THIS FRONTEND?!", allRandomProducts);
   // const dispatch = useDispatch();
   // if (!props.allProducts) {
@@ -41,7 +43,10 @@ export default function Home(props) {
           subHeader={"New Modern Design Collection"}
           categoryPage={""}
           pageType={"Home"} />
-        <Directions />
+        {
+          productsDirectionsHelper &&
+          <Directions />
+        }
         <Guarantee />
         <ShopCategory />
         <Newsletter />

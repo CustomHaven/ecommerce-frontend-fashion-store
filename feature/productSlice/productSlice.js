@@ -79,10 +79,18 @@ const productSlice = createSlice({
         focusOneProduct: false,
         displayedProductID: "product-cards-0",
 
-        hrefMonitor: ""
+        hrefMonitor: "",
+        pageArrayLength: 0,
+        slideShowPressCount: 0
 
     },
     reducers: {
+        addSlideShowCount(state, action) {
+            state.slideShowPressCount = state.slideShowPressCount + action.payload;
+        },
+        savePageArrayLength(state, action) {
+            state.pageArrayLength = action.payload;
+        },
         displayProductCategory(state, action) {
             state.displayCategoryList = action.payload;
         },
@@ -152,8 +160,7 @@ const productSlice = createSlice({
             state.focusOneProduct = action.payload;
         },
         oneDisplayedProduct(state, action) {
-            const oldToNewString = state.displayedProductID.replace(/\d/, action.payload);
-            state.displayedProductID = oldToNewString;
+            state.displayedProductID = action.payload;
         }
     },
     extraReducers: builder => {
@@ -310,10 +317,15 @@ export const {
     hrefChanger,
     displayProductCategory,
     focusSingleProduct,
-    oneDisplayedProduct
+    oneDisplayedProduct,
+    savePageArrayLength,
+    addSlideShowCount
 } = productSlice.actions;
 
 
+
+export const selectSlideShowPressCount = state => state.products.slideShowPressCount;
+export const selectPageArrayLength = state => state.products.pageArrayLength;
 export const selectDisplayCategoryList = state => state.products.displayCategoryList;
 export const selectArrayChunkSize = state => state.products.arrayChunkSize;
 export const selectDisplayMax = state => state.products.displayMax;

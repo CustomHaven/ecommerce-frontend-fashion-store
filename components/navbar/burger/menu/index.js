@@ -43,7 +43,7 @@ const Menu = (props) => {
                         <AiOutlineClose />
                     </button>
                     <figure className={styles.aside_menu_canva_logo_container}>
-                        <Link href="/">
+                        <Link href="/" onClick={closeSideBar}>
                             {/* <Canvas src="/assets/custom-haven-monkey-small.png" className={styles.aside_menu_canva_logo} /> */}
                             <Canvas 
                                 src="/assets/my_logo/logo_world_customhaven_side_stack.svg"
@@ -54,7 +54,7 @@ const Menu = (props) => {
                     </figure>
                     <ul className={styles.aside_menu_ul}>
                         <li>
-                            <Link href="/"><span>Home</span></Link>
+                            <Link href="/" onClick={closeSideBar}><span>Home</span></Link>
                         </li>
                         <li data-shop="shop-li" onClick={handleClick}>
                             <span data-shop="shop-li" data-span-content="the-content">Shop</span>
@@ -69,10 +69,10 @@ const Menu = (props) => {
                                 <div className={styles.aside_menu_options_dropdown}>
                                     <ul>
                                         <li>
-                                            <Link href="/products/men/all"><p>Men's</p></Link>
+                                            <Link href="/products/men/all" onClick={closeSideBar}><p>Men's</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/products/women/all"><p>Women's</p></Link>
+                                            <Link href="/products/women/all" onClick={closeSideBar}><p>Women's</p></Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -95,16 +95,16 @@ const Menu = (props) => {
                                 <div className={styles.aside_menu_options_dropdown}>
                                     <ul>
                                         <li>
-                                            <Link href="/about"><p>About Us</p></Link>
+                                            <Link href="/about" onClick={closeSideBar}><p>About Us</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/delivery-information"><p>Delivery Information</p></Link>
+                                            <Link href="/delivery-information" onClick={closeSideBar}><p>Delivery Information</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
+                                            <Link href="/privacy-policy" onClick={closeSideBar}><p>Privacy Policy</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                                            <Link href="/terms-conditions" onClick={closeSideBar}><p>Terms & Conditions</p></Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -115,7 +115,7 @@ const Menu = (props) => {
                             <Link href="/contact"><span>Contact</span></Link>
                         </li>
                     </ul>
-                    <p className={styles.aside_menu_account}><Link href="/account/login">Account</Link></p>
+                    <p className={styles.aside_menu_account}><Link href="/login" onClick={closeSideBar}>Account</Link></p>
                     <nav className={styles.aside_menu_last_nav}>
                         <div>
                             <select>

@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         // await store.dispatch(allProductsThunk());
 
         // store.dispatch(productDisplayMax(6));
-        const allProducts = await redisGet("all_products", store, "products", "allProducts", allProductsThunk);
+        const allProducts = await redisGet("all_products", store, "products", "allProducts", allProductsThunk, true);
 
         return {
             props: {

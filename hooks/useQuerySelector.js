@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import useIsomorphicEffect from './useIsomorphicEffect';
 import { watchHrefChange } from '../utils/hrefChangeHelper';
 
-const useQuerySelector = (selector) => {
+const useQuerySelector = (selector, updateVar) => {
     const element = useRef(null);
     const [href, setHref] = useState(process?.title === "browser" && window.location.href);
 
@@ -19,7 +19,7 @@ const useQuerySelector = (selector) => {
         handler();
         window.onload = watchHrefChange(href, setHref, element, selector);
 
-    }, [element, href]);
+    }, [element, href, updateVar]);
 
     return element;
 };
