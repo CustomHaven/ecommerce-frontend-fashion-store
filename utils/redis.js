@@ -7,9 +7,9 @@ if (process.env.NODE_ENV === "production") {
     redis = new Redis();
 }
 
-export const redisGet = async (key, store, reducer, state, thunk, server, options = {}) => {
+export const redisGet = async (key, store, reducer, state, thunk, options = {}) => {
     // console.log("redisGET IS BEING CALLED!", store, reducer, state);
-    console.log("server", server);
+    // console.log("server", server);
     // if (!server) {
     //     store = store();
     // }
