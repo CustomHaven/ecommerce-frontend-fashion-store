@@ -42,7 +42,12 @@ export default function Home(props) {
           headerText={"Featured Products"}
           subHeader={"New Modern Design Collection"}
           categoryPage={""}
-          pageType={"Home"} />
+          pageType={"Home"}
+          pageSub={null}
+          pagePath={null}
+          theProductsAll={null}
+          redisCached={null}
+          productTypeStr={null} />
         {
           productsDirectionsHelper &&
           <Directions />
