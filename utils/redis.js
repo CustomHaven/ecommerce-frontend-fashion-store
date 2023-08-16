@@ -23,7 +23,7 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
             console.log("items I CAN LITERALLY SEE THE ITEMS THE ENTIRE STRING IN MY REDIS SO I HAVE THE VALUE!!", items.length);
             return items;
         } else {
-            await store().dispatch(thunk(options));
+            await store.dispatch(thunk(options));
             const fetchedItems = store().getState()[reducer][state];
             await redis.set(key, JSON.stringify(fetchedItems));
             console.log("fetchingITEMS");
