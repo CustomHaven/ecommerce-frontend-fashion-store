@@ -62,8 +62,8 @@ export default async function POST(req, res) {
                 if (newBody.hasOwnProperty("reduxAllProducts")) {
                     if (JSON.stringify(newBody.evaluationKey) !== JSON.stringify(newBody.reduxAllProducts)) {
 
-                        await Promise.resolve(redisResult.forEach(async (r) => {
-                            await redis.set(r.keyStr, JSON.stringify(r.valueStr));
+                        await Promise.all(redisResult.map(async (r) => {
+                            return await redis.set(r.keyStr, JSON.stringify(r.valueStr));
                         }));
 
                         return res.status(201).json({ usingKey: newBody.usingKey });
@@ -71,12 +71,10 @@ export default async function POST(req, res) {
                 } else {
                     if (JSON.stringify(newBody.evaluationKey) !== JSON.stringify(newBody.usingKey)) {
 
-                        await Promise.resolve(redisResult.forEach(async (r) => {
-                            await redis.set(r.keyStr, JSON.stringify(r.valueStr));
+                        await Promise.all(redisResult.map(async (r) => {
+                            return await redis.set(r.keyStr, JSON.stringify(r.valueStr));
                         }));
 
-
-                        
                         return res.status(201).json({ usingKey: newBody.usingKey });
                     }
                 }
