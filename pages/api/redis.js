@@ -67,9 +67,15 @@ export default async function POST(req, res) {
                 } else {
                     if (JSON.stringify(newBody.evaluationKey) !== JSON.stringify(newBody.usingKey)) {
 
+                        console.log("right before saving the stuff to redis! what is redisResult?");
+
+                        console.log(redisResult);
+
                         await Promise.resolve(redisResult.forEach(async (r) => {
                             await redis.set(r.keyStr, JSON.stringify(r.valueStr));
                         }));
+
+                        console.log("redis stored!?");
                         
                         return res.status(201).json({ usingKey: newBody.usingKey });
                     }
