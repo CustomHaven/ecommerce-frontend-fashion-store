@@ -217,8 +217,10 @@ const Featured = (props) => {
     }, []);
 
     useEffect(() => {
-        if (allProductsThunk.length > 0) {
-            fetcher(obj);
+        if (props.homePageOrAllShopPage === "Homepage Or All Products Shop page") {
+            if (allTheProducts.length > 0) {
+                fetcher(obj);
+            }
         }
     }, [allTheProducts]);
 
