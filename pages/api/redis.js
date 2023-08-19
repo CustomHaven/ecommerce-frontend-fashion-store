@@ -53,7 +53,7 @@ export default async function POST(req, res) {
 
                 console.log(redisResult);
 
-                await Promise.resolve(redisResult.forEach(async (r) => {
+                await Promise.all(redisResult.forEach(async (r) => {
                     await redis.set(r.keyStr, JSON.stringify(r.valueStr));
                 }));
                 console.log("redis stored!?");
