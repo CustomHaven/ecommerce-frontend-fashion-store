@@ -13,7 +13,11 @@ import styles from "../../styles/Product.module.css";
 
 
 const ProductPage = (props) => {
-
+    // if (!props.product) {
+    //     return;
+    // }
+    console.log("props.product in the begining of ProductPage!!", props.product);
+    console.log("checking the start is do we have prodId", props.prodId);
     const dispatch = useDispatch();
     const singleProduct = useSelector(selectSingleProduct);
     const isError = useSelector(selectSingleProductErrors);
@@ -28,15 +32,15 @@ const ProductPage = (props) => {
 
     const [imgIdContainerLength, setImgIdContainerLength] = useState(0);
 
+    // Does something similar but used in two different places
     const [initialFour, setInitialFour] = useState([]);
     const [forClick, setForClick] = useState([]);
     const [displaySmallerImages, setDisplaySmallerImages] = useState([]);
     const [currentSelectedImage, setCurrentSelectedImage] = useState("");
     const [currentImage, setCurrentImage] = useState({});
 
-    const { windowWidth } = useWindowDimensions();
-
     const fetcher = async (input) => {
+        console.log("FETCHER IS HIT!")
         const response = await fetch("/api/redis", {
             method: "POST",
             body: JSON.stringify(input)
@@ -47,10 +51,26 @@ const ProductPage = (props) => {
         } else {
             const jsonRespons = await response.json();
 
+            // setMonitorCaching(allTheProducts);
+            // props.setUsingProducts(jsonRespons.usingKey);
             setFetchProduct(jsonRespons.usingKey);
             return;
         }
     }
+
+    console.log("props.product what is it?", props.product);
+
+    console.log("theSingleProduct we have it?", theSingleProduct);
+    console.log("imgIdContainer we have it?", imgIdContainer);
+    console.log("imgIdContainerLength we have it?", imgIdContainerLength);
+    console.log("initialFour we have it?", initialFour);
+    console.log("forClick we have it?", forClick);
+    console.log("currentSelectedImage we have it?", currentSelectedImage);
+    console.log("currentImage we have it?", currentImage);
+    console.log("displaySmallerImages we have it?", displaySmallerImages);
+
+    // const [largeImageSelected, setLargeImageSelected] = useState(false);
+    const { windowWidth } = useWindowDimensions();
 
     const handleLeftClick = () => {
         const theFoursLastIndex = clickHelper("left", forClick, theSingleProduct.images);
@@ -105,14 +125,19 @@ const ProductPage = (props) => {
     }
 
     useEffect(() => {
-        dispatch(singleProductThunk(props.prodId));
+        // if (props.product) {
+            // console.log("props.product in the begining what is it common tell me?!", props.product);
+            // console.log("props.prodId in the begining what is it common tell me?!", props.prodId);
+            dispatch(singleProductThunk(props.prodId));
+        // }
     }, []);
 
     useEffect(() => {
         if (props.product) {
             if (props.product.id && singleProduct.id) {
+                console.log("are in the comparison place?");
                 if (JSON.stringify(singleProduct) !== JSON.stringify(props.product)) {
-                    console.log("Not the same change needed!");
+                    console.log("it is not the same the JSON STRINGIFY!");
                     const obj = [
                         {
                             keyStr: props.prodId.replace(/-/, "_"),
@@ -126,13 +151,14 @@ const ProductPage = (props) => {
                     fetcher(obj);
                 }
             } else {
-                console.log("Same values change not needed");
+                console.log("JSON STRINGIFY is the same WHAT IS IN REDIS AND IN OUR DB!")
             }
         }
     }, [singleProduct]);
 
     useEffect(() => {
         if (fetchProduct) {
+            console.log("we are in fetch product!");
             props.setProduct(fetchProduct);
         }
     }, [fetchProduct]);
@@ -140,11 +166,19 @@ const ProductPage = (props) => {
     useEffect(() => {
         if (!props.product) {
             if (singleProduct) {
+                console.log("we have singleProduct values apparently", singleProduct);
                 if (singleProduct.id) {
+                    console.log("props.product is empty!", props.product);
+                    console.log("singleProduct should not be empty!", singleProduct);
                     props.setProduct(singleProduct);
                 } 
                 if (isError) {
                     props.setError(isError);
+                    props.setStatusText(statusText);
+                    props.setStatusCode(statusCode);
+                    console.log("isError we have error", isError);
+                    console.log("statusText is", statusText);
+                    console.log("statusCode is", statusCode);
                 }
             }
         }
@@ -152,8 +186,10 @@ const ProductPage = (props) => {
 
 
     useEffect(() => {
+        console.log("outside the props.products");
         if (props.product) {
             if (props.product.id) {
+                console.log("Are we in here in the props.product? listing?", props.product);
                 const productImagesArray = [].concat(props.product.ProductImages.map(val => Object.assign({}, {
                     idImage: val.id.replace(/^(.+)$/, "image-id-$1"),
                     imgName: val.image_name,
@@ -179,7 +215,9 @@ const ProductPage = (props) => {
     }, [props.product]);
 
     useEffect(() => {
+        console.log("are we even entering here?", theSingleProduct);
         if (theSingleProduct.id) {
+            console.log("are we entering the if statement for setImgId etc?")
             setImgIdContainer(theSingleProduct.images.map(img => img.idImage));
             setCurrentSelectedImage(theSingleProduct.images[0].idImage);
             setCurrentImage(theSingleProduct.images[0]);
@@ -215,6 +253,10 @@ const ProductPage = (props) => {
             setDisplaySmallerImages(tempArray);
         });
     }, [windowWidth]);
+
+    // return;
+
+    console.log("singleProduct redux came back?", singleProduct);
 
     if (isError) {
         return <Error statusCode={statusCode} statusText={statusText} resetValues={true} />
