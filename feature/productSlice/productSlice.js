@@ -288,6 +288,10 @@ const productSlice = createSlice({
                 state.singleProductLoading = false;
                 state.singleProductErrors = true;
 
+                console.log("single Product rejecting with errors!", action.payload);
+
+                state.singleProduct = { error: true };
+
                 state.singleProductStatusCode = action.payload.statusCode;
                 state.singleProductStatusText = action.payload.statusText;
                 state.singleProductStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");

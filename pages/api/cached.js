@@ -1,7 +1,7 @@
 export default async function POST(req, res) {
     try {
         if (req.method === "POST") {
-            // if (process.env.NODE_ENV === "production") {
+            if (process.env.NODE_ENV === "production") {
                 console.log("API?CAHCED WE ARE IN! REQ.body", req.body);
                 console.log("API?CAHCED WE ARE IN! TYPEOF req.body", typeof req.body);
                 if (typeof req.body === "string") req.body = JSON.parse(req.body);
@@ -26,13 +26,13 @@ export default async function POST(req, res) {
                     }
                 }
                 return res.status(200).json({ redis: redisResponse });
-            // } else {
-            //     console.log("NOT IN PRODUCTION");
-            //     throw {
-            //         status: 405,
-            //         message: "Method not allowed"
-            //     }
-            // }
+            } else {
+                console.log("NOT IN PRODUCTION");
+                throw {
+                    status: 405,
+                    message: "Method not allowed"
+                }
+            }
         }
     } catch (error) {
         console.log("ERROR HIT FOR CACHED!", error);

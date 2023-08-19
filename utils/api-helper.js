@@ -11,7 +11,7 @@ const finalResponse = async (response, removeDeleteMethod) => {
         return jsonResponse;
     }
     throw {
-        name: response.statusText,
+        statusText: response.statusText,
         statusCode: response.status,
         message: await response.text(),
     }

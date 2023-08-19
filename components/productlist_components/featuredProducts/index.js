@@ -130,21 +130,38 @@ const Featured = (props) => {
 
     // console.log("THE START! props.allProducts", props.allProducts);
 
-    const obj = [
-        {
-            keyStr: "all_products",
-            reduxAllProducts: allTheProducts
-        },
-        {
-            keyStr: "all_products_randomized",
-            usingKey: randomListedProducts
-        },
-        {
-            noKey: "empty",
-            evaluationKey: props.allProducts,
-            randomProducts: props.usingProducts
+    let obj;
+
+    if (props.homePageOrAllShopPage === "Homepage Or All Products Shop page") {
+        if (props.homePage) {
+            obj = [
+                {
+                    keyStr: "all_products",
+                    reduxAllProducts: allTheProducts
+                },
+                {
+                    keyStr: "all_products_randomized",
+                    usingKey: randomListedProducts
+                },
+                {
+                    noKey: "empty",
+                    evaluationKey: props.allProducts,
+                    randomProducts: props.usingProducts
+                }
+            ];
+        } else {
+            obj = [
+                {
+                    keyStr: "all_products",
+                    usingKey: allTheProducts
+                },
+                {
+                    noKey: "empty",
+                    evaluationKey: props.allProducts
+                }
+            ]
         }
-    ];
+    }
 
     console.log("right above the SWR", props.usingProducts);
 
@@ -206,33 +223,15 @@ const Featured = (props) => {
     }, [allTheProducts]);
 
     const fetcher = async (input) => {
-        // console.log("localProductState", localProductState);
-        // console.log("props.allProducts", props.allProducts);
         if (localProductState) {
-            // console.log("inside the useSWR!");
-            // dispatch(allProductsThunk());
-
             const response = await fetch("/api/redis", {
                 method: "POST",
                 body: JSON.stringify(input)
-                // body: JSON.stringify({
-                //     allProducts: props.allProducts,
-                //     randomProducts: props.usingProducts,
-                //     reduxAllProducts: allTheProducts,
-                //     reduxRandomProducts: randomListedProducts,
-                //     key_str: "all_products",
-                    
-                // })
             });
-            // console.log("OKAY RESPONSE SWR DONE!");
-            // console.log("RESPONSE DONE FROM SWR!", response);
-            
-            // console.log("jsonRespons in the useSWR:!!", jsonRespons);
             if (!response.ok) {
                 return null;
             } else {
                 const jsonRespons = await response.json();
-                // console.log("ARE WE ABOVE SET MONITOR CACHING?", jsonRespons.usingKey);
                 setMonitorCaching(allTheProducts);
                 props.setUsingProducts(jsonRespons.usingKey);
                 return;
@@ -360,21 +359,39 @@ const Featured = (props) => {
 
     useEffect(() => {
         if (reSetCaching && !props.redisCached) {
-            const ll = [
-                {
-                    keyStr: "all_products",
-                    reduxAllProducts: allTheProducts
-                },
-                {
-                    keyStr: "all_products_randomized",
-                    usingKey: randomListedProducts
-                },
-                {
-                    noKey: "empty",
-                    evaluationKey: props.allProducts,
-                    randomProducts: props.usingProducts
+
+            let ll;
+            if (props.homePageOrAllShopPage === "Homepage Or All Products Shop page") {
+                if (props.homePage) {
+                    ll = [
+                        {
+                            keyStr: "all_products",
+                            reduxAllProducts: allTheProducts
+                        },
+                        {
+                            keyStr: "all_products_randomized",
+                            usingKey: randomListedProducts
+                        },
+                        {
+                            noKey: "empty",
+                            evaluationKey: props.allProducts,
+                            randomProducts: props.usingProducts
+                        }
+                    ];
+                } else {
+                    ll = [
+                        {
+                            keyStr: "all_products",
+                            usingKey: allTheProducts
+                        },
+                        {
+                            noKey: "empty",
+                            evaluationKey: props.allProducts
+                        }
+                    ]
                 }
-            ];
+            }
+
             fetcher(ll);
             // cached("set", "all_product_randomized", JSON.stringify(randomListedProducts));
             // cached("set", "all_products", JSON.stringify(allTheProducts));
@@ -399,22 +416,6 @@ const Featured = (props) => {
     console.log("window.location.pathname", process.title === "browser" && window.location.pathname);
     console.log("PATH IN QUERY");
 
-    // console.log("featureContainerRef what is it?", featureContainerRef());
-
-    // console.log("featureProductsContainerRef inside it?", featureProductsContainerRef.current && featureProductsContainerRef.current.children[0].id);
-    // console.log("what is the refChild??", refChild);
-
-    // useEffect(() => {
-    //     if (singleProduct && featureProductsContainerRef.current) {
-    //         setRefChild(featureProductsContainerRef.current.children[0].id);
-    //     }
-    // }, [featureProductsContainerRef.current?.children[0].id]);
-
-    // useCallback(node => {
-    //     if (node) {
-
-    //     }
-    // });
 
     return (
         <>

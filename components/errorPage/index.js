@@ -17,7 +17,7 @@ const ErrorPage = ({status, resetValues}) => {
     const [requestRef, resetAnimation, setResetAnimation] = useGameAnimation(canvasRef, status, resetValues);
 
     const handleHome = () => {
-        console.log(router);
+        console.log("router", router);
         router.push("/");
     }
 

@@ -43,11 +43,13 @@ export default function Home(props) {
           subHeader={"New Modern Design Collection"}
           categoryPage={""}
           pageType={"Home"}
-          pageSub={null}
-          pagePath={null}
-          theProductsAll={null}
-          redisCached={null}
-          productTypeStr={null} />
+          // pageSub={null}
+          // pagePath={null}
+          // theProductsAll={null}
+          // redisCached={null}
+          // productTypeStr={null}
+          homePageOrAllShopPage={"Homepage Or All Products Shop page"}
+          homePage={"Homepage"} />
         {
           productsDirectionsHelper &&
           <Directions />

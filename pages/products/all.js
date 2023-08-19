@@ -41,7 +41,9 @@ const AllProducts = (props) => {
                     headerText={"All Products"}
                     subHeader={"New Modern Design Collection"}
                     categoryPage={""}
-                    pageType={"Product Listing"} />
+                    pageType={"Product Listing"}
+                    homePageOrAllShopPage={"Homepage Or All Products Shop page"}
+                    allShopPage={"All Shop Page"} />
                 <Directions />
             </>
         </>   
@@ -52,7 +54,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async () => {
         // await store.dispatch(allProductsThunk());
 
-        // store.dispatch(productDisplayMax(6));
+        store.dispatch(productDisplayMax(6));
         const allProducts = await redisGet("all_products", store, "products", "allProducts", allProductsThunk, true);
 
         return {

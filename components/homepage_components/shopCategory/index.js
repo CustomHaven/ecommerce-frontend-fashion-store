@@ -34,23 +34,23 @@ const ShopCategory = () => {
             <h2>Shop</h2>
             <div ref={containerRef}>
                 <div ref={leftRef} data-left={!bigScreen ? "left" : null} data-delay={!bigScreen ? "0.3s" : "0.3s"}>
-                    <Link href="/shop/men" className={styles.shop_category_link}>
+                    <Link href="products/men/all" className={styles.shop_category_link}>
                         <div className={styles.shop_img_container}>
                             <Image src="/assets/man_standing_LED.jpg" fill contain="true" alt="men's shopping" />
                         </div>
                     </Link>
-                    <Link href="/shop/men" className={styles.shop_category_link}>
+                    <Link href="products/men/all" className={styles.shop_category_link}>
                         <h3>Men's</h3>
                     </Link>
                 </div>
                 <div ref={rightRef} data-right={!bigScreen ? "right" : null} data-delay={!bigScreen ? "0.6s" : "0.3s"}>
-                    <Link href="/shop/women" className={styles.shop_category_link} >
+                    <Link href="products/women/all" className={styles.shop_category_link} >
                         <div className={styles.shop_img_container}>
                             <Image src="/assets/woman-touching-hair.jpg" fill contain="true" alt="women's shopping" />  
                         </div>
                         {/* <Image src="woman-touching-hair.jpg" width={410} height={249} alt="women's shopping"/> */}
                     </Link>  
-                    <Link href="/shop/women" className={styles.shop_category_link}>
+                    <Link href="products/women/all" className={styles.shop_category_link}>
 
                         <h3>Women's</h3>
                     </Link>

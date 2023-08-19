@@ -1,5 +1,7 @@
 import Head from "next/head";
+import { useState, useEffect } from "react";
 import Error from "../../../_error";
+import redis from "../../../../utils/redis";
 import HiddenHeader from "../../../../components/HiddenHeader";
 import Breadcrumbs from "../../../../components/Breadcrumbs";
 import ProductPage from "../../../../components/productPage";
@@ -9,43 +11,65 @@ import { singleProductThunk } from "../../../../feature/productSlice/productSlic
 
 const ProdId = (props) => {
 
-    if (props.isError) {
-        return <Error statusCode={props.statusCode} statusText={props.statusText} resetValues={true} />
-    }
+    const [error, setError] = useState(props.isError);
+    const [statusCode, setStatusCode] = useState(0);
+    const [statusText, setStatusText] = useState("");
 
-    const productImagesArray = [].concat(props.singleProduct.ProductImages.map(val => Object.assign({}, {
-        idImage: val.id.replace(/^(.+)$/, "image-id-$1"),
-        imgName: val.image_name,
-        imgData: val.image_data
-    })));
+    // if (error) {
+    //     return <Error statusCode={statusCode} statusText={statusText} resetValues={true} />
+    // }
 
-    const productBannerImage = Object.assign({}, {
-        idImage: props.singleProduct.ProductBannerImage.id.replace(/^(.+)$/, "banner-id-$1"),
-        imgName: props.singleProduct.ProductBannerImage.banner_image_name,
-        imgData: props.singleProduct.ProductBannerImage.banner_image_data
-    });
+    const [singleProduct, setSingleProduct] = useState(props.singleProduct);
+
+    // if (!props.singleProduct) {
+    //     return;
+    // }
+
+    // const [theSingleProduct, setTheSingleProduct] = useState(props.singleProduct);
 
 
-    productImagesArray.unshift(productBannerImage);
 
-    const singleProduct = Object.assign({}, {...props.singleProduct, images: productImagesArray}) // work from here!
+    // useEffect(() => {
+        // if (props.singleProduct) {
 
-    delete singleProduct["ProductBannerImage"];
-    delete singleProduct["ProductImages"];
+
+    
+            // setTheSingleProduct(singleProductCopy);
+        // }
+    // }, [props.singleProduct]);
+
+
+    // console.log("theSingleProduct", singleProductCopy);
 
     console.log("what is query params", props.queryParams);
 
+    console.log("props.singleProduct what is it?", props.singleProduct);
 
     return (
         <>
+        {
+            !error && 
             <Head>
-                <title>Haven's {props.singleProduct.product_name}</title>
+                <title>Haven's {singleProduct ? singleProduct.product_name : ""}</title>
             </Head>
+        }
             <>
-                <HiddenHeader divideBy={1} />
-                <HiddenHeader divideBy={4} />
-                <Breadcrumbs divideBy={8} breadcrumbs={props.queryParams} prodId={props.prodId} pageType={"productPage"} />
-                <ProductPage product={singleProduct}/>
+                {
+                    !error && 
+                    <>
+                        <HiddenHeader divideBy={1} />
+                        <HiddenHeader divideBy={4} />
+                        <Breadcrumbs divideBy={8} breadcrumbs={props.queryParams} prodId={props.prodId} pageType={"productPage"} />
+                    </>   
+                }
+                <ProductPage 
+                    prodId={props.prodId}
+                    product={singleProduct}
+                    setProduct={setSingleProduct}
+                    setError={setError}
+                    setStatusCode={setStatusCode}
+                    setStatusText={setStatusText}
+                />
             </>
         </>
     );
@@ -55,6 +79,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (ctx) => {
 
         const queryParams = Object.values(ctx.query);
+        console.log("queryParams in the start", queryParams);
         queryParams.pop();
         queryParams.unshift("Home");
         queryParams[1] = (queryParams[1] += "'s" + " " + queryParams[2]).replace(/(^[m|w])(\w+)(.\w\s)([t|b|a])(\w+$)/i, (all, b, c, d, e, f) => {
@@ -62,25 +87,62 @@ export const getServerSideProps = wrapper.getServerSideProps(
         });
         queryParams.pop();
 
-        await store.dispatch(singleProductThunk(ctx.query.prod_id));
+        console.log("queryParams before store dispatch!", queryParams);
 
-        const isError = store.getState().products.singleProductErrors;
-        const statusCode = store.getState().products.singleProductStatusCode;
-        const statusText = store.getState().products.singleProductStatusText;
+        let isError = null, statusCode = null, statusText = null, singleProductObject = null;
+        
+        const dataInRedis = await redis.get(ctx.query.prod_id.replace(/-/, "_"), async (err, item) => {
+            if (err) console.error("prod_id redis giving following error:", err);
+            if (item) {
+                console.log("item was found!");
+                return item;
+            } else {
+                console.log("item not found!");
+                await store.dispatch(singleProductThunk(ctx.query.prod_id));
+                singleProductObject = store.getState().products.singleProduct;
+                isError = store.getState().products.singleProductErrors;
+                statusCode = store.getState().products.singleProductStatusCode;
+                statusText = store.getState().products.singleProductStatusText;
+                console.log("all negative errors inside the redis else!:", isError, statusCode, statusText, singleProductObject);
+                if (singleProductObject.id) {
+                    await redis.set(ctx.query.prod_id.replace(/-/, "_"), JSON.stringify(store.getState().products.singleProduct));
+                }
+                return store.getState().products.singleProduct;
+            }
+        });
 
-        const singleProductObject = store.getState().products.singleProduct;
+        console.log("dataInRedis", dataInRedis);
 
-        if ("product_name" in singleProductObject) {
-            queryParams.push(store.getState().products.singleProduct.product_name);
+        if (dataInRedis) {
+            singleProductObject = JSON.parse(dataInRedis);
         }
 
+        // await store.dispatch(singleProductThunk(ctx.query.prod_id));
 
-        // console.log("queryParams!", queryParams);
+        // const isError = store.getState().products.singleProductErrors;
+        // const statusCode = store.getState().products.singleProductStatusCode;
+        // const statusText = store.getState().products.singleProductStatusText;
 
+        // const singleProductObject = store.getState().products.singleProduct;
+
+        if (singleProductObject) {
+            if ("product_name" in singleProductObject) {
+                // queryParams.push(store.getState().products.singleProduct.product_name);
+                queryParams.push(singleProductObject.product_name);
+            }
+        }
+
+        console.log("singleProductObject looking back", singleProductObject);
+
+        console.log("all negative errors:", isError, statusCode, statusText);
+
+        console.log("queryParams in the final end!", queryParams);
+        console.log("ctx.query.prod_id", ctx.query.prod_id);
 
         return {
             props: {
-                singleProduct: store.getState().products.singleProduct,
+                // singleProduct: store.getState().products.singleProduct,
+                singleProduct: singleProductObject,
                 prodId: ctx.query.prod_id,
                 queryParams: queryParams,
                 isError: isError,

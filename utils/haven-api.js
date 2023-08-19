@@ -44,6 +44,7 @@ const haven = {
             // /products/single-product-and-all-images/
             response = await fetch(`${API_URL}/products/single-product-and-all-images/${id}`);
             jsonResponse = await finalResponse(response);
+            console.log("getSingleProductWithImages", jsonResponse);
             // console.log("final response json bits", jsonResponse);
             return jsonResponse;
             // }
