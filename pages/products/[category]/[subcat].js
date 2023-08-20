@@ -1,56 +1,27 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import redis, { redisGet } from "../../../utils/redis";
 import Error from "../../_error";
 import HiddenHeader from "../../../components/HiddenHeader";
 import AsideMenu from "../../../components/productlist_components/asideMenu";
 import FeatureProducts from "../../../components/productlist_components/featuredProducts";
 import Directions from "../../../components/productlist_components/directions";
-import { wrapper, doStore } from "../../../store/store";
-import {
-    allProductsThunk, productDisplayMax, 
-    listOfAllMenProducts, listMensBottoms, listMensTop,
-    listOfAllWomenProducts, listWomensBottoms, listWomensTop,
-    displayProductCategory, selectDisplayCategoryList, selectAllProducts
-} from "../../../feature/productSlice/productSlice";
-import { changeSubCatPathLocation } from "../../../feature/generalComponents/generalComponentSlice";
+import { wrapper } from "../../../store/store";
+import { allProductsThunk, productDisplayMax, selectAllProducts } from "../../../feature/productSlice/productSlice";
 import { productCategoriesSeparator } from "../../../utils/subCatHelper";
 
 
 const SubCat = (props) => {
 
-    if (props.symbolHolder === "") {
+    if (props.error) {
         return <Error statusCode={404} resetValues={true} />
     }
-    const dispatch = useDispatch();
 
-    const catList = useSelector(selectDisplayCategoryList);
     const teProducts = useSelector(selectAllProducts);
 
-    console.log("catList!", catList);
-    console.log("DO STORE??");
-    console.log(catList);
-    console.log("DO STORE DONE?!");
-
-    console.log("redisCached");
-    console.log(props.redisCached);
-    console.log("redisCached");
-
-
-    console.log("props.pagePath is server side showing client?");
-    console.log("props.pagePath", props.pagePath);
-    console.log("props.pagePath is server side showing client?");
-
-    // dispatch(changeSubCatPathLocation(props.pagePath));
-
-
-    const [allProducts, setAllProducts] = useState(props.productCategory);
+    const [allProducts] = useState(props.productCategory);
     const [usingProducts, setUsingProducts] = useState(props.productCategory);
-
-    // useEffect(() => {
-    //     productCategoriesSeparator(doStore, teProducts, props.pagePath, null, "");
-    // }, [teProducts])
 
     return (
         <>
@@ -61,9 +32,6 @@ const SubCat = (props) => {
                 <HiddenHeader divideBy={1} />
                 <HiddenHeader divideBy={4} />
                 <AsideMenu />
-                {
-                // props.allProducts.length > 0 ?
-                
                 <FeatureProducts 
                     allProducts={allProducts}
                     usingProducts={usingProducts}
@@ -78,9 +46,8 @@ const SubCat = (props) => {
                     theProductsAll={teProducts}
                     redisCached={props.redisCached}
                     productTypeStr={props.productTypeStr}
+                    updatePage={props.symbolHolder}
                 />
-                // : null
-                }
                 <Directions />
             </>
         </>   
@@ -90,8 +57,25 @@ const SubCat = (props) => {
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) => async (ctx) => {
         const query = ctx.query;
+        const cat = ["men", "women"];
+        const sub = ["all", "top", "bottom"];
+        let error;
+        if (cat.find(v => v === query.category.toLowerCase()) === undefined || sub.find(v => v === query.subcat.toLowerCase()) === undefined  ) {
+            error = true;
+        } else {
+            error = false;
+        }
+
+        if (error) {
+            return {
+                props: {
+                    error
+                }
+            }
+        }
+    
         const pagePath = query.category.toLowerCase() + " " + query.subcat.toLowerCase();
-        console.log("pagePath server LEVEL is fine!?", pagePath);
+
         const textDisplay = pagePath.replace(/(^[m|w])(\w+)\s([t|b|a])(\w+$)/i, (all, b, c, d, e) => {
             return b.toUpperCase() + c.toLowerCase() + "'s " + d.toUpperCase() + e.toLowerCase();
         });
@@ -106,8 +90,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         const catListRedis = await redis.get(pagePath.replace(/\s/, "_"), async (err, items) => {
             if (err) console.log("we have err in redis for some reasons.", err);
             if (items) {
-                console.log("is the items found SUBCATS!?!");
-                console.log("items I CAN LITERALLY SEE THE ITEMS OF SUBCATS REDIS SO I HAVE THE VALUE!!", items.length);
                 return items;
             } else {
                 productCategoryF = productCategoriesSeparator(store, allProducts, pagePath, productCategory, symbolHolder, true);
@@ -117,22 +99,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
             }
         });
 
-        console.log("FROM REDIS WE HAVE!", catListRedis);
-
-        console.log("textDisplay", pagePath);
-
-        console.log("Does page path contain all?", pagePath.match(/all/));
         let productTypeStr;
         if (pagePath.match(/all/)) {
             productTypeStr = textDisplay.replace(/[\'](\w) .+$/, "$1");
         } else {
             productTypeStr = textDisplay.replace(/'/, "");
         }
-
-        console.log("We have the wanted STR productTypeStr", productTypeStr);
-
-
-
 
         return {
             props: {
@@ -143,9 +115,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
                 displayText: textDisplay,
                 productCategory: catListRedis === null ? productCategoryF.productCategory : JSON.parse(catListRedis),
                 redisCached: catListRedis !== null ? true : false,
-                productTypeStr: productTypeStr
-                // store: store,
-                // productCategoriesSeparator: productCategoriesSeparator
+                productTypeStr: productTypeStr,
+                error: error
             }
         }
     }

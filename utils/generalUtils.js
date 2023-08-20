@@ -7,7 +7,6 @@ export const chunkArray = (array, size) => {
 }
 
 export const bufferImg = (imgData) => {
-    console.log("imgData INSIDE BUFFERIMG!", imgData);
     const buff = Buffer.from(imgData, "base64"); //.toString("utf-8");
 
     const bannerImg = buff.toString("utf-8");

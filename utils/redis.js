@@ -24,9 +24,9 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
             return items;
         } else {
             await store.dispatch(thunk(options));
-            const fetchedItems = store().getState()[reducer][state];
+            const fetchedItems = store.getState()[reducer][state];
             await redis.set(key, JSON.stringify(fetchedItems));
-            console.log("fetchingITEMS");
+            console.log("fetchingITEMS", fetchedItems);
             console.log("fetchingITEMS ARE:", JSON.stringify(fetchedItems).length);
             console.log("fetchingITEMS DONE!!");
             return fetchedItems;

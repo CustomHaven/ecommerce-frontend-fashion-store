@@ -28,9 +28,13 @@ const componentSlice = createSlice({
         logoutBool: true,
 
         productsDirectionsHelper: 0,
-        subCatPathLocation: ""
+        subCatPathLocation: "",
+        featureProducts: 0
     },
     reducers: {
+        updateFeatureProducts(state, action) {
+            state.featureProducts = action.payload;
+        },
         changeSubCatPathLocation(state, action) {
             state.subCatPathLocation = action.payload;
         },
@@ -119,9 +123,11 @@ export const { mainRef,
     controlAdminSideBar,
     defaultLogoutFeature,
     controlProductDirectionHelper,
-    changeSubCatPathLocation } = componentSlice.actions;
+    changeSubCatPathLocation,
+    updateFeatureProducts } = componentSlice.actions;
 
 
+export const selectFeatureProducts = state => state.components.featureProducts;
 export const selectSubCatPathLocation = state => state.components.subCatPathLocation;
 export const selectProductsDirectionsHelper = state => state.components.productsDirectionsHelper;
 
