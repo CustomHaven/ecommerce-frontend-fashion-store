@@ -39,10 +39,10 @@ export default async function POST(req, res) {
                 delete newBody.noKey;
             });
 
-            console.log("req.body", req.body);
+            // console.log("req.body", req.body);
             // console.log("keyedOnce", keyedOnce);
-            console.log("redisResult", redisResult);
-            console.log("newBody", newBody);
+            // console.log("redisResult", redisResult);
+            // console.log("newBody", newBody);
 
             if (newBody.usingKey.length < 1) {
                 console.log("usingKey is empty", newBody.usingKey.length);
@@ -73,7 +73,7 @@ export default async function POST(req, res) {
 
                 console.log("right before saving the stuff to redis! what is redisResult?");
 
-                console.log(redisResult);
+                // console.log(redisResult);
 
                 await Promise.all(redisResult.map(async (r) => {
                     return await redis.set(r.keyStr, JSON.stringify(r.valueStr));

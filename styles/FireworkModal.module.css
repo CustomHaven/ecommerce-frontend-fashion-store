@@ -1,0 +1,194 @@
+.main_container {
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    left: calc(50% - (350px/2));
+    top: calc(50% - (350px/2));
+    z-index: 500;
+    margin: auto;
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+.createbox_animation {
+    animation: createBox 1.3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.removebox_animation {
+    animation: removeBox 1.3s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+}
+
+.success_container {
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    margin: 0 1rem;
+    border-radius: 50px;
+    box-shadow: 4px 4px 6px rgba(var(--firework-dark), .4);
+    background: linear-gradient(to bottom right, rgb(var(--firework-success-1)), rgb(var(--firework-success-2)));
+}
+
+.success_container::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    width: 20rem;
+    height: 20rem;
+    background: linear-gradient(to bottom right, rgb(var(--firework-success-1)), rgb(var(--firework-success-2)));
+    border-radius: 15%;
+    filter: blur(.5rem);
+}
+
+/* Envelope drawing - SUCCESS */
+
+.msg_success {
+	position: relative;
+	width: 100px;
+	height: 50px;
+	margin: 4.5rem auto 2.9rem auto;
+	background-color: rgb(var(--firework-subtle-gray-2));
+	border-radius: 5px;
+	animation: float 2s ease-in-out infinite alternate;
+}
+
+.msg_success::before,
+.msg_success::after {
+    content: '';
+    position: absolute;
+    border: 0 solid transparent;
+    border-width: 23px 50px;
+}
+.msg_success::after {
+    bottom: 1px;
+    left: 0;
+    border-right-color: rgb(var(--firework-subtle-gray-2));
+    border-bottom-color: rgb(var(--firework-subtle-gray));
+    border-left-color: rgb(var(--firework-subtle-gray));
+    border-radius: 0 0 5px 5px;
+    transform: rotate(360deg);
+}
+
+.msg_success .letter {
+    position: absolute;
+    left: 8px;
+    bottom: 40%;
+    width: 85px;
+    height: 55px;
+    background-color: rgba(var(--firework-white), .4);
+    border-radius: 5px;
+}
+
+
+.msg_success .letter::before, .msg_success .letter::after {
+    content: '';
+    position: absolute;
+    bottom: 62%;
+    left: 8px;
+    border: 2px solid rgb(var(--firework-gray-1));
+}
+
+.msg_success .letter::after {
+    width: 70px;
+    box-shadow: 0 9px 0 rgb(var(--firework-gray-2)), 0 18px 0 rgb(var(--firework-gray-2)), 0 27px 0 rgb(var(--firework-gray-2));
+}
+
+.shadow {
+    position: absolute;
+    top: 135px;
+    left: 110px;
+    width: 100px;
+    height: 20px;
+    background-color: rgba(var(--firework-dark));
+    border-radius: 50%;
+    opacity: 0.65;
+    animation: shadow 2s ease-in-out infinite alternate;
+}
+
+.title {
+    font-size: 110%;
+    color: rgb(var(--firework-white));
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.message {
+    position: absolute;
+    bottom: 20%;
+    font-size: 80%;
+    color: rgb(var(--firework-white));
+    text-align: center;
+    letter-spacing: 0.9px;
+    line-height: 20px;
+}
+.success .btn, .btn, .success .btn:focus, .btn:focus {
+    position: absolute;
+    bottom: 3%;
+    left: 25%;
+    width: 50%;
+    height: 2.5rem;
+    font-size: 90%;
+    background-color: rgb(var(--firework-white));
+    border: none;
+    border-radius: 50px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 2px 2px 6px rgba(var(--firework-shadow-dark) .4);
+    transition: all 800ms ease-in-out;
+    outline: none;
+    cursor: pointer;
+    color: rgb(var(--firework-success-2));
+}
+
+@keyframes shadow {
+    50% {
+        transform: scale(0.9);
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes createBox {
+    from {
+        transform: scale(var(--firework-from-toggle-grow-shrink));
+    }
+    to {
+        transform: scale(var(--firework-to-toggle-grow-shrink));
+    }
+}
+
+@keyframes removeBox {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(0);
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .success_container {
+        margin-left: 45px;
+    }
+    .success_container, .success_container::before {
+        width: 16rem;
+        height: 20rem;
+    }
+    .shadow {
+        left: 80px;
+    }
+    .title {
+        font-size: 90%;
+    }
+    .message {
+        font-size: 70%;
+    }
+}

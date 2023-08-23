@@ -62,9 +62,16 @@ const authSlice = createSlice({
     reducers: {
         loginPerson(state, action) {
             state.loginProfile = action.payload;
+            // Want to hide the token string from the frontend make the below codes work!
+            // const user = action.payload.user;
+            // const token = action.payload.token;
+            // const obj = { user, token };
+            // state.loginProfile = obj;
+            // state.loginProfile = {...state["loginProfile"], user: action.payload.user, token: action.payload.token};
         },
         logoutPerson(state, action) {
             state.loginProfile = action.payload;
+            state.token_id = "";
         },
         errorInLogin(state, action) {
             state.loginError = action.payload;

@@ -19,7 +19,8 @@ import { selectCart,
     selectCartFullPriceWithShipping,
     selectCartFullPrice,
     selectShippingMethod,
-    selectShippingPrice } from "../../../feature/cartSlice/cartSlice";
+    selectShippingPrice,
+    abandonedCartThunk } from "../../../feature/cartSlice/cartSlice";
 import { selectOrder, newOrderThunk } from "../../../feature/orderSlice/orderSlice";
 import { makePaymentThunk, selectPaymentConfirmed } from "../../../feature/paymentSlice/paymentSlice";
 import { HiLockClosed } from "react-icons/hi"; // 16 x 16
@@ -27,7 +28,9 @@ import { RiQuestionFill } from "react-icons/ri"; // 16 x 16
 import useQuerySelector from "../../../hooks/useQuerySelector";
 import { insertHyphen, validateCreditCardNumber, creditCardType, noInputScenario } from "../../../utils/contactFormValidation";
 import { fetchMethod, headers } from "../../../utils/generalUtils";
+import { toggleCelebrateNewOrder } from "../../../feature/generalComponents/generalComponentSlice";
 import styles from "../../../styles/checkoutpage/PaymentCheckout.module.css";
+import { updateProductThunk, selectUpdateProducts } from "../../../feature/productSlice/productSlice";
 
 const PaymentCheckout = (props) => {
     const { contentRef, openAccordion, setOpenAccordion, setOpenAccordionShipping, shippingAccordionRef } = props;
@@ -46,7 +49,8 @@ const PaymentCheckout = (props) => {
     const [longNumber, setLongNumber] = useState(0);
 
     const dispatch = useDispatch();
-
+    
+    const updatedProductsArray = useSelector(selectUpdateProducts);
     const loginProfile = useSelector(selectLoginProfile);
     const fName = useSelector(selectFirstName);
     const lName = useSelector(selectLastName);
@@ -150,8 +154,14 @@ const PaymentCheckout = (props) => {
 
     const handlePay = (e) => {
         console.log("HANDLE PAY clicked!");
+        console.log("loginProfile what is it?", loginProfile);
 
-        if (loginProfile.token !== undefined) {
+        if (!cvv.length >= 3 && !cvv.length <= 4 && expiryDate.length >= 6 && expiryDate.length <= 7) {
+            return;
+        }
+
+        if (loginProfile.hasOwnProperty("message")) {
+            console.log("wont be called?! the refresh bit")
 
             dispatch(refreshAuth({ refresh_token: loginProfile.refresh_token }));
 
@@ -161,7 +171,9 @@ const PaymentCheckout = (props) => {
             }, true)
                 .then(res => { console.log("final res what is it?", res); return res })
                 .then(res => { 
-                dispatch(loginPerson(res)); setFetchLoading(false); setLoginSuccess(true);
+                    dispatch(loginPerson(res)); 
+                    setFetchLoading(false); 
+                    setLoginSuccess(true);
             });
 
             // dispatch(saveContactDetailThunk({ userId: loginProfile.user.id, bodyObj: {
@@ -174,6 +186,8 @@ const PaymentCheckout = (props) => {
             //     country: country,
             //     phoneNumber: phoneNumber,
             // }}));
+        } else {
+            console.log("no have?!");
         }
     }
 
@@ -236,14 +250,52 @@ const PaymentCheckout = (props) => {
         }
     }, [paymentConfirmed]);
 
+    const subtractProductQuantity = async (orders) => {
+        await Promise.all(orders.OrderLists.map(async order => {
+            return await dispatch(updateProductThunk({
+                id: order.product_id, 
+                body: {
+                    quantity: order.quantity,
+                    add: false
+                }
+            }));
+        }));
+    }
+
     useEffect(() => {
         if (orderCompleted.id) {
             // send an email to them where I am congratulating them for their order!
-            router.push("/");
+
+
+            subtractProductQuantity(orderCompleted);
+
+            // Promise.all(orderCompleted.OrderLists.map(async order => {
+            //     await dispatch(updateProductThunk(order.id, {
+            //         quantity: order.quantity
+            //     }))
+            // }));
             // on the homepage make modal showing their order number and flex-row in direction of card containing the banner images/price quantity of the units in their order
             // and as a master class stage do firework animation around the modal
         }
     }, [orderCompleted]);
+
+    useEffect(() => {
+        if (updatedProductsArray.length > 0) {
+            console.log("updatedProductsArray", updatedProductsArray);
+            console.log("cart.id", cart.id);
+            dispatch(abandonedCartThunk({
+                id: cart.id, 
+                abandoned: false 
+            }));
+        }
+    }, [updatedProductsArray]);
+
+    useEffect(() => {
+        if (cart.abandoned === false) {
+            dispatch(toggleCelebrateNewOrder(true));
+            router.push("/?order=" + orderCompleted.id);
+        }
+    }, [cart.abandoned]);
 
     return (
         <article id="payment_method" className={styles.payment_method}>

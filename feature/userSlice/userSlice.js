@@ -87,6 +87,10 @@ const userSlice = createSlice({
         allUsersOrdersStatusMessage: "",
     },
     reducers: {
+        completeResetUserStates(state) {
+            state.userProfile = {};
+            state.email = "";
+        },
         saveEmailAddress(state, action) {
             state.email = action.payload;
         },
@@ -236,6 +240,7 @@ const userSlice = createSlice({
 });
 
 export const {
+    completeResetUserStates,
     saveEmailAddress,
     userLogedout
 } = userSlice.actions;

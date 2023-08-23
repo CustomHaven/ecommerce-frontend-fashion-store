@@ -41,9 +41,14 @@ const paymentSlice = createSlice({
         paymentErrorName: "",
         paymentErrorStatusMessage: "",
         paymentErrorStatusCode: 0,
+        paymentProfile: ""
 
     },
     reducers: {
+        resetPaymentStrings(state) {
+            state.paymentConfirmed = "";
+            state.paymentProfile = "";
+        },
         finalPaymentPrice(state, action) {
             state.paymentTotal = action.payload;
         }
@@ -94,6 +99,7 @@ const paymentSlice = createSlice({
 
 
 export const {
+    resetPaymentStrings,
     finalPaymentPrice
 } = paymentSlice.actions;
 

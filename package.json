@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fireworks-js/react": "^2.10.7",
     "@reduxjs/toolkit": "^1.8.6",
     "@tensorflow-models/body-pix": "^2.2.0",
     "@tensorflow/tfjs": "^4.0.0",

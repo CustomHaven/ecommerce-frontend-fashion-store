@@ -36,6 +36,20 @@ export const newProductThunk = createAsyncThunk(
     }
 );
 
+export const updateProductThunk = createAsyncThunk(
+    "products/updateProductThunk",
+    async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+        console.log("updateProductThunk what are the args?", args);
+        const { id, body } = args;
+        try {
+            const product = await Promise.resolve(haven.updateProduct(id, body));
+            return fulfillWithValue(product);
+        } catch (error) {
+            throw rejectWithValue(error);
+        }
+    }
+);
+
 
 const productSlice = createSlice({
     name: "products",
@@ -57,6 +71,14 @@ const productSlice = createSlice({
         singleProductStatusMessage: "",
 
 
+        // updating products
+        updateProducts: [],
+        updateProductsLoading: false,
+        updateProductsError: false,
+
+        updateProductsStatusCode: 0,
+        updateProductsStatusText: "",
+        updateProductsStatusMessage: "",
 
         // addProduct
         newProduct: {},
@@ -85,6 +107,9 @@ const productSlice = createSlice({
 
     },
     reducers: {
+        resetUpdatedProducts(state) {
+            state.updateProducts = [];
+        },
         addSlideShowCount(state, action) {
             state.slideShowPressCount = state.slideShowPressCount + action.payload;
         },
@@ -137,7 +162,7 @@ const productSlice = createSlice({
             });
         },
         listWomensBottoms(state, action) {
-            console.log("women bottom payload", action);
+            // console.log("women bottom payload", action);
             state.womensBottom = action.payload.filter(products => {
                 if (products.type.match(/Womens Bottom/)) { // spelt wrong in the backend fix to women correct spelling
                     return products;
@@ -247,6 +272,33 @@ const productSlice = createSlice({
                 state.singleProductStatusMessage = action.payload.products.singleProductStatusMessage;
 
             })
+
+
+            .addCase(updateProductThunk.pending, (state) => {
+                state.updateProductsError = false;
+                state.updateProductsLoading = true;
+            })
+            .addCase(updateProductThunk.fulfilled, (state, action) => {
+                state.updateProductsError = false;
+                state.updateProductsLoading = false;
+
+                const copy = state.updateProducts.concat(action.payload.data);
+                state.updateProducts = copy;
+
+                state.updateProductsStatusCode = action.payload.statusCode;
+                state.updateProductsStatusText = action.payload.statusText;
+            })
+            .addCase(updateProductThunk.rejected, (state, action) => {
+                state.updateProductsError = true;
+                state.updateProductsLoading = false;
+
+                // console.log("action.payload fro updateProductThunk", updateProductThunk);
+
+                state.updateProductsStatusCode = action.payload.statusCode;
+                state.updateProductsStatusText = action.payload.statusText;
+                state.updateProductsStatusMessage = action.payload.message.split(":")[1].replace(/["'{}]/g, "");
+            })
+
             .addCase(allProductsThunk.pending, (state) => {
                 state.allProductsLoading = true;
                 state.allProductsErrors = false;
@@ -288,7 +340,7 @@ const productSlice = createSlice({
                 state.singleProductLoading = false;
                 state.singleProductErrors = true;
 
-                console.log("single Product rejecting with errors!", action.payload);
+                // console.log("single Product rejecting with errors!", action.payload);
 
                 state.singleProduct = { error: true };
 
@@ -307,7 +359,8 @@ const productSlice = createSlice({
     }
 })
 
-export const { 
+export const {
+    resetUpdatedProducts,
     listOfAllMenProducts,
     listMensTop,
     listMensBottoms,
@@ -327,6 +380,13 @@ export const {
 } = productSlice.actions;
 
 
+
+export const selectUpdateProducts = state => state.products.updateProducts;
+export const selectUpdateProductsLoading = state => state.products.updateProductsLoading;
+export const selectUpdateProductsError = state => state.products.updateProductsError;
+export const selectUpdateProductsStatusCode = state => state.products.updateProductsStatusCode;
+export const selectUpdateProductsStatusText = state => state.products.updateProductsStatusText;
+export const selectUpdateProductsStatusMessage = state => state.products.updateProductsStatusMessage;
 
 export const selectSlideShowPressCount = state => state.products.slideShowPressCount;
 export const selectPageArrayLength = state => state.products.pageArrayLength;

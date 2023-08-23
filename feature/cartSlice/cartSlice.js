@@ -51,9 +51,9 @@ export const abandonedCartThunk = createAsyncThunk(
     "cart/purchaseCompleteThunk",
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
-            const { id, abandonded } = args;
+            const { id, abandoned } = args;
 
-            const cart = await Promise.resolve(haven.updateAbandondedCart(id, abandonded));
+            const cart = await Promise.resolve(haven.updateAbandondedCart(id, abandoned));
             return fulfillWithValue(cart);
         } catch (error) {
             throw rejectWithValue(error);
@@ -143,6 +143,14 @@ const cartSlice = createSlice({
         cartFullPriceWithShipping: 0,
     },
     reducers: {
+        restartCartDeliveryInformation(state) {
+            state.cartDeliveryInformation = [];
+        },
+        removeCart(state) {
+            state.cart = {
+                cartList: []
+            };
+        },
         removeTheTempCart(state, action) {
             state.tempCart = action.payload;
         },
@@ -393,6 +401,8 @@ const cartSlice = createSlice({
 });
 // removeCartItemThunk
 export const {
+    restartCartDeliveryInformation,
+    removeCart,
     removeTheTempCart,
     updateCartTotalPrice,
     updateCartTotalPriceWithShipping,

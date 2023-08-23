@@ -5,7 +5,9 @@ export default async function POST(req, res) {
     try {
 
         if (req.method === "POST") {
-            const token = req.headers["authorization"].split(" ")[1];
+
+            const token = req.headers["cookie"].split(";").find(t => t.match("refreshed_token")).trim().replace(/refreshed_token=/, "");
+            const tokenId = req.headers["cookie"].split(";").find(t => t.match("token_id")).trim().replace(/token_id=/, "");
 
             const response = await fetch(process.env.BACKEND + "/auth/logout", {
                     method: "GET",
@@ -14,14 +16,13 @@ export default async function POST(req, res) {
                         "Content-Type": "application/json",
                         "Authorization": "Bearer " + token,
                         "Login-Stage": "refresh",
-                        "Cookie": req.headers["cookie"].replace(/^(token_id=)(.+)(;\srefresh_token=.+)$/, "$2")
+                        "Cookie": tokenId
                     },
-                    // body: JSON.stringify({ email: req.body.email, password: req.body.password, frontend: "incoming frontend" }),
                     credentials: "include"
             });
 
             const data = await response.json();
-
+            console.log("data signout", data);
             res
                 .setHeader("Set-Cookie", [
                     // serialize("access_token", "", { path: "/", httpOnly: true, maxAge: 0 }),

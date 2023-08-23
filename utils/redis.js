@@ -14,21 +14,16 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
     //     store = store();
     // }
     return await redis.get(key, async (err, items) => {
-        if (err) {
-            console.log("ARE WE IN THE ERROR redisGET?");
-            console.error(err);
-        }
+        if (err) console.error("we have err in redis for some reasons.", err);
         if (items) {
-            console.log("is the items found?!");
-            console.log("items I CAN LITERALLY SEE THE ITEMS THE ENTIRE STRING IN MY REDIS SO I HAVE THE VALUE!!", items.length);
             return items;
         } else {
             await store.dispatch(thunk(options));
             const fetchedItems = store.getState()[reducer][state];
             await redis.set(key, JSON.stringify(fetchedItems));
-            console.log("fetchingITEMS", fetchedItems);
-            console.log("fetchingITEMS ARE:", JSON.stringify(fetchedItems).length);
-            console.log("fetchingITEMS DONE!!");
+            // console.log("fetchingITEMS", fetchedItems);
+            // console.log("fetchingITEMS ARE:", JSON.stringify(fetchedItems).length);
+            // console.log("fetchingITEMS DONE!!");
             return fetchedItems;
         }
     })

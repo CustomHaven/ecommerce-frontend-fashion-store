@@ -48,6 +48,20 @@ const contactDetailSlice = createSlice({
         deliverTo: ""
     },
     reducers: {
+        fullResetContactDetails(state) {
+            state.contactDetail = {};
+            state.firstName = "";
+            state.lastName = "";
+            state.addressLine1 = "";
+            state.addressLine2 = "";
+            state.townCity = "";
+            state.postcode = "";
+            state.country = "";
+            state.countryCode = "";
+            state.phoneNumber = "";
+            state.fullPhoneNumber = "";
+            state.deliverTo = "";
+        },
         saveFirstName(state, action) {
             state.firstName = action.payload;
         },
@@ -122,6 +136,7 @@ const contactDetailSlice = createSlice({
 });
 
 export const {
+    fullResetContactDetails,
     saveFirstName,
     saveLastName,
     saveAddressLine1,

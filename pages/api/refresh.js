@@ -25,7 +25,7 @@ export default async function POST(req, res) {
                     serialize("refresh_token", data.token, { path: "/", httpOnly: false, maxAge: data.expiration, secure: process.env.NODE_ENV === "production" ? true : false })
                 ])
                 .status(201)
-                .json({ user: data.user, token: data.refresh_token, refresh_token: data.token })
+                .json({ user: data.user, token: data.refresh_token, refresh_token: data.token });
                 // .end(res.getHeader('Set-Cookie'))
                 // .end();
         }

@@ -44,10 +44,39 @@ const haven = {
             // /products/single-product-and-all-images/
             response = await fetch(`${API_URL}/products/single-product-and-all-images/${id}`);
             jsonResponse = await finalResponse(response);
-            console.log("getSingleProductWithImages", jsonResponse);
+            // console.log("getSingleProductWithImages", jsonResponse);
             // console.log("final response json bits", jsonResponse);
             return jsonResponse;
             // }
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    async updateProduct(id, body) {
+        try {
+            console.log("updateProduct HAVEN", body);
+            response = await fetch(`${API_URL}/products/${id}`, {
+                method: "PUT",
+                headers,
+                body: JSON.stringify(body)
+            });
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    async updateProductQuantity(id, quantity) {
+        try {
+            response = await fetch(`${API_URL}/products/update-quantity/${id}`, {
+                method: "PUT",
+                headers,
+                body: JSON.stringify(quantity)
+            });
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
         } catch (error) {
             throw error;
         }
@@ -82,12 +111,12 @@ const haven = {
         }
     },
 
-    async updateAbandondedCart(id, abandonded) {
+    async updateAbandondedCart(id, abandoned) {
         try {
             response = await fetch(`${API_URL}/carts/abandoned/${id}`, { // CART ID!!
                 method: "PUT",
                 headers: headers,
-                body: JSON.stringify({ abandonded: abandonded })
+                body: JSON.stringify({ abandoned: abandoned })
             });
             // console.log("RESPONSE!!", response);
             jsonResponse = await finalResponse(response);
@@ -137,7 +166,7 @@ const haven = {
                 headers: headers,
                 body: JSON.stringify(body)
             });
-            console.log("RESPONSE!!", response);
+            // console.log("RESPONSE!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -152,7 +181,7 @@ const haven = {
                 headers: headers,
                 body: JSON.stringify({quantity})
             });
-            console.log("RESPONSE!!", response);
+            // console.log("RESPONSE!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -167,7 +196,7 @@ const haven = {
                 headers: headers,
                 body: JSON.stringify({})
             });
-            console.log("RESPONSE DELETE!!", response);
+            // console.log("RESPONSE DELETE!!", response);
             jsonResponse = await finalResponse(response, true);
             return jsonResponse;
         } catch (error) {
@@ -184,7 +213,7 @@ const haven = {
                 method: "GET",
                 headers: headers
             });
-            console.log("RESPONSE GET BY EMAIL!!", response);
+            // console.log("RESPONSE GET BY EMAIL!!", response);
             jsonResponse = await finalResponse(response, false);
             return jsonResponse;
         } catch (error) {
@@ -200,7 +229,7 @@ const haven = {
                 body: JSON.stringify({email}),
                 headers: headers
             });
-            console.log("RESPONSE POST GUEST!!", response);
+            // console.log("RESPONSE POST GUEST!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -216,7 +245,7 @@ const haven = {
                 body: JSON.stringify({email, password, confirm_password: confirmPassword, email_campaign: emailCampaign}),
                 headers: headers
             });
-            console.log("RESPONSE POST GUEST!!", response);
+            // console.log("RESPONSE POST GUEST!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -234,7 +263,7 @@ const haven = {
                 headers: headers,
                 credentials: "include" // This here
             });
-            console.log("RESPONSE POST LOGINGUEST!!", response);
+            // console.log("RESPONSE POST LOGINGUEST!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -248,7 +277,7 @@ const haven = {
                 headers: headers,
                 credentials: "include"
             });
-            console.log("RESPONSE POST LOGINGUEST!!", response);
+            // console.log("RESPONSE POST LOGINGUEST!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {
@@ -273,7 +302,7 @@ const haven = {
                 headers: headers,
                 credentials: "include" // This here
             });
-            console.log("RESPONSE POST LOGINGUEST!!", response);
+            // console.log("RESPONSE POST LOGINGUEST!!", response);
             jsonResponse = await finalResponse(response);
             return jsonResponse;
         } catch (error) {

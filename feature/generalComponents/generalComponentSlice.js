@@ -29,9 +29,13 @@ const componentSlice = createSlice({
 
         productsDirectionsHelper: 0,
         subCatPathLocation: "",
-        featureProducts: 0
+        featureProducts: 0,
+        celebrateNewOrder: false
     },
     reducers: {
+        toggleCelebrateNewOrder(state, action) {
+            state.celebrateNewOrder = action.payload;
+        },
         updateFeatureProducts(state, action) {
             state.featureProducts = action.payload;
         },
@@ -124,9 +128,11 @@ export const { mainRef,
     defaultLogoutFeature,
     controlProductDirectionHelper,
     changeSubCatPathLocation,
-    updateFeatureProducts } = componentSlice.actions;
+    updateFeatureProducts,
+    toggleCelebrateNewOrder } = componentSlice.actions;
 
 
+export const selectCelebrateNewOrder = state => state.components.celebrateNewOrder;
 export const selectFeatureProducts = state => state.components.featureProducts;
 export const selectSubCatPathLocation = state => state.components.subCatPathLocation;
 export const selectProductsDirectionsHelper = state => state.components.productsDirectionsHelper;

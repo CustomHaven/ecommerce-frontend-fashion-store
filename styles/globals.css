@@ -64,6 +64,24 @@ a {
   --danger-red: rgba(244, 15, 15, 1);
 
   --admin-main-container-grid-size: 10vw auto;
+
+
+  /* Firework roots */
+
+  --firework-dark: 97, 97, 97;
+  --firework-white: 250, 250, 250;
+  --firework-gray-1: 164, 176, 190;
+  --firework-gray-2: 206, 214, 224;
+  --firework-success-1: 123, 237, 159;
+  --firework-success-2: 37, 188, 99;
+  --firework-error-1: 225, 107, 129;
+  --firework-error-2: 225, 71, 87;
+  --firework-subtle-gray: 243, 243, 244;
+  --firework-subtle-gray-2: 223, 228, 234;
+  --firework-shadow-dark: 33, 33, 33;
+  --firework-from-toggle-grow-shrink: 0;
+  --firework-to-toggle-grow-shrink: 1;
+
   /* TYPOGRAPHY */
 }
 
@@ -113,6 +131,8 @@ input:not(:placeholder-shown) {
   position: relative;
   /* width: 100%; */
   max-width: 100vw;
+  /* width: 100vh; */
+  /* height: 100vh; */
   overflow: hidden !important;
   /* overflow-x: hidden !important; */
   /* margin-left: auto; */

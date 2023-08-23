@@ -76,6 +76,10 @@ const orderSlice = createSlice({
         bestSellerStatusMessage: "",
     },
     reducers: {
+        resetOrders(state) {
+            state.order = {};
+            state.allOrders = [];
+        },
         fetchedOrders(state, action) {
             state.allOrders = action.payload;
         },
@@ -179,6 +183,8 @@ const orderSlice = createSlice({
 });
 // removeOrderItemThunk
 export const {
+    resetOrders,
+    fetchedOrders
 } = orderSlice.actions;
 
 export const selectOrder = state => state.order.order;

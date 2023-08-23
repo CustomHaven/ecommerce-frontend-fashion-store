@@ -10,7 +10,7 @@ import { FiLogOut } from "react-icons/fi";
 import Canvas from "../../canva";
 import { fetchMethod, headers, adminHeaders } from "../../../utils/generalUtils";
 import { userLogedout, selectUserProfile } from "../../../feature/userSlice/userSlice";
-import { logoutUserAuth, selectLoginProfile } from "../../../feature/authSlice/authSlice";
+import { logoutPerson, logoutUserAuth, selectLoginProfile } from "../../../feature/authSlice/authSlice";
 import { selectAsideSwitch, adminHeaderController, defaultLogoutFeature } from "../../../feature/generalComponents/generalComponentSlice";
 import styles from "../../../styles/Administrator/AdminNavbar.module.css";
 
@@ -35,13 +35,17 @@ const AdminNavbar = () => {
         localStorage.removeItem("refresh_token");
         // fetchMethod("/api/refresh", "POST", headers, {
         dispatch(defaultLogoutFeature(true));
-        dispatch(userLogedout({}));
+        // dispatch(userLogedout({}));
         fetch("/api/signout", {
             method: "POST",
             headers: adminHeaders(loginProfile.token, "refresh"),
             body: JSON.stringify({static: "key"}),
             credentials: "include"
-        }).then(res => res.json()).then(res => { console.log("final res what?!", res); setLogout(true) });
+        }).then(res => res.json()).then(res => { 
+            console.log("final res what?!", res);
+            dispatch(logoutPerson({}));
+            setLogout(true);
+        });
         // fetchMethod("/api/signout", "GET", headers, {}, true)
         //     .then(res => { console.log("final res what is it?", res.json()); return res })
         //     .then(res => { setLogout(true) });
