@@ -20,8 +20,6 @@ const Directions = (props) => {
     const { windowWidth } = useWindowDimensions();
     const [updateVar, setUpdateVar] = useState(0);
 
-    console.log("listCount", listCount);
-
     const productSectionSize = useResizeObserver(null, "#feature-product-section > div", true, updateVar);
 
     const asideInFloat = useQuerySelector("#aside_product_menu_id", updateVar);

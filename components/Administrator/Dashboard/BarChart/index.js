@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { options, monthLabels, weekdayLabels } from "../../../../utils/barChartHelper";
-import { selectAllOrders } from "../../../../feature/orderSlice/orderSlice";
 import styles from "../../../../styles/Administrator/Dashboard/BarChart.module.css";
 
 const BarChart = (props) => {
@@ -14,42 +12,43 @@ const BarChart = (props) => {
     const [clientOption, setClientOption] = useState("Month");
     const weekRef = useRef(null);
     const monthRef = useRef(null);
-    // const allOrders = useSelector(selectAllOrders);
-    
 
     const totalSales = (inputType) => {
 
-        if (inputType === "Week") {
-            return weekdayLabels.map(day => {
-                const theWeekdayTotal = allOrders.map((order) => {
-                    const purchaseDate = order.created_at.replace(/[a-zA-Z].+$/, "");
-
-                    if (day === new Date(purchaseDate).toLocaleString("en-UK", { weekday: "long" } )) {
-                        return parseFloat(order.final_price);
-                    } else {
-                        return 0;
-                    }
-
-                });
-
-                return parseFloat(theWeekdayTotal.reduce((acc, curr) => acc + curr, 0).toFixed(2));
-            });
-
-        } else {
-            return monthLabels.map((month) => {
-                const theMonthTotal = allOrders.map((order) => {
-                    const purchaseDate = order.created_at.replace(/[a-zA-Z].+$/, "");
+        if (allOrders) {
+            if (inputType === "Week" && allOrders.length > 0) {
+                return weekdayLabels.map(day => {
+                    const theWeekdayTotal = allOrders.map((order) => {
+                        const purchaseDate = order.created_at.replace(/[a-zA-Z].+$/, "");
     
-                    if (month === new Date(purchaseDate).toLocaleString("en-UK", { month: "long" } )) {
-                        return parseFloat(order.final_price);
-                    } else {
-                        return 0;
-                    }
+                        if (day === new Date(purchaseDate).toLocaleString("en-UK", { weekday: "long" } )) {
+                            return parseFloat(order.final_price);
+                        } else {
+                            return 0;
+                        }
     
+                    });
+    
+                    return parseFloat(theWeekdayTotal.reduce((acc, curr) => acc + curr, 0).toFixed(2));
                 });
     
-                return parseFloat(theMonthTotal.reduce((acc, curr) => acc + curr, 0).toFixed(2));
-            })
+            } 
+            if (inputType === "Month" && allOrders.length > 0) {
+                return monthLabels.map((month) => {
+                    const theMonthTotal = allOrders.map((order) => {
+                        const purchaseDate = order.created_at.replace(/[a-zA-Z].+$/, "");
+        
+                        if (month === new Date(purchaseDate).toLocaleString("en-UK", { month: "long" } )) {
+                            return parseFloat(order.final_price);
+                        } else {
+                            return 0;
+                        }
+        
+                    });
+        
+                    return parseFloat(theMonthTotal.reduce((acc, curr) => acc + curr, 0).toFixed(2));
+                })
+            }
         }
     };
 

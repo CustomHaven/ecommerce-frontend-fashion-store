@@ -87,14 +87,20 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
         store.dispatch(productDisplayMax(6));
 
+
+
         const catListRedis = await redis.get(pagePath.replace(/\s/, "_"), async (err, items) => {
             if (err) console.log("we have err in redis for some reasons.", err);
             if (items) {
                 return items;
             } else {
                 productCategoryF = productCategoriesSeparator(store, allProducts, pagePath, productCategory, symbolHolder, true);
+                if (productCategoryF?.productCategory.constructor === Array) {
+                    if (productCategoryF.productCategory.length === 0) {
+                        return;
+                    }
+                }
                 await redis.set(productCategoryF.keyPagePath, JSON.stringify(productCategoryF.productCategory));
-                console.log("WE ARE SETTING THE productCategoryF IN REDIS SET! WORKS", productCategoryF);
                 return productCategoryF;
             }
         });

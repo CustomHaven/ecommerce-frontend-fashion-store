@@ -13,7 +13,6 @@ import { allProductsThunk, selectDisplayMax, productDisplayMax } from "../../fea
 const AllProducts = (props) => {
 
     if (process.title === "browser" && window.location.pathname === "/") {
-        console.log("empty pathname?");
         return;
     }
     const dispatch = useDispatch();

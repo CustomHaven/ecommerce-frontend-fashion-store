@@ -8,11 +8,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 export const redisGet = async (key, store, reducer, state, thunk, options = {}) => {
-    // console.log("redisGET IS BEING CALLED!", store, reducer, state);
-    // console.log("server", server);
-    // if (!server) {
-    //     store = store();
-    // }
     return await redis.get(key, async (err, items) => {
         if (err) console.error("we have err in redis for some reasons.", err);
         if (items) {
@@ -20,10 +15,16 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
         } else {
             await store.dispatch(thunk(options));
             const fetchedItems = store.getState()[reducer][state];
+            if (fetchedItems.constructor === Array) {
+                if (fetchedItems.length === 0) {
+                    return;
+                }
+            } else if (fetchedItems.constructor === Object) {
+                if (Object.keys(fetchedItems).length === 0) {
+                    return;
+                }
+            }
             await redis.set(key, JSON.stringify(fetchedItems));
-            // console.log("fetchingITEMS", fetchedItems);
-            // console.log("fetchingITEMS ARE:", JSON.stringify(fetchedItems).length);
-            // console.log("fetchingITEMS DONE!!");
             return fetchedItems;
         }
     })

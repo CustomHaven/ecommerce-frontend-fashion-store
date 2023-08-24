@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import {  useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useRedis from "../../../hooks/useRedis";
 import { allProductsThunk, selectAllProducts } from "../../../feature/productSlice/productSlice";
 import { storePageListingArray, selectPageListingController, selectSlideMultiplier, controlOptionMenu } from "../../../feature/generalComponents/generalComponentSlice";
 import SubHeaderNav from "../SubHeaderNav";
@@ -10,14 +10,12 @@ import { bufferImg } from "../../../utils/generalUtils";
 import { directionSequence } from "../../../utils/generalUtils";
 import styles from "../../../styles/Administrator/ProductListingPage/ProductListing.module.css";
 
-const AdminProductListing = () => {
+const AdminProductListing = (props) => {
 
-    // const [slideNumber, setSlideNumber] = useState(1);
-    // const [pageListing] = useState(4);
     const slideNumber = useSelector(selectSlideMultiplier);
     const slidesRef = useRef(null);
 
-    const allProducts = useSelector(selectAllProducts);
+    const allTheProducts = useSelector(selectAllProducts);
     const pageListing = useSelector(selectPageListingController);
 
 
@@ -27,11 +25,29 @@ const AdminProductListing = () => {
         dispatch(allProductsThunk());
     }, []);
 
-    useEffect(() => {
-        dispatch(storePageListingArray(directionSequence(allProducts.length, pageListing, 1)));
-    }, [allProducts]);
+    const arrayObj = [ { keyStr: "all_products", usingKey: allTheProducts }, { noKey: "empty", evaluationKey: props.allProducts } ];
 
-    console.log({allProducts});
+    const [ redisState ] = useRedis(arrayObj, props.allProducts, allTheProducts, false);
+
+    useEffect(() => {
+        if (redisState) {
+            props.setAllProducts(redisState);
+        }
+    }, [redisState]);
+
+    useEffect(() => {
+        if (!props.allProducts && allTheProducts.length > 0) {
+            props.setAllProducts(allTheProducts);
+        }
+    }, [allTheProducts]);
+
+    useEffect(() => {
+        if (props.allProducts) {
+            if (props.allProducts.length > 0) {
+                dispatch(storePageListingArray(directionSequence(props.allProducts.length, pageListing, 1)));
+            }
+        }
+    }, [props.allProducts]);
 
     return (
         <section className={[styles.admin_products_main_section, "unselectable"].join(" ")}>
@@ -43,7 +59,8 @@ const AdminProductListing = () => {
             <section onClick={() => dispatch(controlOptionMenu(false))} className={styles.admin_products_content}>
                 <article ref={slidesRef}>
                     {
-                        allProducts.slice(pageListing * (slideNumber - 1), pageListing * slideNumber).map(product => 
+                        props.allProducts &&
+                        props.allProducts.slice(pageListing * (slideNumber - 1), pageListing * slideNumber).map(product => 
                             <article key={product.id} className={styles.admin_product_unit}>
                                 <div className={styles.admin_products_image_container}>
                                     <Image
@@ -63,15 +80,17 @@ const AdminProductListing = () => {
                 </article>
             </section>
             <div className={"admin_directions_and_submit_button"}>
-                <Directions 
-                    max={allProducts.length}
-                    pageListing={pageListing}
-                    slideNumber={slideNumber}
-                    // setSlideNumber={setSlideNumber}
-                    option={1}
-                    slidesRef={slidesRef}
-                    products={allProducts}
-                />
+                {
+                    props.allProducts &&
+                        <Directions 
+                            max={props.allProducts.length}
+                            pageListing={pageListing}
+                            slideNumber={slideNumber}
+                            option={1}
+                            slidesRef={slidesRef}
+                            products={props.allProducts}
+                        />
+                }
                 <button>New Product</button>
             </div>
         </section>

@@ -3,11 +3,9 @@ import { listOfAllMenProducts, listMensBottoms, listMensTop,
     displayProductCategory } from "../feature/productSlice/productSlice";
 
 export const productCategoriesSeparator = (paramStore, allProducts, pagePath, setProductCategory, symbolHolder, server, dispatch) => {
-    console.log("pagePath", pagePath);
-    console.log("server", server);
+
     symbolHolder = pagePath.replace(/^(\w).+(\b\w).+/g, "$1$2").toLowerCase();
     if (!allProducts) {
-        console.log("pagePath", pagePath.replace(/^(\w).+(\b\w).+/g, "$1$2"));
         if (server) {
             setProductCategory = []
         } else {
@@ -128,7 +126,6 @@ export const finalSubCatListing = (dispatch, pagePath, subCategoriesObj) => {
             dispatch(displayProductCategory(subCategoriesObj.wa));
             break;
         case "women bottom":
-            console.log("YES WE ARE HITTING THE WOMAN BOTTOM BIT!", subCategoriesObj.wb);
             dispatch(displayProductCategory(subCategoriesObj.wb));
             break;
         case "women top":

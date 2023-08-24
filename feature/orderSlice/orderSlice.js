@@ -9,11 +9,8 @@ export const newOrderThunk = createAsyncThunk(
     async (args, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
         try {
             const { user_id, cart_id, body, refreshed_token, loginStage } = args;
-            // console.log("is this even called?!")
-            // console.log("what is the ID?", id);
-            // console.log("what is abandonded?", abandonded);
             const order = await Promise.resolve(haven.newOrder(user_id, cart_id, body, refreshed_token, loginStage));
-            // console.log("CARTTT CALLED IN THUNK!", order);
+
             return fulfillWithValue(order);
         } catch (error) {
             throw rejectWithValue(error);
@@ -92,8 +89,6 @@ const orderSlice = createSlice({
             })
             .addCase(newOrderThunk.fulfilled, (state, action) => {
 
-                // console.log("the fulfilled payload??", action);
-
                 state.orderLoading = false;
                 state.orderError = false;
 
@@ -123,11 +118,11 @@ const orderSlice = createSlice({
             })
             .addCase(retrieveAllOrderThunk.fulfilled, (state, action) => {
 
-                // console.log("the fulfilled payload??", action);
+
 
                 state.allOrdersLoading = false;
                 state.allOrdersError = false;
-                // console.log("action.payload", action.payload);
+
                 state.allOrders = action.payload.data;
 
                 state.allOrdersStatusCode = action.payload.statusCode;
@@ -137,9 +132,7 @@ const orderSlice = createSlice({
             .addCase(retrieveAllOrderThunk.rejected, (state, action) => {
                 state.allOrdersLoading = false;
                 state.allOrdersError = true;
-                console.log("FAILEDDDDDD");
-                // console.log(action.payload);
-                console.log("DDDDDDDDDDDDD")
+
                 state.allOrders = [];
 
                 state.allOrdersStatusCode = action.payload.statusCode;
@@ -156,8 +149,6 @@ const orderSlice = createSlice({
                 state.bestSellerError = false;
             })
             .addCase(retrieveBestSellers.fulfilled, (state, action) => {
-
-                // console.log("the fulfilled payload??", action);
 
                 state.bestSellerLoading = false;
                 state.bestSellerError = false;

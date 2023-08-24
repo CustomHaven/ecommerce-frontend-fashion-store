@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useRedis from "../../../hooks/useRedis";
 import { retrieveAllOrderThunk, selectAllOrders } from "../../../feature/orderSlice/orderSlice";
 import SubHeaderNav from "../SubHeaderNav";
 import Directions from "../Directions";
@@ -17,22 +18,42 @@ import styles from "../../../styles/Administrator/Orders/Orders.module.css";
 const AdminOrders = (props) => {
     const { allOrders } = props;
     const dispatch = useDispatch();
+    const allTheOrders = useSelector(selectAllOrders);
 
     // const allOrders = useSelector(selectAllOrders);
     const pageListing = useSelector(selectPageListingController);
     const slideNumber = useSelector(selectSlideMultiplier);
 
+    useEffect(() => {
+        dispatch(retrieveAllOrderThunk( { refreshed_token: props.refT } ));
+    }, []);
+
     const slidesRef = useRef(null);
-
-    // console.log({allOrders})
-
-    // useEffect(() => {
-    //     dispatch(retrieveAllOrderThunk());
-    // }, []);
+    const arrayObjects = [{ keyStr: "all_orders", usingKey: allTheOrders }, { noKey: "empty", evaluationKey: props.allOrders }];
+    const [ redisState ] = useRedis(arrayObjects, props.allOrders, allTheOrders, true);
 
     useEffect(() => {
-        dispatch(storePageListingArray(directionSequence(allOrders.length, pageListing, 1)));
+        if (redisState) {
+            props.setAllOrders(redisState);
+        }
+    }, [redisState]);
+
+    useEffect(() => {
+        if (!props.allOrders && allTheOrders.length > 0) {
+            props.setAllOrders(allTheOrders);
+        }
+    }, [allTheOrders]);
+
+
+
+    useEffect(() => {
+        if (allOrders) {
+            if (allOrders.length > 0) {
+                dispatch(storePageListingArray(directionSequence(allOrders.length, pageListing, 1)));
+            }
+        }
     }, [allOrders]);
+    
 
     return (
         <section className={[styles.admin_many_pages_main_section, "unselectable"].join(" ")}>
@@ -64,26 +85,32 @@ const AdminOrders = (props) => {
                 </div>
 
 
-            <AdminTable 
-                header={["Order", "Date", "Customer", "Fullfilment Status", "Tracking ID", "Total"]}
-                tableData={allOrders}
-                pageListing={pageListing}
-                slideNumber={slideNumber}
-                pageType={"Order"}
-            />
+            {
+                allOrders &&
+                    <AdminTable 
+                        header={["Order", "Date", "Customer", "Fullfilment Status", "Tracking ID", "Total"]}
+                        tableData={allOrders}
+                        pageListing={pageListing}
+                        slideNumber={slideNumber}
+                        pageType={"Order"}
+                    />
+            }
 
             </article>
 
             <div className={"admin_directions_and_submit_button"}>
-                <Directions 
-                    max={allOrders.length}
-                    pageListing={pageListing}
-                    slideNumber={slideNumber}
+                {
+                    allOrders &&
+                        <Directions 
+                            max={allOrders.length}
+                            pageListing={pageListing}
+                            slideNumber={slideNumber}
 
-                    option={1}
-                    slidesRef={slidesRef}
-                    products={allOrders}
-                />
+                            option={1}
+                            slidesRef={slidesRef}
+                            products={allOrders}
+                        />
+                }
                 <button>New Order</button>
             </div>
         </section>

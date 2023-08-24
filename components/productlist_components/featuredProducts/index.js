@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useRedis from "../../../hooks/useRedis";
 import useMediaQuery from "../../../hooks/useMediaQuery"; // this 1 done the trick!
-import styles from "../../../styles/Feature.module.css";
 import MinitureProductSize from "./minitureProduct";
 import { chunkArray } from "../../../utils/generalUtils";
 import { selectProductListCount, productArrayChunkSize, productListCounter,
@@ -12,6 +12,7 @@ import { selectProductListCount, productArrayChunkSize, productListCounter,
     selectWomensBottom, selectDisplayCategoryList } from "../../../feature/productSlice/productSlice";
 import { controlProductDirectionHelper, selectProductsDirectionsHelper } from "../../../feature/generalComponents/generalComponentSlice";
 import { productCategoriesSeparator, finalSubCatListing } from "../../../utils/subCatHelper";
+import styles from "../../../styles/Feature.module.css";
 
 
 const Featured = (props) => {
@@ -64,19 +65,29 @@ const Featured = (props) => {
 
     const [pageArray, setPageArray] = useState([]);
 
-
-    const fetcher = async (input) => {
-        const response = await fetch("/api/redis", {
-            method: "POST",
-            body: JSON.stringify(input)
-        });
-        if (!response.ok) {
-            return null;
-        } else {
-            const jsonRespons = await response.json();
-            props.setUsingProducts(jsonRespons.usingKey);
-            return;
-        }
+    let arrayObject, second, first;
+    if (props.homePage === "Homepage") {
+        arrayObject = [ 
+            { keyStr: "all_products", evaluationKey: allTheProducts },
+            { keyStr: "all_products_randomized", usingKey: randomListedProducts },
+            { noKey: "empty", allProducts: props.allProducts, randomProducts: props.usingProducts }
+        ];
+        first = props.allProducts;
+        second = allTheProducts;
+    } 
+    if (props.allShopPage === "All Shop Page") {
+        arrayObject = [ 
+            { keyStr: "all_products_randomized", evaluationKey: randomListedProducts },
+            { keyStr: "all_products", usingKey: allTheProducts },
+            { noKey: "empty", evaluationKey: props.allProducts }
+        ];
+        first = props.allProducts;
+        second = allTheProducts;
+    }
+    if (props.pageSub === "Sub-category Listing") {
+        arrayObject = [ { keyStr: props.pagePath.replace(/\s/, "_"), usingKey: displayCategoryList } ];
+        first = props.usingProducts;
+        second = displayCategoryList;
     }
 
     const copyArrayHelper = (smallOrBigArray, chunkSize) => {
@@ -91,7 +102,7 @@ const Featured = (props) => {
         dispatch(productArrayChunkSize(props.displayMax));
         let copy;
         if (process?.title === "browser" && window.location.pathname === "/") {
-            console.log("are you entering here SHOW URSELF?!")
+
             const tempArray = props.usingProducts.slice(0, props.displayMax);
             if (media) {
                 dispatch(focusSingleProduct(true));
@@ -99,30 +110,26 @@ const Featured = (props) => {
                 copy = copyArrayHelper(tempArray, 1);
                 ///
                 setPageArray(copy);
-                console.log("COPY! HOMEPAGE at MEDIA IF statement", media);
                 dispatch(controlProductDirectionHelper(productsDirectionsHelper + 1));
             } else {
                 dispatch(focusSingleProduct(false));
                 dispatch(productListCounter(0));
                 copy = copyArrayHelper(tempArray, props.displayMax);
                 setPageArray(copy);
-                console.log("COPY! HOMEPAGE at MEDIA ELSE statement", media);
                 dispatch(controlProductDirectionHelper(productsDirectionsHelper + 1));
             }
         } else {
             if (media) {
                 dispatch(focusSingleProduct(true));
-                // dispatch(oneDisplayedProduct(0));
+
                 copy = copyArrayHelper(props.usingProducts, 1);
                 setPageArray(copy);
-                console.log("COPY! THE OTHER PAGES at MEDIA IF statement", media);
                 dispatch(controlProductDirectionHelper(productsDirectionsHelper + 1));
             } else {
                 dispatch(focusSingleProduct(false));
                 dispatch(productListCounter(0));
                 copy = copyArrayHelper(props.usingProducts, props.displayMax);
                 setPageArray(copy);
-                console.log("COPY! THE OTHER PAGES at MEDIA ELSE statement", media);
                 dispatch(controlProductDirectionHelper(productsDirectionsHelper + 1));
             }
         }
@@ -133,81 +140,51 @@ const Featured = (props) => {
         dispatch(allProductsThunk());
     }, [props.updatePage]);
 
+    useEffect(() => {
+        if (!props.usingProducts) {
+            if (props.homePage === "Homepage") {
+                if (randomListedProducts.length > 0) {
+                    props.setUsingProducts(randomListedProducts);
+                }
+            }
+            if (props.allShopPage === "All Shop Page") {
+                if (allTheProducts.length > 0) {
+                    props.setUsingProducts(allTheProducts);
+                }
+            }
+        }
+    }, [allTheProducts, randomListedProducts]);
+
 
     useEffect(() => {
         if (allTheProducts && props.pageSub === "Sub-category Listing") {
-            console.log("inside the productCategoriesSeparator");
             productCategoriesSeparator(null, allTheProducts, props.pagePath, setSubCatListing, "", false, dispatch);
         }
     }, [allTheProducts]);
 
     useEffect(() => {
         if (subCatListing && props.pageSub === "Sub-category Listing") {
-            console.log("next stage subCatListing we have value of", subCatListing);
             finalSubCatListing(dispatch, props.pagePath, subProductsObj);
         }
     }, [subCatListing, subProductsObj]);
 
     useEffect(() => {
-        if (allTheProducts && props.homePageOrAllShopPage === "Homepage Or All Products Shop page") {
-            let obj;
-            if (JSON.stringify(allTheProducts) !== JSON.stringify(props.allProducts)) {
-
-                if (props.homePage === "Homepage") {
-                    obj = [
-                        {
-                            keyStr: "all_products",
-                            evaluationKey: allTheProducts
-                        },
-                        {
-                            keyStr: "all_products_randomized",
-                            usingKey: randomListedProducts
-                        },
-                        {
-                            noKey: "empty",
-                            allProducts: props.allProducts,
-                            randomProducts: props.usingProducts
-                        }
-                    ];
-                } else {
-                    obj = [
-                        {
-                            keyStr: "all_products_randomized",
-                            evaluationKey: randomListedProducts
-                        },
-                        {
-                            keyStr: "all_products",
-                            usingKey: allTheProducts
-                        },
-                        {
-                            noKey: "empty",
-                            evaluationKey: props.allProducts
-                        }
-                    ]
+        if (displayCategoryList) {
+            if (props.pageSub === "Sub-category Listing") {
+                if (displayCategoryList.length > 0) {
+                    props.setUsingProducts(displayCategoryList);
                 }
-                fetcher(obj);
-            } else {
-                console.log("redis is uptodate no change needed!");
-            }
-        }
-    }, [allTheProducts]);
-
-    useEffect(() => {
-        if (displayCategoryList && props.pageSub === "Sub-category Listing") {
-            if (JSON.stringify(displayCategoryList) !== JSON.stringify(props.usingProducts)) {
-                console.log("We are updating the redis for sub listing products");
-                let obj = [
-                    {
-                        keyStr: props.pagePath.replace(/\s/, "_"),
-                        usingKey: displayCategoryList
-                    }                
-                ]
-                fetcher(obj);
-            } else {
-                console.log("No need for update sub listing is uptodate redis");
             }
         }
     }, [displayCategoryList]);
+
+    const [ redisState ] = useRedis(arrayObject, first, second, false);
+
+    useEffect(() => {
+        if (redisState) {
+            props.setUsingProducts(redisState);
+        }
+    }, [redisState]);
 
     useEffect(() => {
         dispatch(savePageArrayLength(pageArray.length));

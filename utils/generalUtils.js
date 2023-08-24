@@ -18,11 +18,8 @@ export const fillDisplayArray = (array, size, idIndex) => {
 
     let pIndex = array.indexOf(idIndex);
     let pReached = false;
-    
-    //console.log(pIndex);
 
     while (arr.length !== size) {
-        //console.log(pIndex)
         if (pReached === false) {
             if (pIndex < array.length) {
                 arr.push(array[pIndex]);
@@ -138,4 +135,21 @@ export const customError = (statusCode, message) => {
     const error = new Error(message);
     error.status = statusCode;
     return error;
+}
+
+export const redisHelpingFetcher = async (input, setState, makeNegativeState) => {
+    const response = await fetch("/api/redis", {
+        method: "POST",
+        body: JSON.stringify(input)
+    });
+    if (!response.ok) {
+        if (makeNegativeState) {
+            setState(null);
+        }
+        return;
+    } else {
+        const jsonRespons = await response.json();
+        setState(jsonRespons.usingKey);
+        return;
+    }
 }
