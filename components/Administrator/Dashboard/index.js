@@ -68,7 +68,10 @@ const AdminDashboard = (props) => {
                     <Calendar />
                 </article>
                 <article className={styles.best_sellers}>
-                    <BestSeller />
+                    <BestSeller 
+                        bestSellers={props.bestSellers}
+                        setBestSellers={props.setBestSellers}
+                    />
                 </article>
             </section>
         </section>

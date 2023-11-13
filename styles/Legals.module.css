@@ -1,0 +1,50 @@
+.legal_section {
+    margin: 40px 5%; 
+    position: relative;
+}
+
+.legal_section > div {
+    margin: 80px auto 130px;
+}
+
+.legal_section > div > h1 {
+    font-size: min(6vw, 2rem);
+    font-family: var(--roboto);
+    font-weight: 800;
+    line-height: 120px;
+    margin-bottom: 0;
+}
+
+.legal_section > div > p {
+    font-family: var(--roboto);
+    font-weight: 500;
+    font-size: min(5vw, 1.2rem);
+    color: rgba(0, 0, 0, 0.6);
+    line-height: 50px;
+    margin-top: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .legal_section > div {
+        margin: 20px auto 80px;
+    }
+
+    .legal_section > div > h1 {
+        line-height: 80px;
+    }
+
+    .legal_section > div > p {
+        line-height: 40px;
+    }
+
+    .legal_section > div > h1,
+    .legal_section > div > p {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .legal_section > div > p {
+        line-height: 30px;
+    }
+}

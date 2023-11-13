@@ -3,17 +3,26 @@ import { headers, adminHeaders } from "./generalUtils";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND;
 
-console.log("API_URL WORKED!", API_URL);
-
 let response, jsonResponse;
 
 const haven = {
+
+    async legalFetch() {
+        try {
+            response = await fetch(`${API_URL}/legalities`);
+            jsonResponse = await finalResponse(response);
+            return jsonResponse;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     async getAllProductsListed() {
         try {
             response = await fetch(`${API_URL}/products/all-products-with-all-images`);
             
             jsonResponse = await finalResponse(response);
-            return jsonResponse
+            return jsonResponse;
         } catch (error) {
             throw error;
         }

@@ -20,13 +20,12 @@ const Menu = (props) => {
         setTimeout(props.setMenuClick, 300, false);
     }
 
-    const handleClick = (e) => {
-        const dataSet = e.target.dataset;
-        if (dataSet.hasOwnProperty("shop")) {
-            setShop(!shop);
-        } else { // other wise hasOwnProperty is "about"
-            setAbout(!about);
-        }
+    const handleShopClick = () => {
+        setShop(!shop);
+    }
+
+    const handleAboutClick = () => {
+        setAbout(!about);
     }
 
     useEffect(() => {
@@ -56,7 +55,7 @@ const Menu = (props) => {
                         <li>
                             <Link href="/" onClick={closeSideBar}><span>Home</span></Link>
                         </li>
-                        <li data-shop="shop-li" onClick={handleClick}>
+                        <li data-shop="shop-li" onClick={handleShopClick}>
                             <span data-shop="shop-li" data-span-content="the-content">Shop</span>
                             {
                                 shop === false &&
@@ -79,10 +78,10 @@ const Menu = (props) => {
                                 </>
                             }
                         </li>
-                        <li>
+                        {/* <li>
                             <Link href="/services"><span>Services</span></Link>
-                        </li>
-                        <li data-about="about-li" onClick={handleClick}>
+                        </li> */}
+                        <li data-about="about-li" onClick={handleAboutClick}>
                             <span data-about="about-li" data-span-content="the-content">About</span>
                             {
                                 about === false &&
@@ -95,16 +94,16 @@ const Menu = (props) => {
                                 <div className={styles.aside_menu_options_dropdown}>
                                     <ul>
                                         <li>
-                                            <Link href="/about" onClick={closeSideBar}><p>About Us</p></Link>
+                                            <Link href="/legal/about" onClick={closeSideBar}><p>About Us</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/delivery-information" onClick={closeSideBar}><p>Delivery Information</p></Link>
+                                            <Link href="/legal/delivery-information" onClick={closeSideBar}><p>Delivery Information</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/privacy-policy" onClick={closeSideBar}><p>Privacy Policy</p></Link>
+                                            <Link href="/legal/privacy-policy" onClick={closeSideBar}><p>Privacy Policy</p></Link>
                                         </li>
                                         <li>
-                                            <Link href="/terms-conditions" onClick={closeSideBar}><p>Terms & Conditions</p></Link>
+                                            <Link href="/legal/terms-and-conditions" onClick={closeSideBar}><p>Terms & Conditions</p></Link>
                                         </li>
                                     </ul>
                                 </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import AdminDashboard from "../../components/Administrator/Dashboard";
 import { loginPerson } from "../../feature/authSlice/authSlice";
-import { retrieveAllOrderThunk } from "../../feature/orderSlice/orderSlice";
+import { retrieveAllOrderThunk, retrieveBestSellers } from "../../feature/orderSlice/orderSlice";
 import { controlAdminSideBar } from "../../feature/generalComponents/generalComponentSlice";
 import { redisGet } from "../../utils/redis";
 import { wrapper } from "../../store/store";
@@ -12,6 +12,7 @@ import { fetchMethod, headers } from "../../utils/generalUtils";
 const Dashboard = (props) => {
     const dispatch = useDispatch();
     const [allOrders, setAllOrders] = useState(props.allOrders);
+    const [bestSellers, setBestSellers] = useState(props.bestSellers);
     dispatch(controlAdminSideBar(0));
 
     return (
@@ -20,9 +21,11 @@ const Dashboard = (props) => {
                 <title>Administrator: Name</title>
             </Head>
             {
-                <AdminDashboard 
+                <AdminDashboard
                     allOrders={allOrders}
                     setAllOrders={setAllOrders}
+                    bestSellers={bestSellers}
+                    setBestSellers={setBestSellers}
                     refT={props.ctx_refresh}
                 />
             }
@@ -79,10 +82,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         }
 
         const allOrders = await redisGet("all_orders", store, "order", "allOrders", retrieveAllOrderThunk, { refreshed_token: context.req.cookies.refreshed_token });
-
+        const bestSeller = await redisGet("best_sellers", store, "order", "bestSellers", retrieveBestSellers);
         return {
             props: {
                 allOrders: typeof allOrders === "object" ? allOrders : JSON.parse(allOrders),
+                bestSellers: typeof bestSeller === "object" ? bestSeller : JSON.parse(bestSeller),
                 ctx_refresh: context.req.cookies.refreshed_token
             }
         }

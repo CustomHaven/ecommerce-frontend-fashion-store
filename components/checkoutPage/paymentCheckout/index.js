@@ -292,6 +292,8 @@ const PaymentCheckout = (props) => {
 
     useEffect(() => {
         if (cart.abandoned === false) {
+            // console.log("all work is done");
+            // console.log("orderCompleted", orderCompleted);
             dispatch(toggleCelebrateNewOrder(true));
             router.push("/?order=" + orderCompleted.id);
         }

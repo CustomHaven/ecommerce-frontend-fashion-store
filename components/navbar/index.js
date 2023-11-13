@@ -152,17 +152,17 @@ const Navbar = (props) => {
                                     <AiOutlineDown />
                                 </p>
                             </li>
-                            <li>
+                            {/* <li>
                                 <p><Link href="/services">Services</Link></p>
-                            </li>
+                            </li> */}
                             <li>
                                 {/*  */}
                                 <div className={styles.dropdown_options}>
                                     <div data-about="about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                                        <Link href="/about"><p>About Us</p></Link>
-                                        <Link href="/delivery-information"><p>Delivery Information</p></Link>
-                                        <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
-                                        <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                                        <Link href="/legal/about"><p>About Us</p></Link>
+                                        <Link href="/legal/delivery-information"><p>Delivery Information</p></Link>
+                                        <Link href="/legal/privacy-policy"><p>Privacy Policy</p></Link>
+                                        <Link href="/legal/terms-and-conditions"><p>Terms & Conditions</p></Link>
                                     </div>
                                 </div>
                                 <p ref={aboutRef} className={styles.nav_option_drawers}>

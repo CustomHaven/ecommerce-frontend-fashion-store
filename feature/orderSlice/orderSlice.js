@@ -92,6 +92,8 @@ const orderSlice = createSlice({
                 state.orderLoading = false;
                 state.orderError = false;
 
+                console.log("the new order action.payload!", action.payload.data);
+
                 state.order = action.payload.data;
 
                 state.orderStatusCode = action.payload.statusCode;

@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import useRedis from "../../../../hooks/useRedis";
 import { selectBestSeller, retrieveBestSellers } from "../../../../feature/orderSlice/orderSlice";
 import { selectPageListingController,
     selectSlideMultiplier,
@@ -8,7 +9,7 @@ import { directionSequence } from "../../../../utils/generalUtils";
 import Directions from "../../Directions"
 import styles from "../../../../styles/Administrator/Dashboard/BestSeller.module.css";
 
-const BestSeller = () => {
+const BestSeller = (props) => {
 
     const pageListing = useSelector(selectPageListingController);
     const slideNumber = useSelector(selectSlideMultiplier);
@@ -21,8 +22,27 @@ const BestSeller = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(storePageListingArray(directionSequence(frequentOrders.length, pageListing, 1)));
+        if (!props.BestSellers && frequentOrders.length > 0) {
+            props.setBestSellers(frequentOrders);
+        }
     }, [frequentOrders]);
+
+    const arrayObj = [ { keyStr: "best_sellers", usingKey: frequentOrders }, { noKey: "empty", evaluationKey: props.BestSellers } ];
+    const [ redisState ] = useRedis(arrayObj, props.BestSeller, frequentOrders, true);
+
+    useEffect(() => {
+        if (redisState) {
+            props.setBestSellers(redisState);
+        }
+    }, [redisState]);
+
+    useEffect(() => {
+        if (props.bestSellers) {
+            if (props.bestSellers.length > 0) {
+                dispatch(storePageListingArray(directionSequence(props.bestSellers.length, pageListing, 1)));
+            }
+        }
+    }, [props.bestSellers]);
 
     return (
         <div className={styles.best_seller_outer_container}>
@@ -43,7 +63,8 @@ const BestSeller = () => {
                         </tbody>
                         <tbody className={styles.best_seller_table_body}>
                             {
-                                frequentOrders.slice(pageListing * (slideNumber - 1), pageListing * slideNumber).map((order) =>
+                                props.bestSellers &&
+                                props.bestSellers.slice(pageListing * (slideNumber - 1), pageListing * slideNumber).map((order) =>
                                         <tr>
                                             <td>{order.Product_Name}</td>
                                             <td>{order.Sales}</td>
@@ -55,12 +76,15 @@ const BestSeller = () => {
                 </div>
             </div>
             <div>
-                <Directions 
-                    max={frequentOrders.length}
-                    pageListing={pageListing}
-                    slideNumber={slideNumber}
-                    option={1}
-                />
+                {
+                    props.bestSellers &&
+                        <Directions 
+                            max={props.bestSellers.length}
+                            pageListing={pageListing}
+                            slideNumber={slideNumber}
+                            option={1}
+                        />
+                }
             </div>
         </div>
     )

@@ -97,7 +97,7 @@ const FireWorkModal = () => {
                 </div>
                 <div className={styles.shadow}></div>
                 <h1 className={styles.title}>Thank you {firstName}!</h1>
-                <p className={styles.message}>Your order summary was delivered to {email} successfully.</p>
+                <p className={styles.message}>Your order summary was delivered to {email} successfully. (check your spam folder as well)</p>
                 <button ref={buttonRef} className={[styles.btn, styles.btn_success].join(" ")} onClick={handleContinue}>Continue</button>
             </div>
         </section>

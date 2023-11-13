@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useFecth = (url, method, headers, body) => {
+const useFetch = (url, method, headers, body) => {
 
     const [state, setState] = useState(null);
 
@@ -23,4 +23,4 @@ const useFecth = (url, method, headers, body) => {
     return [state];
 }
 
-export default useFecth;
+export default useFetch;

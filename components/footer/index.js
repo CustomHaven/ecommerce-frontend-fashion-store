@@ -31,10 +31,10 @@ const Footer = (props) => {
                 </li>
                 <li>
                     <h3>About</h3>
-                    <Link href="/about"><p>About Us</p></Link>
-                    <Link href="/delivery-information"><p>Delivery Information</p></Link>
-                    <Link href="/privacy-policy"><p>Privacy Policy</p></Link>
-                    <Link href="/terms-conditions"><p>Terms & Conditions</p></Link>
+                    <Link href="/legal/about"><p>About Us</p></Link>
+                    <Link href="/legal/delivery-information"><p>Delivery Information</p></Link>
+                    <Link href="/legal/privacy-policy"><p>Privacy Policy</p></Link>
+                    <Link href="/legal/terms-and-conditions"><p>Terms & Conditions</p></Link>
                 </li>
                 <li>
                     <h3>My Account</h3>

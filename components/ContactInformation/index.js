@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import useFecth from "../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { saveFirstName,
     saveLastName,
@@ -24,7 +24,7 @@ const ContactInformation = (props) => {
     const dispatch = useDispatch();
     const countryRef = useRef(null);
     
-    const [countryData] = useFecth("https://countries.trevorblades.com/graphql", "POST", {"Content-type": "application/json"}, {query: `
+    const [countryData] = useFetch("https://countries.trevorblades.com/graphql", "POST", {"Content-type": "application/json"}, {query: `
         query {
             countries {
                 name

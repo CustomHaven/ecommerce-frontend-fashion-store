@@ -9,6 +9,7 @@ import authReducer from "../feature/authSlice/authSlice";
 import paymentReducer from "../feature/paymentSlice/paymentSlice";
 import orderReducer from "../feature/orderSlice/orderSlice";
 import errorReducer from "../feature/errorSlice/errorSlice";
+import legalReducer from "../feature/legalSlice/legalSlice";
 
 const makeStore = () => configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const makeStore = () => configureStore({
         auth: authReducer,
         payment: paymentReducer,
         order: orderReducer,
+        legal: legalReducer,
         error: errorReducer
     },
     devTools: true,

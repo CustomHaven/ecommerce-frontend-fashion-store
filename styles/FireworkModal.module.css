@@ -132,6 +132,7 @@
     width: 50%;
     height: 2.5rem;
     font-size: 90%;
+    font-weight: 700;
     background-color: rgb(var(--firework-white));
     border: none;
     border-radius: 50px;
@@ -142,6 +143,11 @@
     outline: none;
     cursor: pointer;
     color: rgb(var(--firework-success-2));
+}
+
+.btn:hover {
+    background-color: rgb(var(--firework-success-1));
+    color: rgb(var(--firework-white));
 }
 
 @keyframes shadow {
@@ -180,7 +186,7 @@
     }
     .success_container, .success_container::before {
         width: 16rem;
-        height: 20rem;
+        height: 22rem;
     }
     .shadow {
         left: 80px;

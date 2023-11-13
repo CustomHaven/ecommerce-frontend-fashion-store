@@ -13,23 +13,25 @@ export const redisGet = async (key, store, reducer, state, thunk, options = {}) 
         if (items) {
             return items;
         } else {
-            await store.dispatch(thunk(options));
-            const fetchedItems = store.getState()[reducer][state];
-            if (fetchedItems.constructor === Array) {
-                if (fetchedItems.length === 0) {
-                    return;
-                }
-            } else if (fetchedItems.constructor === Object) {
-                if (Object.keys(fetchedItems).length === 0) {
-                    return;
-                }
-            }
-            await redis.set(key, JSON.stringify(fetchedItems));
-            return fetchedItems;
+            return await redisSetInServer(key, store, reducer, state, thunk, options = {});
         }
     })
 };
 
-// export const redisSet = async(key, )
+export const redisSetInServer = async (key, store, reducer, state, thunk, options = {}) => {
+    await store.dispatch(thunk(options));
+    const fetchedItems = store.getState()[reducer][state];
+    if (fetchedItems.constructor === Array) {
+        if (fetchedItems.length === 0) {
+            return;
+        }
+    } else if (fetchedItems.constructor === Object) {
+        if (Object.keys(fetchedItems).length === 0) {
+            return;
+        }
+    }
+    await redis.set(key, JSON.stringify(fetchedItems));
+    return fetchedItems;
+}
 
 export default redis;
