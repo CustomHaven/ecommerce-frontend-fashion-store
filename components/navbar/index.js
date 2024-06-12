@@ -123,7 +123,7 @@ const Navbar = (props) => {
                             {
                                 logoutBool ?
                                     <Link href="/login"><BsPerson fill="white" stroke="black" strokeWidth="0.1" /></Link> :
-                                    <div onClick={handleLogout}><BiLogOut fill="white" stroke="black" strokeWidth="0.1"/></div>
+                                    <div title="Logout" onClick={handleLogout}><BiLogOut fill="white" stroke="black" strokeWidth="0.1"/></div>
 
                             }
                             <Link href="/search"><BsSearch /></Link>

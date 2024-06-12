@@ -152,7 +152,7 @@ const AdminNavbar = () => {
                             </p>
                         </div>
                     </li>
-                    <li onClick={handleLogout}>
+                    <li title="Logout" onClick={handleLogout}>
                         <FiLogOut />
                     </li>
                 </ul>
